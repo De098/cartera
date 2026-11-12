@@ -126,6 +126,12 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
 .dlg-caja { background: var(--tarjeta); border: 2px solid var(--borde); border-radius: 16px; padding: 18px; width: 100%; max-width: 420px; }
 .dlg-caja p { margin: 0 0 16px; font-size: 1.1rem; font-weight: 700; overflow-wrap: anywhere; }
 .dlg-bots { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.dlg-bots.uno { grid-template-columns: 1fr; }
+#dlgtxt { white-space: pre-line; }
+/* los avisos del sistema están desactivados */
+.aviso-permiso { background: var(--ambar-fondo); color: var(--ambar-texto); border: 2px solid var(--ambar-texto); border-radius: 12px; padding: 10px 12px; margin: 10px 0; }
+.aviso-permiso p { margin: 0 0 8px; font-weight: 700; }
+.aviso-permiso button { width: 100%; }
 .toast { position: fixed; left: 16px; right: 16px; bottom: calc(24px + env(safe-area-inset-bottom)); z-index: 40; max-width: 520px; margin: 0 auto;
   background: var(--texto); color: #fff; padding: 12px 16px; border-radius: 12px; font-weight: 700; text-align: center; }
 </style>
@@ -162,6 +168,10 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
     <div id="vcodigo" class="codigo"><img id="vimg" alt="Código"><p id="verr" hidden></p></div>
     <p id="vnum" class="numero"></p>
     <div id="vinfo" class="info" hidden></div>
+    <div id="vavisos" class="aviso-permiso" hidden>
+      <p>Los avisos están desactivados: actívalos en los ajustes de Android para que esta tarjeta te avise.</p>
+      <button class="bavisos">Abrir ajustes de notificaciones</button>
+    </div>
     <div id="vadj" class="adj"></div>
     <div class="acciones">
       <button id="veditar">Editar</button>
@@ -253,6 +263,10 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
     </div>
     <div class="caja">
       <h3>Avisos</h3>
+      <div id="ajavisosmal" class="aviso-permiso" hidden>
+        <p>Los avisos están desactivados: actívalos en los ajustes de Android.</p>
+        <button class="bavisos">Abrir ajustes de notificaciones</button>
+      </div>
       <p class="suave">Las entradas avisan el día del evento y, si quieres, unos días antes. Las caducidades avisan los días que elijas.</p>
       <label for="ajhora" style="font-weight:800">Hora de los avisos</label>
       <input id="ajhora" type="time">
@@ -262,13 +276,18 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
       <div id="ajcad" class="checks"></div>
     </div>
     <div class="caja">
+      <h3>Importar de otras apps</h3>
+      <p>Trae tus tarjetas de otra app. El formato se reconoce solo, mirando el archivo por dentro.</p>
+      <button id="ajotras" class="primario" style="width:100%">Importar…</button>
+      <p class="suave">Se puede importar de Catima (su copia .zip o .csv, sin contraseña), Loyalty Card Keychain, pases de Apple Wallet (.pkpass) y cualquier archivo .csv con una fila de cabecera.</p>
+    </div>
+    <div class="caja">
       <h3>Copia de seguridad</h3>
       <p>Guarda todo (tarjetas, entradas y sus adjuntos) en un archivo .zip, o recupéralo. Al recuperar no se borra nada.</p>
       <div class="botones2">
         <button id="ajexportar">Guardar copia</button>
         <button id="ajimportar">Recuperar copia</button>
       </div>
-      <p class="suave">También puedes recuperar una copia de Catima: elige su archivo .zip de exportación.</p>
     </div>
     <div class="caja">
       <h3>Acerca de</h3>
@@ -281,7 +300,7 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
 <div id="dlg" class="dlg" hidden>
   <div class="dlg-caja">
     <p id="dlgtxt"></p>
-    <div class="dlg-bots"><button id="dlgno">Cancelar</button><button id="dlgsi" class="primario peligro">Borrar</button></div>
+    <div class="dlg-bots" id="dlgbots"><button id="dlgno">Cancelar</button><button id="dlgsi" class="primario peligro">Borrar</button></div>
   </div>
 </div>
 <div id="toast" class="toast" hidden></div>

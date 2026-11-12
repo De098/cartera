@@ -15,7 +15,16 @@ sin servidor y sin permiso de internet. Android 10 o superior. Licencia GPL-3.0.
 - **Caducidades**: cualquier tarjeta puede caducar; avisos configurables (por defecto 30 días antes y el mismo día) y
   distintivos «Caduca pronto» y «Caducada».
 - **Widget de favoritas** (pulsar una abre su código) y **acceso directo** a una tarjeta en la pantalla de inicio.
-- **Copia de seguridad** en un `.zip` (tarjetas y adjuntos) y **recuperación de copias de Catima** (su `.zip` de exportación).
+- **Copia de seguridad** en un `.zip` (tarjetas y adjuntos).
+- **Importar de otras apps** (Ajustes > Importar de otras apps): el formato se detecta por el contenido del archivo, no por su
+  nombre. Admite **Catima** (su `.zip` con `catima.csv` y las imágenes de frente y dorso, y el `.csv` suelto de las versiones
+  anteriores, con o sin línea de versión), **Loyalty Card Keychain** (su CSV), **pases de Apple Wallet** (`.pkpass` y
+  `.pkpasses`, también al abrirlos desde el correo o el navegador) y **cualquier CSV con cabecera** (columnas reconocidas por
+  nombre en castellano o inglés; separador coma, punto y coma o tabulador). Al terminar enseña cuántas tarjetas se han importado,
+  cuántas ya estaban (mismo nombre y número, no se duplican) y cuántas se han importado sin dibujo del código. Las copias de
+  Catima cifradas con contraseña no se pueden abrir sin librerías externas: la app pide exportarlas sin contraseña.
+- **Avisos**: el permiso de notificaciones se pide solo la primera vez que se guarda o importa una tarjeta con fecha de evento o
+  de caducidad; si se deniega, la app lo explica y ofrece un botón hacia los ajustes de notificaciones de Android.
 
 ## Cómo está hecha
 
@@ -34,14 +43,18 @@ la propia app también.
 | `EscanerActivity.kt` | escáner con Camera2 + ZXing, con el permiso de la cámara pedido al abrirse |
 | `Rutas.kt` | puente entre la página y las clases anteriores (datos, guardar, borrar…, e imágenes) |
 | `Programador.kt`, `Avisos.kt` | alarmas exactas locales, canales de notificación, reprogramado al encender el móvil |
-| `Copia.kt`, `Catima.kt` | copia `.zip` de la app e importación de la de Catima (`catima.csv` + imágenes) |
+| `Copia.kt` | copia `.zip` de la app (exportar e importar) |
+| `Importar.kt` | detecta el formato de un archivo por su contenido (zip, cifrado, CSV…), guarda las tarjetas leídas sin duplicar y cuenta el resumen |
+| `TablaCsv.kt`, `Csv.kt` | lector de CSV (separador, codificación, columnas por nombre en castellano e inglés), fechas, colores y tipos de código |
+| `Catima.kt` | la copia `.zip` de Catima: `catima.csv` + imágenes de frente y dorso |
+| `Pkpass.kt` | pases de Apple Wallet (`pass.json`: nombre, código, fecha, color e imágenes; `.pkpasses` con varios) |
 | `Widgets.kt` | el widget de favoritas |
-| `MainActivity.kt` | el `WebView`, el puente con el sistema (cámara, galería, archivos, brillo, accesos directos) |
+| `MainActivity.kt` | el `WebView`, el puente con el sistema (cámara, galería, archivos, brillo, accesos directos, importar archivos y pases abiertos desde otras apps, permiso de avisos) |
 
 Los datos están en la carpeta privada de la app: `tarjetas/«id».json` (uno por tarjeta, con los campos que no conoce esta
 versión conservados al guardar) y `adjuntos/«id»/…`. No hay copia de seguridad en la nube (`allowBackup=false`).
 
-Permisos: `CAMERA` (solo al pulsar «Escanear»), `POST_NOTIFICATIONS`, `USE_EXACT_ALARM` / `SCHEDULE_EXACT_ALARM` y
+Permisos: `CAMERA` (solo al pulsar «Escanear»), `POST_NOTIFICATIONS` (solo al guardar o importar algo con fecha), `USE_EXACT_ALARM` / `SCHEDULE_EXACT_ALARM` y
 `RECEIVE_BOOT_COMPLETED` (avisos). **No** tiene `INTERNET`.
 
 ## Compilar

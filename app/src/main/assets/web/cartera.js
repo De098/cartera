@@ -78,8 +78,19 @@ function preguntar(texto, boton) {
   $("#dlg").hidden = false;
   return new Promise(res => { resolverDlg = res; });
 }
+/** Un mensaje con su botón «Aceptar» (el resumen de una importación: varias líneas que no caben en un aviso corto). */
+function informar(texto) {
+  $("#dlgtxt").textContent = texto;
+  $("#dlgsi").textContent = "Aceptar";
+  $("#dlgsi").classList.remove("peligro");
+  $("#dlgno").hidden = true;
+  $("#dlgbots").classList.add("uno");
+  $("#dlg").hidden = false;
+  return new Promise(res => { resolverDlg = res; });
+}
 function cerrarDlg(si) {
   $("#dlg").hidden = true;
+  $("#dlgno").hidden = false; $("#dlgbots").classList.remove("uno"); $("#dlgsi").classList.add("peligro");
   if (resolverDlg) { const r = resolverDlg; resolverDlg = null; r(si); }
 }
 $("#dlgsi").onclick = () => cerrarDlg(true);
@@ -95,6 +106,7 @@ let datos = {tarjetas: [], formatos: [], ajustes: {hora: "09:00", previo: 1, cad
 let cargado = false;
 let seg = "todo";
 let pendienteAbrir = null;
+let avisosOk = true;    // ¿pueden salir avisos? (si no, se enseña un aviso con un botón hacia los ajustes de Android)
 let actual = null;      // tarjeta que se está viendo
 let ed = null;          // tarjeta que se está editando (copia de trabajo)
 let edNumeroOrig = "";  // el número tal como estaba al abrir el editor
@@ -242,6 +254,7 @@ function pintarVer() {
   if (t.nota) info.push(`<p class="nota">${esc(t.nota)}</p>`);
   $("#vinfo").innerHTML = info.join("");
   $("#vinfo").hidden = !info.length;
+  pintarAvisosMal();
 
   const adj = [];
   for (const a of t.adjuntos || []) {
@@ -420,6 +433,8 @@ async function guardar() {
   const veniaDeVer = !$("#ver").hidden;
   try {
     const id = await api("/cartera/guardar", "POST", o);
+    // con fecha de evento o de caducidad hacen falta los avisos: el permiso se pide ahora, y solo la primera vez
+    if ((o.evento || o.caduca) && puente) { try { puente.pedirAvisos(); } catch (e) {} }
     cerrarEditor();
     await cargar();
     if (veniaDeVer) {
@@ -432,6 +447,20 @@ $("#eguardar").onclick = guardar;
 $("#eguardar2").onclick = guardar;
 $("#bnuevo").onclick = () => abrirEditor(null);
 
+// ---------------------------------------------------------------- avisos desactivados
+
+/** Enseña (o esconde) el aviso de «avisos desactivados» en la tarjeta que se ve, si tiene fecha, y en Ajustes. */
+function pintarAvisosMal() {
+  const t = actual;
+  $("#vavisos").hidden = avisosOk || !t || t.archivada || !(t.evento || t.caduca);
+  $("#ajavisosmal").hidden = avisosOk;
+}
+function refrescarAvisos() {
+  try { if (puente) avisosOk = !!puente.avisosActivos(); } catch (e) {}
+  pintarAvisosMal();
+}
+for (const b of document.querySelectorAll(".bavisos")) b.onclick = () => { if (puente) puente.ajustesAvisos(); };
+
 // ---------------------------------------------------------------- ajustes
 
 function abrirAjustes() {
@@ -440,6 +469,7 @@ function abrirAjustes() {
   $("#ajprevio").value = String(a.previo != null ? a.previo : 1);
   pintarChecks($("#ajcad"), OPC_CADUCA, a.caduca || [30, 0]);
   try { $("#ajversion").textContent = puente ? puente.version() : ""; } catch (e) {}
+  refrescarAvisos();
   $("#ajustes").hidden = false;
   $("#ajustes").scrollTop = 0;
   bloquear();
@@ -456,6 +486,7 @@ $("#ajcad").addEventListener("change", guardarAjustes);
 $("#bajustes").onclick = abrirAjustes;
 $("#ajvolver").onclick = cerrarAjustes;
 $("#ajexportar").onclick = () => { if (puente) puente.exportar(); else avisar("Solo funciona dentro de la app"); };
+$("#ajotras").onclick = () => { if (puente) puente.importarOtras(); else avisar("Solo funciona dentro de la app"); };
 $("#ajimportar").onclick = () => { if (puente) puente.importar(); else avisar("Solo funciona dentro de la app"); };
 
 // ---------------------------------------------------------------- lo que llega de la app y el botón atrás
@@ -492,6 +523,11 @@ window.alNativo = m => {
     pintarAdjuntos();
   } else if (m.tipo === "aviso") {
     avisar(m.msj);
+  } else if (m.tipo === "resumen") {
+    informar(m.msj);
+  } else if (m.tipo === "avisos") {
+    avisosOk = !!m.activos;
+    pintarAvisosMal();
   } else if (m.tipo === "abrir") {
     if (cargado) abrirDesdeAviso(m.id, true); else pendienteAbrir = m.id;
   } else if (m.tipo === "recargar") {
@@ -510,4 +546,5 @@ window.atras = () => {
 
 // ---------------------------------------------------------------- arranque
 
+refrescarAvisos();
 cargar();

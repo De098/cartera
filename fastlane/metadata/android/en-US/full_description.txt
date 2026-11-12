@@ -22,6 +22,10 @@ Cartera keeps your membership, loyalty and library cards, tickets and boarding p
 <b>Also</b>
 • Favourites widget: tap one and its code opens.
 • Home screen shortcut to a single card.
-• Backup to a .zip file and restore from Catima backups.
+• Backup to a .zip file.
+
+<b>Import from other apps</b>
+• Catima (its .zip or .csv backup, without a password), Loyalty Card Keychain, Apple Wallet passes (.pkpass, also when opened from an email or the browser) and any .csv file with a header row.
+• The format is detected automatically. When done you see how many cards were imported, how many were already there and how many came without a drawn code.
 
 Light, high-contrast theme. Free software (GPL-3.0).

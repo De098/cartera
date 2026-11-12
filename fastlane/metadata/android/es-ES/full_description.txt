@@ -22,6 +22,10 @@ Cartera guarda en tu móvil las tarjetas de socio, fidelización o biblioteca, y
 <b>Y además</b>
 • Widget de favoritas: pulsa una y se abre su código.
 • Acceso directo a una tarjeta en la pantalla de inicio.
-• Copia de seguridad en un archivo .zip y recuperación de copias de Catima.
+• Copia de seguridad en un archivo .zip.
+
+<b>Importar de otras apps</b>
+• Catima (su copia .zip o .csv, sin contraseña), Loyalty Card Keychain, pases de Apple Wallet (.pkpass, también al abrirlos desde el correo o el navegador) y cualquier archivo .csv con cabecera.
+• El formato se reconoce solo. Al terminar ves cuántas tarjetas se han importado, cuántas ya estaban y cuántas sin dibujo del código.
 
 Tema claro y de buen contraste. Software libre (GPL-3.0).

@@ -50,6 +50,10 @@ class MainActivity : Activity() {
         private const val PEDIR_ESCANEAR = 43
         private const val PEDIR_GALERIA = 44
         private const val PEDIR_ADJUNTO = 45
+        private const val PEDIR_OTRAS = 46
+        private const val PERMISO_AVISOS = 1
+        private const val PREFS = "cartera"
+        private const val PREF_PREGUNTADO = "avisosPreguntado"   // ya se pidió el permiso de avisos una vez: no se repite
         private const val MAX_COPIA = 500L * 1024 * 1024   // 500 MB
     }
 
@@ -107,7 +111,30 @@ class MainActivity : Activity() {
             try { startActivityForResult(i, PEDIR_EXPORTAR) } catch (_: Exception) { aviso("No se puede guardar en este móvil") }
         }
 
-        /** Ajustes → recuperar una copia de Cartera o de Catima (añade, no borra nada). */
+        /** Ajustes → importar de otras apps (Catima, Loyalty Card Keychain, Wallet, CSV): cualquier archivo; el formato se detecta por el contenido. */
+        @JavascriptInterface
+        fun importarOtras() = runOnUiThread {
+            val i = Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("*/*")
+            try { startActivityForResult(i, PEDIR_OTRAS) } catch (_: Exception) { aviso("No se puede abrir archivos en este móvil") }
+        }
+
+        /** ¿Pueden salir avisos? (permiso concedido y notificaciones de la app no desactivadas). */
+        @JavascriptInterface
+        fun avisosActivos(): Boolean = hayAvisos()
+
+        /** Se ha guardado una tarjeta con fecha: si hace falta, se pide el permiso de avisos (solo la primera vez). */
+        @JavascriptInterface
+        fun pedirAvisos() = runOnUiThread { pedirPermisoAvisos() }
+
+        /** Abre los ajustes de notificaciones de Cartera en Android. */
+        @JavascriptInterface
+        fun ajustesAvisos() = runOnUiThread {
+            val i = Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                .putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, packageName)
+            try { startActivity(i) } catch (_: Exception) { aviso("No se pueden abrir los ajustes de notificaciones") }
+        }
+
+        /** Ajustes → recuperar una copia de Cartera (si el archivo es de otra app, también se detecta e importa). */
         @JavascriptInterface
         fun importar() = runOnUiThread {
             val i = Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
@@ -163,7 +190,7 @@ class MainActivity : Activity() {
 
         web.loadUrl(Rutas.ORIGEN + "/cartera")
         abrirDesde(intent)
-        pedirPermisoAvisos()
+        Avisos.crearCanales(this)   // el permiso de avisos NO se pide aquí: ver pedirPermisoAvisos()
         Programador.programarTrabajo(this)
     }
 
@@ -212,6 +239,7 @@ class MainActivity : Activity() {
         aplicarPantalla()
         thread(name = "programador") { Programador.ahora(this) }   // al abrir la app: avisos y widget al día
         enviar(JSONObject().put("tipo", "recargar"))               // por si algo se archivó mientras tanto
+        enviar(JSONObject().put("tipo", "avisos").put("activos", hayAvisos()))   // por si se cambió en los ajustes de Android
     }
 
     override fun onPause() {
@@ -236,6 +264,49 @@ class MainActivity : Activity() {
         val id = i.getStringExtra(EXTRA_ID)?.takeIf { Nucleo.ID.matches(it) }
         i.removeExtra(EXTRA_ID)
         if (id != null) enviar(JSONObject().put("tipo", "abrir").put("id", id))
+
+        // un pase de Wallet abierto desde otra app (correo, navegador, archivos…): se importa y se enseña
+        val uri: Uri? = when (i.action) {
+            Intent.ACTION_VIEW -> i.data
+            Intent.ACTION_SEND -> @Suppress("DEPRECATION") i.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
+            else -> null
+        }
+        if (uri != null) {
+            i.action = Intent.ACTION_MAIN; i.data = null; i.removeExtra(Intent.EXTRA_STREAM)   // para no importarlo dos veces
+            thread(name = "archivos") { importarDe(uri, true) }
+        }
+    }
+
+    /** Copia el archivo a la caché (con tope de tamaño), lo importa y se lo cuenta a la página. «fuera»: vino de otra app. */
+    private fun importarDe(uri: Uri, fuera: Boolean) {
+        val tmp = File(cacheDir, "importar.tmp")
+        try {
+            contentResolver.openInputStream(uri)!!.use { entrada ->
+                tmp.outputStream().use { salida ->
+                    // a trozos, con tope por si eligen un archivo enorme
+                    val trozo = ByteArray(64 * 1024)
+                    var total = 0L
+                    while (true) {
+                        val n = entrada.read(trozo)
+                        if (n < 0) break
+                        total += n
+                        if (total > MAX_COPIA) throw ErrorUsuario("Ese archivo es demasiado grande")
+                        salida.write(trozo, 0, n)
+                    }
+                }
+            }
+            val r = Importar.archivo(tmp, abrirSiUna = fuera)
+            Programador.ahora(this)
+            val tipo = if (r.resumen && r.abrir == null) "resumen" else "aviso"
+            enviar(JSONObject().put("tipo", tipo).put("msj", if (tipo == "aviso") r.mensaje.lineSequence().first() else r.mensaje))
+            enviar(JSONObject().put("tipo", "recargar"))
+            if (r.abrir != null) enviar(JSONObject().put("tipo", "abrir").put("id", r.abrir))
+            if (r.conFechas) runOnUiThread { pedirPermisoAvisos() }
+        } catch (e: ErrorUsuario) {
+            enviar(JSONObject().put("tipo", "aviso").put("msj", e.message ?: "No se ha podido"))
+        } catch (_: Exception) {
+            enviar(JSONObject().put("tipo", "aviso").put("msj", "No se ha podido leer ese archivo"))
+        } finally { tmp.delete() }
     }
 
     /** Manda un mensaje a la página (window.alNativo); si aún no ha cargado, espera. */
@@ -360,36 +431,14 @@ class MainActivity : Activity() {
                         contentResolver.openOutputStream(uri, "wt")!!.use { Copia.exportar(it) }
                         enviar(JSONObject().put("tipo", "aviso").put("msj", "Copia guardada"))
                     }
-                    PEDIR_IMPORTAR -> {
-                        val tmp = File(cacheDir, "importar.zip")
-                        try {
-                            contentResolver.openInputStream(uri)!!.use { entrada ->
-                                tmp.outputStream().use { salida ->
-                                    // a trozos, con tope por si eligen un archivo enorme
-                                    val trozo = ByteArray(64 * 1024)
-                                    var total = 0L
-                                    while (true) {
-                                        val n = entrada.read(trozo)
-                                        if (n < 0) break
-                                        total += n
-                                        if (total > MAX_COPIA) throw IllegalStateException("grande")
-                                        salida.write(trozo, 0, n)
-                                    }
-                                }
-                            }
-                            val msj = Copia.importar(tmp)
-                            Programador.ahora(this)
-                            enviar(JSONObject().put("tipo", "aviso").put("msj", msj))
-                            enviar(JSONObject().put("tipo", "recargar"))
-                        } finally { tmp.delete() }
-                    }
+                    PEDIR_IMPORTAR, PEDIR_OTRAS -> importarDe(uri, false)
                 }
             } catch (e: ErrorUsuario) {
                 enviar(JSONObject().put("tipo", "aviso").put("msj", e.message ?: "No se ha podido"))
             } catch (_: Exception) {
                 val msj = when (pedido) {
                     PEDIR_EXPORTAR -> "No se ha podido guardar la copia"
-                    PEDIR_IMPORTAR -> "No se ha podido leer ese archivo"
+                    PEDIR_IMPORTAR, PEDIR_OTRAS -> "No se ha podido leer ese archivo"
                     PEDIR_ADJUNTO -> "No se ha podido adjuntar ese archivo"
                     else -> "No se ha podido leer esa imagen"
                 }
@@ -398,10 +447,29 @@ class MainActivity : Activity() {
         }
     }
 
+    /** Avisos posibles: permiso concedido (Android 13+) y notificaciones de la app no desactivadas. */
+    private fun hayAvisos(): Boolean =
+        (Build.VERSION.SDK_INT < 33 || checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
+            getSystemService(android.app.NotificationManager::class.java).areNotificationsEnabled()
+
+    /**
+     * El permiso de avisos solo se pide cuando hace falta: al guardar o importar una tarjeta con fecha de evento o de
+     * caducidad, y solo la primera vez. Si se deniega no se vuelve a pedir: la página enseña un aviso con un botón
+     * hacia los ajustes de notificaciones de Android.
+     */
     private fun pedirPermisoAvisos() {
-        // el permiso de avisos solo hay que pedirlo desde Android 13; antes viene dado
-        if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
-            requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
-        Avisos.crearCanales(this)
+        val prefs = getSharedPreferences(PREFS, MODE_PRIVATE)
+        if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+            && !prefs.getBoolean(PREF_PREGUNTADO, false)) {
+            prefs.edit().putBoolean(PREF_PREGUNTADO, true).apply()
+            requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), PERMISO_AVISOS)
+        } else enviar(JSONObject().put("tipo", "avisos").put("activos", hayAvisos()))
+    }
+
+    @Deprecated("Activity sin AndroidX: es la forma de recibir el resultado")
+    @Suppress("DEPRECATION")
+    override fun onRequestPermissionsResult(pedido: Int, permisos: Array<out String>, resultados: IntArray) {
+        super.onRequestPermissionsResult(pedido, permisos, resultados)
+        if (pedido == PERMISO_AVISOS) enviar(JSONObject().put("tipo", "avisos").put("activos", hayAvisos()))
     }
 }

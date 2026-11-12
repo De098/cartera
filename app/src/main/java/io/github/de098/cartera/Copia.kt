@@ -12,7 +12,7 @@ import java.util.zip.ZipOutputStream
 /**
  * Copia de seguridad en un solo .zip: copia.json (qué app y qué versión del formato), tarjetas/«id».json, los
  * adjuntos en adjuntos/«id»/«archivo» y ajustes.json. Importar AÑADE: no borra nada; lo que tenga el mismo id se
- * sustituye. Si el .zip trae catima.csv es una copia de Catima y se importa con [Catima].
+ * sustituye. Si le llega un archivo de otra app (Catima, pases de Wallet, CSV…) lo detecta y lo importa igual: ver [Importar].
  */
 object Copia {
     private const val APP = "io.github.de098.cartera"
@@ -48,40 +48,39 @@ object Copia {
         }
     }
 
-    /** Devuelve el mensaje para enseñar («Recuperado: …» o por qué no). */
-    @Synchronized
-    fun importar(archivo: File): String {
-        val z = try { ZipFile(archivo) } catch (_: Exception) { return "Ese archivo no es una copia de Cartera ni de Catima" }
-        z.use {
-            val nombres = z.entries().asSequence().map { it.name }.toList()
-            if (nombres.any { it.equals("catima.csv", ignoreCase = true) }) return Catima.importar(z)
-            val cab = z.getEntry("copia.json")?.let {
-                try { JSONObject(z.getInputStream(it).bufferedReader(Charsets.UTF_8).readText()) } catch (_: Exception) { null }
-            }
-            if (cab == null || cab.optString("app") != APP) return "Ese archivo no es una copia de Cartera ni de Catima"
-            if (cab.optInt("formato") > 1) return "Esa copia es de una versión más nueva de la app: actualízala primero"
+    /** Importa lo que sea (copia de Cartera o de otra app): el formato se detecta por el contenido, ver [Importar]. */
+    fun importar(archivo: File): Resultado = Importar.archivo(archivo)
 
-            var tarjetas = 0
-            // primero los adjuntos (las tarjetas los comprueban al guardarse)
-            for (e in z.entries()) {
-                val m = ADJUNTO.matchEntire(e.name) ?: continue
-                val destino = File(File(Nucleo.adjuntos, m.groupValues[1]), m.groupValues[2])
-                destino.parentFile?.mkdirs()
-                z.getInputStream(e).use { i -> destino.outputStream().use { o -> i.copyTo(o) } }
-            }
-            for (e in z.entries()) {
-                val m = TARJETA.matchEntire(e.name) ?: continue
-                val j = try { JSONObject(z.getInputStream(e).bufferedReader(Charsets.UTF_8).readText()) } catch (_: Exception) { continue }
-                if (j.optString("id") != m.groupValues[1] || j.optString("nombre").isEmpty()) continue
-                // se pasa por guardar() para comprobar todo; conserva «archivada», «uso» y demás, que guardar() no toma de fuera
-                try {
-                    val id = Tarjetas.guardar(j)
-                    Tarjetas.completarImportada(id, j)
-                    tarjetas++
-                } catch (_: Exception) { /* una tarjeta mala no estropea el resto */ }
-            }
-            return if (tarjetas == 0) "La copia no tenía nada nuevo"
-            else "Recuperado: $tarjetas tarjeta${if (tarjetas > 1) "s" else ""}"
+    /** Una copia de Cartera (ya abierta): añade sus tarjetas y adjuntos. */
+    @Synchronized
+    fun importarCartera(z: ZipFile): Resultado {
+        val cab = z.getEntry("copia.json")?.let {
+            try { JSONObject(z.getInputStream(it).bufferedReader(Charsets.UTF_8).readText()) } catch (_: Exception) { null }
         }
+        if (cab == null || cab.optString("app") != APP) return Resultado(Importar.NO_RECONOZCO)
+        if (cab.optInt("formato") > 1) return Resultado("Esa copia es de una versión más nueva de la app: actualízala primero")
+
+        var tarjetas = 0
+        var conFechas = false
+        // primero los adjuntos (las tarjetas los comprueban al guardarse)
+        for (e in z.entries()) {
+            val m = ADJUNTO.matchEntire(e.name) ?: continue
+            val destino = File(File(Nucleo.adjuntos, m.groupValues[1]), m.groupValues[2])
+            destino.parentFile?.mkdirs()
+            z.getInputStream(e).use { i -> destino.outputStream().use { o -> i.copyTo(o) } }
+        }
+        for (e in z.entries()) {
+            val m = TARJETA.matchEntire(e.name) ?: continue
+            val j = try { JSONObject(z.getInputStream(e).bufferedReader(Charsets.UTF_8).readText()) } catch (_: Exception) { continue }
+            if (j.optString("id") != m.groupValues[1] || j.optString("nombre").isEmpty()) continue
+            // se pasa por guardar() para comprobar todo; conserva «archivada», «uso» y demás, que guardar() no toma de fuera
+            try {
+                val id = Tarjetas.guardar(j)
+                Tarjetas.completarImportada(id, j)
+                tarjetas++
+                if (j.optString("caduca").isNotEmpty() || j.optString("evento").isNotEmpty()) conFechas = true
+            } catch (_: Exception) { /* una tarjeta mala no estropea el resto */ }
+        }
+        return Resultado(if (tarjetas == 0) "La copia no tenía nada nuevo" else "Recuperado: $tarjetas tarjeta${if (tarjetas > 1) "s" else ""}", conFechas = conFechas)
     }
 }
