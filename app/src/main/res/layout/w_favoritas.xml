@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/raiz" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="12dp" android:background="@drawable/w_fondo_claro">
+    <TextView android:id="@+id/titulo" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingBottom="4dp"
+        android:text="★ Favoritas" android:textSize="17dp" android:textStyle="bold" android:textColor="#241F31" android:fontFamily="@font/nunito"/>
+    <ListView android:id="@+id/lista" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:divider="@null" android:dividerHeight="0dp"/>
+    <TextView android:id="@+id/vacio" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:gravity="center" android:text="Marca tarjetas con la estrella (★) y saldrán aquí"
+        android:textSize="15dp" android:textColor="#6F6A78" android:fontFamily="@font/nunito"/>
+</LinearLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nombre">Cartera</string>
+    <string name="w_nombre_favoritas">Favoritas</string>
+    <string name="w_desc_favoritas">Tus tarjetas favoritas: pulsa una y se abre su código</string>
+</resources>

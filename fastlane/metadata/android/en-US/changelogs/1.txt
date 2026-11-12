@@ -1,0 +1,1 @@
+First version: cards with a code (QR and barcodes) added with the camera, from a photo or by hand; tickets and passes with reminders and automatic archiving; expiry dates; favourites widget, home screen shortcut and backup (also from Catima).

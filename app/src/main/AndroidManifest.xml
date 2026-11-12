@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Sin permiso de internet: todo se queda en el móvil -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- avisos programados en el móvil: alarmas exactas y volver a ponerlas al encender -->
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <!-- Android 12: el permiso de alarmas exactas era este (en 10 y 11 no hace falta ninguno) -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- escanear códigos: la cámara se pide justo al pulsar «Escanear», no al abrir la app -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- sin cámara (o sin autoenfoque) la app se instala igual: se puede teclear el número o leerlo de una foto -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+
+    <application
+        android:label="@string/nombre"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:theme="@style/Tema"
+        android:enableOnBackInvokedCallback="true"
+        android:allowBackup="false">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode|density|smallestScreenSize"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- escáner con la cámara (Camera2 + ZXing) -->
+        <activity
+            android:name=".EscanerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode|density|smallestScreenSize"
+            android:theme="@style/Tema" />
+
+        <!-- Avisos: los dispara una alarma de la propia app -->
+        <receiver android:name=".AvisoReceiver" android:exported="false" />
+
+        <!-- widget Favoritas: pulsar una tarjeta abre su código -->
+        <receiver
+            android:name=".WFavoritas"
+            android:label="@string/w_nombre_favoritas"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/w_favoritas_info" />
+        </receiver>
+        <!-- rellena la lista del widget -->
+        <service
+            android:name=".ServicioFavoritas"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+
+        <service
+            android:name=".ProgramadorJob"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="false" />
+
+        <receiver android:name=".ArranqueReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

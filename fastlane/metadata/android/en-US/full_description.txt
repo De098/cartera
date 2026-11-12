@@ -1,0 +1,27 @@
+Cartera keeps your membership, loyalty and library cards, tickets and boarding passes on your phone, with their code ready to show: no account, no server and no internet permission. Your data never leaves the device. The app is in Spanish.
+
+<b>Cards with a code</b>
+• Name, number, colour, note and favourites. A searchable list: favourites first, then the ones you use most.
+• QR, EAN-13, EAN-8, UPC-A, Code 128, Code 39, Aztec, PDF417 and Data Matrix codes.
+• Opening a card shows a big code with the number below, full screen brightness and the screen kept on. Closing it restores everything.
+
+<b>Three ways to add a card</b>
+• Scan the code with the camera (the permission is only asked at that moment).
+• Read the code from a photo or screenshot in your gallery.
+• Type the number and choose the type.
+
+<b>Tickets and passes</b>
+• With the event date and time, an attachment (image or PDF) and/or its code.
+• A reminder on the day of the event and a configurable earlier one (for example, one day before).
+• Once the event is over they are archived automatically; you can restore or delete them.
+
+<b>Expiry dates</b>
+• Any card can have an expiry date, with configurable reminders (by default 30 days before and on the day).
+• "Expires soon" and "Expired" badges.
+
+<b>Also</b>
+• Favourites widget: tap one and its code opens.
+• Home screen shortcut to a single card.
+• Backup to a .zip file and restore from Catima backups.
+
+Light, high-contrast theme. Free software (GPL-3.0).

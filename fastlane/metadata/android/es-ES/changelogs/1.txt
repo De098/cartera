@@ -1,0 +1,1 @@
+Primera versión: tarjetas con código (QR y códigos de barras) que se añaden con la cámara, desde una foto o a mano; entradas y billetes con avisos y archivo automático; caducidades; widget de favoritas, acceso directo y copia de seguridad (también desde Catima).

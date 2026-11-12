@@ -1,0 +1,27 @@
+Cartera guarda en tu móvil las tarjetas de socio, fidelización o biblioteca, y tus entradas y billetes, con su código listo para enseñar: sin cuenta, sin servidor y sin permiso de internet. Tus datos no salen del teléfono.
+
+<b>Tarjetas con código</b>
+• Nombre, número, color, nota y favoritas. Lista con buscador: las favoritas arriba y luego las que usas más a menudo.
+• Códigos QR, EAN-13, EAN-8, UPC-A, Code 128, Code 39, Aztec, PDF417 y Data Matrix.
+• Al abrir una tarjeta, el código sale grande, con el número debajo, el brillo al máximo y la pantalla sin apagarse. Al cerrarla, todo vuelve a como estaba.
+
+<b>Tres formas de añadir una tarjeta</b>
+• Escanear el código con la cámara (el permiso se pide solo en ese momento).
+• Leer el código de una foto o captura de la galería.
+• Teclear el número y elegir el tipo.
+
+<b>Entradas y billetes</b>
+• Con fecha y hora del evento, un adjunto (imagen o PDF) y/o su código.
+• Aviso el día del evento y otro previo configurable (por ejemplo, un día antes).
+• Cuando pasa el evento se archivan solas; puedes restaurarlas o borrarlas.
+
+<b>Caducidades</b>
+• Cualquier tarjeta puede tener fecha de caducidad, con avisos configurables (por defecto 30 días antes y el mismo día).
+• Distintivo «Caduca pronto» o «Caducada».
+
+<b>Y además</b>
+• Widget de favoritas: pulsa una y se abre su código.
+• Acceso directo a una tarjeta en la pantalla de inicio.
+• Copia de seguridad en un archivo .zip y recuperación de copias de Catima.
+
+Tema claro y de buen contraste. Software libre (GPL-3.0).

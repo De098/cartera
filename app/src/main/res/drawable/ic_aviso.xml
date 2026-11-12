@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- icono de los avisos (barra de estado): una sola tinta -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp" android:viewportWidth="72" android:viewportHeight="72">
+  <group android:translateX="-12" android:translateY="-10">
+    <path android:pathData="M36,26 H66 A5,5 0 0 1 71,31 V50 M31,50 V31 A5,5 0 0 1 36,26 M38,36 H64" android:strokeColor="#FFFFFF" android:strokeWidth="4" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+    <path android:pathData="M30,42 H78 A6,6 0 0 1 84,48 V76 A6,6 0 0 1 78,82 H30 A6,6 0 0 1 24,76 V48 A6,6 0 0 1 30,42 Z" android:strokeColor="#FFFFFF" android:strokeWidth="4" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+    <path android:pathData="M33,56 V72 M39,56 V72 M45,56 V72 M51,56 V72" android:strokeColor="#FFFFFF" android:strokeWidth="3.5" android:strokeLineCap="round"/>
+    <path android:pathData="M68,56 H84 V70 H68 A7,7 0 0 1 68,56 Z" android:fillColor="#FFFFFF"/>
+  </group>
+</vector>
