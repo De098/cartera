@@ -4,6 +4,12 @@ Tarjetas de socio y fidelización, entradas y billetes con su código, que funci
 sin servidor y sin permiso de internet. Android 10 o superior. Licencia GPL-3.0. Hermana de
 [Recordatorios](https://github.com/De098/recordatorios).
 
+[![Descargar APK](https://img.shields.io/github/v/release/De098/cartera?label=Descargar%20APK&logo=android&style=for-the-badge)](https://github.com/De098/cartera/releases/latest)
+[![Obtainium](https://img.shields.io/badge/Obtainium-actualizaciones%20autom%C3%A1ticas-5a4fcf?style=for-the-badge)](https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/De098/cartera)
+
+Descarga el `.apk` de la última versión (en **Assets**) y ábrelo en el móvil. Con [Obtainium](https://github.com/ImranR98/Obtainium)
+se instala y se actualiza sola: pulsa el segundo botón desde el móvil o añade `https://github.com/De098/cartera`.
+
 - **Tarjetas con código**: nombre, número, tipo de código (QR, EAN-13, EAN-8, UPC-A, Code 128, Code 39, Aztec, PDF417,
   Data Matrix y algunos más), color, nota y favoritas. Lista con buscador: favoritas arriba y luego las usadas hace menos.
   Al abrir una, el código sale grande con el número debajo, el brillo al máximo y la pantalla sin apagarse; al cerrarla
@@ -12,6 +18,15 @@ sin servidor y sin permiso de internet. Android 10 o superior. Licencia GPL-3.0.
   galería, o teclear el número y elegir el tipo.
 - **Entradas y billetes**: fecha y hora del evento, adjunto (imagen o PDF) y/o código. Avisan el día del evento y un
   día antes (configurable). Cuando pasa el evento se archivan solos (restaurables y borrables).
+- **Billetes que se rellenan solos**: al escanear (o leer de una foto) una tarjeta de embarque IATA (BCBP) saca el vuelo,
+  el origen, el destino y el día (el código no lleva año ni hora: se elige el año que deja la fecha más próxima; el nombre
+  del pasajero no se usa), y de un billete de tren UIC 918.3 (Aztec «#UT») la fecha y hora y las estaciones que traiga su
+  capa de texto (U_TLAY, con la fecha de emisión de U_HEAD). Rellena el formulario sin guardar y avisa arriba de lo que ha
+  sacado. Si el código no lleva fecha (p. ej. los Code 128 de 13 cifras de Renfe), pregunta «¿Es una entrada o un billete?»
+  y pide enseguida el día y la hora. El registro U_FLEX (FCB) de los billetes UIC aún no se descodifica.
+- **Ver contenido del código**: en la tarjeta, muestra lo que lleva el código (en hexadecimal con vista previa si es
+  binario) con un botón «Copiar»; los octetos del escaneo se guardan en la tarjeta (campo `bruto`, base64) y «Reconocer
+  fecha» vuelve a pasar el analizador sobre una tarjeta ya guardada.
 - **Caducidades**: cualquier tarjeta puede caducar; avisos configurables (por defecto 30 días antes y el mismo día) y
   distintivos «Caduca pronto» y «Caducada».
 - **Widget de favoritas** (pulsar una abre su código) y **acceso directo** a una tarjeta en la pantalla de inicio.

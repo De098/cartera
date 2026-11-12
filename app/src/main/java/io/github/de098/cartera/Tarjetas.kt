@@ -76,15 +76,20 @@ object Tarjetas {
         val numero = e.optString("numero", j.optString("numero")).trim().take(1000)
         j.put("numero", numero)
         if (e.has("codigo")) {
-            val cod = e.optString("codigo").trim().take(2000)
+            val cod = e.optString("codigo").take(4000).let { if (e.optString("bruto").isEmpty()) it.trim() else it }
             if (cod.isEmpty()) j.remove("codigo") else j.put("codigo", cod)
+        }
+        // octetos en bruto del código (base64), si es binario: sirven para verlos y volver a reconocer la fecha
+        if (e.has("bruto")) {
+            val br = e.optString("bruto").take(8000)
+            if (br.isEmpty()) j.remove("bruto") else j.put("bruto", br)
         }
         var tipo = e.optString("tipo", j.optString("tipo"))
         if (Nucleo.FORMATOS.none { it.first == tipo }) tipo = "NINGUNO"
         if (j.optString("codigo").ifEmpty { numero }.isEmpty()) tipo = "NINGUNO"
         j.put("tipo", tipo)
         if (tipo != "NINGUNO") {
-            val fallo = Codigos.validar(tipo, j.optString("codigo").ifEmpty { numero })
+            val fallo = Codigos.validar(tipo, j.optString("codigo").ifEmpty { numero }, j.has("bruto"))
             if (fallo != null) throw ErrorUsuario(fallo)
         }
 
@@ -134,6 +139,21 @@ object Tarjetas {
         }
         Nucleo.escribir(archivo(id), j.toString(1))
         return id
+    }
+
+    /** Lo que reconoce [Billetes] del código, como JSON para la página (nombre, evento, eventoHora, tipo, resumen), o null. */
+    fun reconocerCodigo(texto: String?, bytes: ByteArray?): JSONObject? {
+        val d = Billetes.analizar(texto, bytes) ?: return null
+        val ev = if (d.hora != null) d.fecha.atTime(d.hora).format(Nucleo.ISO_MIN) else d.fecha.toString()
+        return JSONObject().put("tipo", d.tipo).put("nombre", d.nombre).put("evento", ev)
+            .put("eventoHora", d.hora != null).put("resumen", d.resumen)
+    }
+
+    /** «Reconocer fecha» en una tarjeta ya guardada: vuelve a pasar el analizador por su código. */
+    fun reconocer(id: String): JSONObject? {
+        val j = leer(id) ?: return null
+        val bytes = j.optString("bruto").takeIf { it.isNotEmpty() }?.let { try { java.util.Base64.getDecoder().decode(it) } catch (_: Exception) { null } }
+        return reconocerCodigo(j.optString("codigo").ifEmpty { j.optString("numero") }, bytes)
     }
 
     @Synchronized

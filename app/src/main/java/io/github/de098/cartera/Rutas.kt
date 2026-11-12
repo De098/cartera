@@ -36,8 +36,9 @@ object Rutas {
                 }
                 metodo == "POST" && path == "/cartera/valido" -> {
                     val j = JSONObject(cuerpo)
-                    texto = Codigos.validar(j.optString("tipo"), j.optString("contenido")) ?: "ok"; tipo = TEXTO
+                    texto = Codigos.validar(j.optString("tipo"), j.optString("contenido"), j.optBoolean("bin")) ?: "ok"; tipo = TEXTO
                 }
+                metodo == "POST" && path == "/cartera/reconocer" -> { texto = Tarjetas.reconocer(cuerpo.trim())?.toString() ?: "no"; tipo = if (texto == "no") TEXTO else JSON }
                 metodo == "POST" && path == "/cartera/guardar" -> { texto = Tarjetas.guardar(JSONObject(cuerpo)); tipo = TEXTO; cambia = true }
                 metodo == "POST" && path == "/cartera/borrar" -> { Tarjetas.borrar(cuerpo.trim()); texto = "ok"; tipo = TEXTO; cambia = true }
                 metodo == "POST" && path == "/cartera/usar" -> { Tarjetas.marcarUso(cuerpo.trim()); texto = "ok"; tipo = TEXTO; cambia = true }
@@ -69,7 +70,7 @@ object Rutas {
         return try {
             when (path) {
                 "/cartera/img/codigo.svg" -> {
-                    val svg = Codigos.svg(query["t"] ?: "", query["n"] ?: "")
+                    val svg = Codigos.svg(query["t"] ?: "", query["n"] ?: "", query["b"] == "1")
                     "image/svg+xml" to ByteArrayInputStream(svg.toByteArray(Charsets.UTF_8))
                 }
                 "/cartera/img/adjunto" -> {

@@ -287,15 +287,15 @@ class EscanerActivity : Activity() {
             fotograma++
             // un fotograma sí y otro no, también en negativo (códigos claros sobre fondo oscuro)
             val r = Codigos.leer(if (fotograma % 4 == 3) fuente.invert() else fuente)
-            if (r != null) runOnUiThread { terminar(r.texto, r.tipo, null) }
+            if (r != null) runOnUiThread { terminar(r.texto, r.tipo, null, r.bytes) }
         } catch (_: Exception) {
         } finally { ocupado = false }
     }
 
-    private fun terminar(numero: String?, formato: String?, error: String?) {
+    private fun terminar(numero: String?, formato: String?, error: String?, bruto: ByteArray? = null) {
         if (terminado) return
         terminado = true
-        if (numero != null) setResult(RESULT_OK, Intent().putExtra("numero", numero).putExtra("formato", formato))
+        if (numero != null) setResult(RESULT_OK, Intent().putExtra("numero", numero).putExtra("formato", formato).putExtra("bruto", bruto))
         else setResult(RESULT_CANCELED, Intent().apply { if (error != null) putExtra("error", error) })
         if (Looper.myLooper() == Looper.getMainLooper()) finish() else runOnUiThread { finish() }
     }

@@ -115,6 +115,14 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
 .adjfila button { min-height: 40px; }
 .checks { display: grid; gap: 2px; margin-top: 6px; }
 
+/* lo que se ha sacado del código y la pregunta rápida de «¿entrada o billete?» */
+.leido { background: var(--sel); border: 2px solid var(--acento); border-radius: 12px; padding: 8px 12px; margin: 4px 0 12px; font-weight: 700; }
+.pregunta { background: var(--ambar-fondo); border: 2px solid var(--ambar-texto); border-radius: 12px; padding: 10px 12px; margin: 4px 0 14px; }
+.pregunta > p { margin: 0 0 8px; font-weight: 800; color: var(--ambar-texto); }
+.pregunta .botones2 { margin-bottom: 0; }
+.contenido { margin: 0 0 14px; max-height: 50vh; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font: 0.85rem/1.35 monospace;
+  background: var(--fondo); border: 2px solid var(--borde); border-radius: 10px; padding: 8px; user-select: text; }
+
 /* ajustes */
 .caja { background: var(--tarjeta); border: 2px solid var(--borde); border-radius: 14px; padding: 12px 14px; margin-bottom: 14px; }
 .caja h3 { margin: 0 0 8px; font-size: 1.1rem; }
@@ -175,6 +183,8 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
     <div id="vadj" class="adj"></div>
     <div class="acciones">
       <button id="veditar">Editar</button>
+      <button id="vcontenido">Ver contenido del código</button>
+      <button id="vreconocer">Reconocer fecha</button>
       <button id="vinicio">Añadir a la pantalla de inicio</button>
       <button id="varch">Archivar</button>
       <button id="vborrar" class="peligro">Borrar</button>
@@ -189,6 +199,21 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
       <button id="ecancelar" class="txt">‹ Cancelar</button>
       <h2 id="etitulo">Nueva tarjeta</h2>
       <button id="eguardar" class="primario">Guardar</button>
+    </div>
+    <p id="eleido" class="leido" hidden></p>
+    <div id="epregunta" class="pregunta" hidden>
+      <p>¿Es una entrada o un billete?</p>
+      <div class="botones2">
+        <button type="button" id="psi" class="primario">Sí</button>
+        <button type="button" id="pno">No, es una tarjeta</button>
+      </div>
+      <div id="pcuando" hidden>
+        <p class="suave" style="margin:10px 0 4px">¿Cuándo es? (se avisa ese día)</p>
+        <div class="dos">
+          <div><label for="pfecha" class="suave" style="font-weight:600">Día</label><input id="pfecha" type="date"></div>
+          <div><label for="phora" class="suave" style="font-weight:600">Hora (opcional)</label><input id="phora" type="time"></div>
+        </div>
+      </div>
     </div>
     <div class="campo">
       <span class="rotulo">¿Qué es?</span>
@@ -301,6 +326,13 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
   <div class="dlg-caja">
     <p id="dlgtxt"></p>
     <div class="dlg-bots" id="dlgbots"><button id="dlgno">Cancelar</button><button id="dlgsi" class="primario peligro">Borrar</button></div>
+  </div>
+</div>
+<div id="cont" class="dlg" hidden>
+  <div class="dlg-caja">
+    <p id="conttit">Contenido del código</p>
+    <pre id="conttxt" class="contenido"></pre>
+    <div class="dlg-bots"><button id="contcopiar" class="primario">Copiar</button><button id="contcerrar">Cerrar</button></div>
   </div>
 </div>
 <div id="toast" class="toast" hidden></div>

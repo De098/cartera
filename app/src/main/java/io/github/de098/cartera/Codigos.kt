@@ -12,6 +12,8 @@ import com.google.zxing.LuminanceSource
 import com.google.zxing.MultiFormatReader
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.RGBLuminanceSource
+import com.google.zxing.Result
+import com.google.zxing.ResultMetadataType
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.common.GlobalHistogramBinarizer
 import com.google.zxing.common.HybridBinarizer
@@ -51,23 +53,24 @@ object Codigos {
     }
 
     /** null si el número se puede dibujar con ese tipo; si no, por qué no (en castellano). */
-    fun validar(clave: String, contenido: String): String? {
+    fun validar(clave: String, contenido: String, bin: Boolean = false): String? {
         if (contenido.isEmpty()) return "Falta el número"
-        return try { matriz(clave, contenido); null } catch (_: Exception) { "Ese número no vale para ${nombre(clave)}. ${ayuda(clave)}" }
+        return try { matriz(clave, contenido, bin); null } catch (_: Exception) { "Ese número no vale para ${nombre(clave)}. ${ayuda(clave)}" }
     }
 
     private fun nombre(clave: String) = Nucleo.FORMATOS.firstOrNull { it.first == clave }?.second ?: clave
 
-    private fun matriz(clave: String, contenido: String): BitMatrix {
+    /** `bin`: el contenido es binario (cada carácter es un octeto, como lo da la lectura): se dibuja en ISO-8859-1 y no en UTF-8. */
+    private fun matriz(clave: String, contenido: String, bin: Boolean = false): BitMatrix {
         val f = FORMATOS[clave] ?: throw ErrorUsuario("Tipo de código desconocido")
-        val pistas = mapOf<EncodeHintType, Any>(EncodeHintType.MARGIN to 0, EncodeHintType.CHARACTER_SET to "UTF-8")
+        val pistas = mapOf<EncodeHintType, Any>(EncodeHintType.MARGIN to 0, EncodeHintType.CHARACTER_SET to (if (bin) "ISO-8859-1" else "UTF-8"))
         return MultiFormatWriter().encode(contenido, f, 0, 0, pistas)
     }
 
     /** El código dibujado como SVG (negro sobre blanco, con su margen en blanco). Lanza si no se puede. */
-    fun svg(clave: String, contenido: String): String {
+    fun svg(clave: String, contenido: String, bin: Boolean = false): String {
         val f = FORMATOS[clave] ?: throw ErrorUsuario("Tipo de código desconocido")
-        val m = try { matriz(clave, contenido) } catch (e: Exception) { throw ErrorUsuario("No se puede dibujar ese código") }
+        val m = try { matriz(clave, contenido, bin) } catch (e: Exception) { throw ErrorUsuario("No se puede dibujar ese código") }
         val w = m.width
         val unidim = f in UNIDIMENSIONALES
         val alto = if (unidim) maxOf(30, (w * 0.4).toInt()) else m.height
@@ -93,8 +96,21 @@ object Codigos {
             "<path fill=\"#000\" d=\"$d\"/></svg>"
     }
 
-    /** Un código leído: el texto y la clave de su tipo. */
-    class Leido(val texto: String, val tipo: String)
+    /** Un código leído: el texto, la clave de su tipo y, si el código es binario, sus octetos en bruto (si no, null). */
+    class Leido(val texto: String, val tipo: String, val bytes: ByteArray? = null)
+
+    /**
+     * Los octetos del código si no son simplemente el texto en UTF-8 (billetes UIC y similares): los segmentos de bytes
+     * de ZXing o, si no hay, el texto como ISO-8859-1 (así lo descodifica ZXing en Aztec y PDF417).
+     */
+    private fun bytesDe(r: Result): ByteArray? {
+        val texto = r.text ?: return null
+        val seg = r.resultMetadata?.get(ResultMetadataType.BYTE_SEGMENTS) as? List<*>
+        val b: ByteArray = if (seg != null && seg.isNotEmpty() && seg.all { it is ByteArray }) {
+            val o = java.io.ByteArrayOutputStream(); seg.forEach { o.write(it as ByteArray) }; o.toByteArray()
+        } else if (texto.all { it.code < 256 }) texto.toByteArray(Charsets.ISO_8859_1) else return null
+        return if (b.contentEquals(texto.toByteArray(Charsets.UTF_8))) null else b
+    }
 
     private fun lector() = MultiFormatReader().apply {
         setHints(mapOf<DecodeHintType, Any>(DecodeHintType.POSSIBLE_FORMATS to LECTURA, DecodeHintType.TRY_HARDER to true))
@@ -109,7 +125,7 @@ object Codigos {
         )
         for (i in intentos) {
             val r = try { lector().decodeWithState(i()) } catch (_: Exception) { null }
-            if (r != null) return Leido(r.text, claveDe(r.barcodeFormat))
+            if (r != null) return Leido(r.text, claveDe(r.barcodeFormat), bytesDe(r))
         }
         return null
     }

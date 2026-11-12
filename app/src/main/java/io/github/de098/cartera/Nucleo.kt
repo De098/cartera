@@ -22,7 +22,8 @@ class ErrorUsuario(mensaje: String) : Exception(mensaje)
  *   creada, uso (milisegundos), archivada, conservar (restaurada a mano: no se archiva sola),
  *   evento (AAAA-MM-DDTHH:mm), eventoHora (false = solo se sabe el día), previo (días de aviso previo, 0 = ninguno),
  *   caduca (AAAA-MM-DD), caducaAvisos (días antes en que avisa; 0 = el mismo día),
- *   adjuntos [{f, tipo ("imagen" | "pdf"), nombre, paginas, rol}]; «rol» está reservado para «frente» y «dorso».
+ *   bruto (octetos del código en base64, solo si es binario: billetes UIC…),
+   adjuntos [{f, tipo ("imagen" | "pdf"), nombre, paginas, rol}]; «rol» está reservado para «frente» y «dorso».
  */
 object Nucleo {
     val ID = Regex("[0-9a-f]{6,32}")

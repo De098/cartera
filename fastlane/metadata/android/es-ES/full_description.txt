@@ -15,6 +15,11 @@ Cartera guarda en tu móvil las tarjetas de socio, fidelización o biblioteca, y
 • Aviso el día del evento y otro previo configurable (por ejemplo, un día antes).
 • Cuando pasa el evento se archivan solas; puedes restaurarlas o borrarlas.
 
+<b>Billetes que se rellenan solos</b>
+• Al escanear una tarjeta de embarque (IATA) saca el vuelo, el origen, el destino y el día; en billetes de tren UIC (Aztec), la fecha, la hora y las estaciones que lleve el código.
+• Rellena el formulario sin guardar y te avisa de lo que ha sacado. Si el código no lleva fecha (p. ej. billetes de Renfe), pregunta si es una entrada o un billete y te pide el día y la hora.
+• «Ver contenido del código» y «Reconocer fecha» en cada tarjeta.
+
 <b>Caducidades</b>
 • Cualquier tarjeta puede tener fecha de caducidad, con avisos configurables (por defecto 30 días antes y el mismo día).
 • Distintivo «Caduca pronto» o «Caducada».

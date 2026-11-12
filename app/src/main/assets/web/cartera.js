@@ -109,6 +109,7 @@ let pendienteAbrir = null;
 let avisosOk = true;    // ¿pueden salir avisos? (si no, se enseña un aviso con un botón hacia los ajustes de Android)
 let actual = null;      // tarjeta que se está viendo
 let ed = null;          // tarjeta que se está editando (copia de trabajo)
+let edNueva = false;    // el editor es de una tarjeta nueva
 let edNumeroOrig = "";  // el número tal como estaba al abrir el editor
 
 async function cargar() {
@@ -199,7 +200,7 @@ $("#lista").addEventListener("click", async e => {
 // ---------------------------------------------------------------- ver una tarjeta
 
 const contenido = t => t.codigo || t.numero || "";
-const urlCodigo = (tipo, c) => `/cartera/img/codigo.svg?t=${encodeURIComponent(tipo)}&n=${encodeURIComponent(c)}`;
+const urlCodigo = (tipo, c, bin) => `/cartera/img/codigo.svg?t=${encodeURIComponent(tipo)}&n=${encodeURIComponent(c)}${bin ? "&b=1" : ""}`;
 const urlAdjunto = (id, f, p) => `/cartera/img/adjunto?id=${encodeURIComponent(id)}&f=${encodeURIComponent(f)}&p=${p || 0}`;
 
 function abrirVer(id) {
@@ -235,11 +236,13 @@ function pintarVer() {
   const img = $("#vimg"), err = $("#verr");
   err.hidden = true; img.hidden = false;
   img.onerror = () => { img.hidden = true; err.hidden = false; err.textContent = "No se puede dibujar el código con ese número."; };
-  if (hay) img.src = urlCodigo(t.tipo, c);
+  if (hay) img.src = urlCodigo(t.tipo, c, !!t.bruto);
   const n = $("#vnum");
   n.textContent = t.numero || "";
   n.hidden = !t.numero;
   n.classList.toggle("largo", (t.numero || "").length > 20);
+  $("#vcontenido").hidden = !c;
+  $("#vreconocer").hidden = !c;
   $("#vfav").textContent = t.favorita ? "★ Favorita" : "☆ Favorita";
 
   const info = [];
@@ -277,6 +280,16 @@ $("#vfav").onclick = async () => {
   } catch (e) { avisar(e.message); }
 };
 $("#veditar").onclick = () => abrirEditor(actual);
+$("#vcontenido").onclick = () => abrirContenido(actual);
+$("#vreconocer").onclick = async () => {
+  const t = actual;
+  try {
+    const r = await api("/cartera/reconocer", "POST", t.id);
+    if (r === "no") { avisar("No se ha reconocido ninguna fecha en este código. Usa «Ver contenido del código» para copiarlo."); return; }
+    abrirEditor(t);
+    aplicarReconocido(JSON.parse(r));
+  } catch (e) { avisar(e.message); }
+};
 $("#vinicio").onclick = () => { if (puente) puente.anadirAcceso(actual.id); else avisar("Solo funciona dentro de la app"); };
 $("#varch").onclick = async () => {
   const t = actual;
@@ -337,6 +350,8 @@ function abrirEditor(t) {
   ed.adjuntos = ed.adjuntos || [];
   ed.caducaAvisos = ed.caducaAvisos || (aj.caduca || []).slice();
   edNumeroOrig = ed.numero || "";
+  edNueva = nueva;
+  $("#eleido").hidden = true; $("#epregunta").hidden = true; $("#pcuando").hidden = true;
   $("#etitulo").textContent = nueva ? "Nueva tarjeta" : "Editar";
   $("#enombre").value = ed.nombre || "";
   $("#enumero").value = ed.numero || "";
@@ -369,13 +384,14 @@ function vistaPrevia() {
     if (!ed) return;
     const tipo = $("#etipo").value;
     const c = ed.codigo || $("#enumero").value.trim();
+    const bin = !!ed.bruto;
     const msj = $("#eprevmsj");
     if (tipo === "NINGUNO" || !c) { $("#eprev").hidden = true; msj.hidden = true; return; }
     try {
-      const r = await api("/cartera/valido", "POST", {tipo, contenido: c});
+      const r = await api("/cartera/valido", "POST", {tipo, contenido: c, bin});
       if (!ed) return;
       if (r === "ok") {
-        $("#eprevimg").src = urlCodigo(tipo, c);
+        $("#eprevimg").src = urlCodigo(tipo, c, bin);
         $("#eprev").hidden = false;
         msj.hidden = true;
       } else {
@@ -387,7 +403,7 @@ function vistaPrevia() {
 }
 
 $("#enumero").addEventListener("input", () => {
-  if ($("#enumero").value.trim() !== edNumeroOrig) ed.codigo = "";   // otro número: el código ya no lleva lo de antes
+  if ($("#enumero").value.trim() !== edNumeroOrig) { ed.codigo = ""; ed.bruto = ""; }   // otro número: el código ya no lleva lo de antes
   vistaPrevia();
 });
 $("#etipo").addEventListener("change", vistaPrevia);
@@ -420,7 +436,7 @@ async function guardar() {
   if (!nombre) { avisar("Pon un nombre"); $("#enombre").focus(); return; }
   const o = {
     id: ed.id, clase: ed.clase, nombre, numero: $("#enumero").value.trim(), tipo: $("#etipo").value,
-    codigo: ed.codigo || "", color: ed.color || "", nota: $("#enota").value, favorita: $("#efav").checked,
+    codigo: ed.codigo || "", bruto: ed.bruto || "", color: ed.color || "", nota: $("#enota").value, favorita: $("#efav").checked,
     caduca: $("#ecaduca").value || "", caducaAvisos: leerChecks($("#ecadchecks")), adjuntos: ed.adjuntos,
   };
   if (ed.clase === "entrada") {
@@ -446,6 +462,68 @@ async function guardar() {
 $("#eguardar").onclick = guardar;
 $("#eguardar2").onclick = guardar;
 $("#bnuevo").onclick = () => abrirEditor(null);
+
+// ---------------------------------------------------------------- lo que lleva el código: reconocido, pregunta rápida y contenido
+
+/** Rellena el formulario con lo que la app ha sacado del código (no se guarda hasta que la persona pulse Guardar). */
+function aplicarReconocido(r) {
+  ed.clase = "entrada";
+  pintarClase();
+  $("#efecha").value = r.evento.slice(0, 10);
+  $("#ehora").value = r.eventoHora ? r.evento.slice(11, 16) : "";
+  if (!$("#enombre").value.trim()) $("#enombre").value = r.nombre;
+  const l = $("#eleido");
+  l.textContent = "Datos sacados del código: " + r.resumen + ". Revísalos y corrígelos si hace falta.";
+  l.hidden = false;
+  $("#epregunta").hidden = true;
+}
+
+/** El código no lleva fecha: se pregunta si es una entrada o un billete, y si sí, se piden ya el día y la hora. */
+function preguntaRapida() {
+  $("#eleido").hidden = true;
+  $("#pcuando").hidden = true;
+  $("#epregunta").hidden = false;
+}
+$("#psi").onclick = () => {
+  ed.clase = "entrada";
+  pintarClase();
+  $("#pfecha").value = $("#efecha").value;
+  $("#phora").value = $("#ehora").value;
+  $("#pcuando").hidden = false;
+  $("#pfecha").focus();
+};
+$("#pno").onclick = () => { $("#epregunta").hidden = true; };
+$("#pfecha").addEventListener("input", () => { $("#efecha").value = $("#pfecha").value; });
+$("#phora").addEventListener("input", () => { $("#ehora").value = $("#phora").value; });
+
+let textoCopiable = "";
+/** El contenido del código en bruto: el texto y, si es binario, en hexadecimal con una vista previa. */
+function abrirContenido(t) {
+  const c = contenido(t);
+  let txt;
+  if (t.bruto) {
+    let b = "";
+    try { b = atob(t.bruto); } catch (e) {}
+    const filas = [];
+    for (let i = 0; i < b.length; i += 16) {
+      const tr = b.slice(i, i + 16);
+      filas.push(i.toString(16).padStart(4, "0") + "  " + Array.from(tr, ch => ch.charCodeAt(0).toString(16).padStart(2, "0")).join(" ").padEnd(47) +
+        "  " + Array.from(tr, ch => { const k = ch.charCodeAt(0); return k >= 32 && k < 127 ? ch : "·"; }).join(""));
+    }
+    txt = `Binario, ${b.length} octetos. Tipo: ${t.tipo}\n\nHEXADECIMAL\n${filas.join("\n")}\n\nBASE64\n${t.bruto}`;
+  } else txt = `Texto (${c.length} caracteres). Tipo: ${t.tipo}\n\n${c}`;
+  textoCopiable = txt;
+  $("#conttxt").textContent = textoCopiable;
+  $("#cont").hidden = false;
+}
+$("#contcerrar").onclick = () => { $("#cont").hidden = true; };
+$("#contcopiar").onclick = async () => {
+  try {
+    if (puente && puente.copiar) puente.copiar(textoCopiable);
+    else await navigator.clipboard.writeText(textoCopiable);
+    avisar("Copiado");
+  } catch (e) { avisar("No se ha podido copiar"); }
+};
 
 // ---------------------------------------------------------------- avisos desactivados
 
@@ -493,6 +571,7 @@ $("#ajimportar").onclick = () => { if (puente) puente.importar(); else avisar("S
 
 function cerrarTodo() {
   if (!$("#dlg").hidden) cerrarDlg(false);
+  $("#cont").hidden = true;
   if (!$("#editar").hidden) cerrarEditor();
   if (!$("#ajustes").hidden) cerrarAjustes();
   if (!$("#ver").hidden) cerrarVer();
@@ -511,12 +590,17 @@ window.alNativo = m => {
   if (!m) return;
   if (m.tipo === "codigo") {
     if (!ed) return;
-    ed.codigo = "";
-    $("#enumero").value = m.numero || "";
+    ed.codigo = ""; ed.bruto = "";
+    if (m.bruto) {   // código binario (billete UIC…): no cabe en el número; se guarda aparte y se dibuja desde ahí
+      ed.bruto = m.bruto; ed.codigo = m.numero || "";
+      $("#enumero").value = "";
+    } else $("#enumero").value = m.numero || "";
     edNumeroOrig = $("#enumero").value;   // viene del código: no es «otro número»
     if ((datos.formatos || []).some(f => f[0] === m.formato)) $("#etipo").value = m.formato;
     vistaPrevia();
     avisar("Código leído");
+    if (m.reconocido) aplicarReconocido(m.reconocido);
+    else if (edNueva && ed.clase !== "entrada") preguntaRapida();
   } else if (m.tipo === "adjunto") {
     if (!ed || m.tarjeta !== ed.id) return;
     ed.adjuntos.push(m.adjunto);
@@ -538,6 +622,7 @@ window.alNativo = m => {
 /** Botón atrás de Android: cierra lo último que se abrió. Devuelve true si había algo que cerrar. */
 window.atras = () => {
   if (!$("#dlg").hidden) { cerrarDlg(false); return true; }
+  if (!$("#cont").hidden) { $("#cont").hidden = true; return true; }
   if (!$("#editar").hidden) { cerrarEditor(); return true; }
   if (!$("#ajustes").hidden) { cerrarAjustes(); return true; }
   if (!$("#ver").hidden) { cerrarVer(); return true; }

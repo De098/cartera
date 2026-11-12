@@ -72,6 +72,13 @@ class MainActivity : Activity() {
         fun pedir(metodo: String, ruta: String, cuerpo: String): String =
             Rutas.pedir(this@MainActivity, metodo, ruta, cuerpo)
 
+        /** «Copiar» del contenido del código: al portapapeles. */
+        @JavascriptInterface
+        fun copiar(texto: String) = runOnUiThread {
+            val cm = getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+            cm.setPrimaryClip(android.content.ClipData.newPlainText("Código", texto))
+        }
+
         /** «Escanear»: la cámara (EscanerActivity pide el permiso en ese momento). */
         @JavascriptInterface
         fun escanear() = runOnUiThread {
@@ -310,6 +317,14 @@ class MainActivity : Activity() {
     }
 
     /** Manda un mensaje a la página (window.alNativo); si aún no ha cargado, espera. */
+    /** Un código leído para la página: el texto, el tipo, los octetos en bruto (base64, si es binario) y lo que reconoce [Billetes]. */
+    private fun mensajeCodigo(texto: String, formato: String, bytes: ByteArray?): JSONObject {
+        val o = JSONObject().put("tipo", "codigo").put("numero", texto).put("formato", formato)
+        if (bytes != null) o.put("bruto", java.util.Base64.getEncoder().encodeToString(bytes))
+        try { Tarjetas.reconocerCodigo(texto, bytes)?.let { o.put("reconocido", it) } } catch (_: Exception) {}
+        return o
+    }
+
     private fun enviar(o: JSONObject) {
         val js = "window.alNativo && alNativo($o)"
         runOnUiThread { if (lista) web.evaluateJavascript(js, null) else pendientes += js }
@@ -408,8 +423,8 @@ class MainActivity : Activity() {
         super.onActivityResult(pedido, resultado, datos)
         if (pedido == PEDIR_ESCANEAR) {
             if (resultado == RESULT_OK && datos != null) {
-                enviar(JSONObject().put("tipo", "codigo").put("numero", datos.getStringExtra("numero") ?: "")
-                    .put("formato", datos.getStringExtra("formato") ?: "NINGUNO"))
+                enviar(mensajeCodigo(datos.getStringExtra("numero") ?: "", datos.getStringExtra("formato") ?: "NINGUNO",
+                    datos.getByteArrayExtra("bruto")))
             } else datos?.getStringExtra("error")?.let { aviso(it) }
             return
         }
@@ -421,7 +436,7 @@ class MainActivity : Activity() {
                     PEDIR_GALERIA -> {
                         val r = Codigos.leerImagen(contentResolver, uri)
                         if (r == null) enviar(JSONObject().put("tipo", "aviso").put("msj", "No se ha encontrado ningún código en esa imagen"))
-                        else enviar(JSONObject().put("tipo", "codigo").put("numero", r.texto).put("formato", r.tipo))
+                        else enviar(mensajeCodigo(r.texto, r.tipo, r.bytes))
                     }
                     PEDIR_ADJUNTO -> {
                         val ficha = Adjuntos.anadir(this, tarjetaAdjunto, uri)

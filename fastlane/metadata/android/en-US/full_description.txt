@@ -15,6 +15,11 @@ Cartera keeps your membership, loyalty and library cards, tickets and boarding p
 • A reminder on the day of the event and a configurable earlier one (for example, one day before).
 • Once the event is over they are archived automatically; you can restore or delete them.
 
+<b>Tickets that fill themselves in</b>
+• Scanning an airline boarding pass (IATA) gets the flight, origin, destination and day; for UIC train tickets (Aztec), the date, time and stations the code carries.
+• It fills in the form without saving and tells you what it found. If the code has no date (e.g. Renfe tickets), it asks whether it is a ticket and then asks for the day and time.
+• "View code content" and "Recognise date" on every card.
+
 <b>Expiry dates</b>
 • Any card can have an expiry date, with configurable reminders (by default 30 days before and on the day).
 • "Expires soon" and "Expired" badges.
