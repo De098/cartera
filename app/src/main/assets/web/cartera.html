@@ -71,7 +71,7 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
   border-radius: 28px; box-shadow: 0 3px 10px rgba(0,0,0,.25); z-index: 5; }
 
 /* ventanas a pantalla completa: ver una tarjeta, editarla, ajustes */
-.capa { position: fixed; inset: 0; z-index: 10; background: var(--fondo); overflow-y: auto; -webkit-overflow-scrolling: touch;
+.capa { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 10; background: var(--fondo); overflow-y: auto; -webkit-overflow-scrolling: touch;
   padding-top: env(safe-area-inset-top); }
 .capa[hidden], [hidden] { display: none !important; }
 .capa-in { max-width: 560px; margin: 0 auto; padding: 8px 16px calc(32px + env(safe-area-inset-bottom)); }
@@ -130,7 +130,7 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
 .caja .botones2 { margin-top: 10px; }
 
 /* confirmaciones y avisos */
-.dlg { position: fixed; inset: 0; z-index: 30; background: rgba(36,31,49,.55); display: flex; align-items: center; justify-content: center; padding: 20px; }
+.dlg { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 30; background: rgba(36,31,49,.55); display: flex; align-items: center; justify-content: center; padding: 20px; }
 .dlg-caja { background: var(--tarjeta); border: 2px solid var(--borde); border-radius: 16px; padding: 18px; width: 100%; max-width: 420px; }
 .dlg-caja p { margin: 0 0 16px; font-size: 1.1rem; font-weight: 700; overflow-wrap: anywhere; }
 .dlg-bots { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
