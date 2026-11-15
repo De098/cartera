@@ -76,21 +76,21 @@ class MainActivity : Activity() {
         @JavascriptInterface
         fun copiar(texto: String) = runOnUiThread {
             val cm = getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
-            cm.setPrimaryClip(android.content.ClipData.newPlainText("Código", texto))
+            cm.setPrimaryClip(android.content.ClipData.newPlainText(getString(R.string.clip_etiqueta), texto))
         }
 
         /** «Escanear»: la cámara (EscanerActivity pide el permiso en ese momento). */
         @JavascriptInterface
         fun escanear() = runOnUiThread {
             try { startActivityForResult(Intent(this@MainActivity, EscanerActivity::class.java), PEDIR_ESCANEAR) }
-            catch (_: Exception) { aviso("No se puede abrir la cámara en este móvil") }
+            catch (_: Exception) { aviso(getString(R.string.err_camara)) }
         }
 
         /** «Desde una foto»: el selector del sistema (sin permiso de almacenamiento). */
         @JavascriptInterface
         fun galeria() = runOnUiThread {
             val i = Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*")
-            try { startActivityForResult(i, PEDIR_GALERIA) } catch (_: Exception) { aviso("No se pueden abrir fotos en este móvil") }
+            try { startActivityForResult(i, PEDIR_GALERIA) } catch (_: Exception) { aviso(getString(R.string.err_fotos)) }
         }
 
         /** «Adjuntar imagen o PDF» a la tarjeta con ese id. */
@@ -99,7 +99,7 @@ class MainActivity : Activity() {
             tarjetaAdjunto = id
             val i = Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("*/*")
                 .putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "application/pdf"))
-            try { startActivityForResult(i, PEDIR_ADJUNTO) } catch (_: Exception) { aviso("No se pueden abrir archivos en este móvil") }
+            try { startActivityForResult(i, PEDIR_ADJUNTO) } catch (_: Exception) { aviso(getString(R.string.err_archivos)) }
         }
 
         /** Con un código a la vista: brillo al máximo y pantalla sin apagarse; al cerrarlo, todo como estaba. */
@@ -115,14 +115,14 @@ class MainActivity : Activity() {
         fun exportar() = runOnUiThread {
             val i = Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
                 .setType("application/zip").putExtra(Intent.EXTRA_TITLE, Copia.nombreArchivo())
-            try { startActivityForResult(i, PEDIR_EXPORTAR) } catch (_: Exception) { aviso("No se puede guardar en este móvil") }
+            try { startActivityForResult(i, PEDIR_EXPORTAR) } catch (_: Exception) { aviso(getString(R.string.err_guardar_aqui)) }
         }
 
         /** Ajustes → importar de otras apps (Catima, Loyalty Card Keychain, Wallet, CSV): cualquier archivo; el formato se detecta por el contenido. */
         @JavascriptInterface
         fun importarOtras() = runOnUiThread {
             val i = Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("*/*")
-            try { startActivityForResult(i, PEDIR_OTRAS) } catch (_: Exception) { aviso("No se puede abrir archivos en este móvil") }
+            try { startActivityForResult(i, PEDIR_OTRAS) } catch (_: Exception) { aviso(getString(R.string.err_archivos)) }
         }
 
         /** ¿Pueden salir avisos? (permiso concedido y notificaciones de la app no desactivadas). */
@@ -138,7 +138,7 @@ class MainActivity : Activity() {
         fun ajustesAvisos() = runOnUiThread {
             val i = Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS)
                 .putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, packageName)
-            try { startActivity(i) } catch (_: Exception) { aviso("No se pueden abrir los ajustes de notificaciones") }
+            try { startActivity(i) } catch (_: Exception) { aviso(getString(R.string.err_ajustes_avisos)) }
         }
 
         /** Ajustes → recuperar una copia de Cartera (si el archivo es de otra app, también se detecta e importa). */
@@ -146,7 +146,7 @@ class MainActivity : Activity() {
         fun importar() = runOnUiThread {
             val i = Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
                 .setType("*/*").putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("application/zip", "application/x-zip-compressed", "application/octet-stream"))
-            try { startActivityForResult(i, PEDIR_IMPORTAR) } catch (_: Exception) { aviso("No se puede abrir archivos en este móvil") }
+            try { startActivityForResult(i, PEDIR_IMPORTAR) } catch (_: Exception) { aviso(getString(R.string.err_archivos)) }
         }
 
         /** Versión de la app, la que pone el build (versionName). */
@@ -297,7 +297,7 @@ class MainActivity : Activity() {
                         val n = entrada.read(trozo)
                         if (n < 0) break
                         total += n
-                        if (total > MAX_COPIA) throw ErrorUsuario("Ese archivo es demasiado grande")
+                        if (total > MAX_COPIA) throw ErrorUsuario(getString(R.string.err_archivo_grande))
                         salida.write(trozo, 0, n)
                     }
                 }
@@ -310,9 +310,9 @@ class MainActivity : Activity() {
             if (r.abrir != null) enviar(JSONObject().put("tipo", "abrir").put("id", r.abrir))
             if (r.conFechas) runOnUiThread { pedirPermisoAvisos() }
         } catch (e: ErrorUsuario) {
-            enviar(JSONObject().put("tipo", "aviso").put("msj", e.message ?: "No se ha podido"))
+            enviar(JSONObject().put("tipo", "aviso").put("msj", e.message ?: getString(R.string.err_generico)))
         } catch (_: Exception) {
-            enviar(JSONObject().put("tipo", "aviso").put("msj", "No se ha podido leer ese archivo"))
+            enviar(JSONObject().put("tipo", "aviso").put("msj", getString(R.string.err_leer_archivo)))
         } finally { tmp.delete() }
     }
 
@@ -386,14 +386,14 @@ class MainActivity : Activity() {
     private fun pedirAcceso(id: String) {
         val j = Tarjetas.leer(id) ?: return
         val sm = getSystemService(ShortcutManager::class.java)
-        if (sm == null || !sm.isRequestPinShortcutSupported) { aviso("Tu pantalla de inicio no permite añadir accesos directos"); return }
+        if (sm == null || !sm.isRequestPinShortcutSupported) { aviso(getString(R.string.err_acceso_no)); return }
         val nombre = j.optString("nombre")
         val abrir = Intent(this, MainActivity::class.java).setAction(Intent.ACTION_VIEW).putExtra(EXTRA_ID, id)
         val info = ShortcutInfo.Builder(this, "tarjeta-$id")
             .setShortLabel(nombre.take(24)).setLongLabel(nombre)
             .setIcon(Icon.createWithAdaptiveBitmap(iconoAcceso(nombre, j.optString("color"))))
             .setIntent(abrir).build()
-        try { sm.requestPinShortcut(info, null) } catch (_: Exception) { aviso("No se ha podido añadir el acceso directo") }
+        try { sm.requestPinShortcut(info, null) } catch (_: Exception) { aviso(getString(R.string.err_acceso)) }
     }
 
     /** Icono del acceso directo: una tarjeta blanca con la inicial, sobre el color de la tarjeta. */
@@ -435,7 +435,7 @@ class MainActivity : Activity() {
                 when (pedido) {
                     PEDIR_GALERIA -> {
                         val r = Codigos.leerImagen(contentResolver, uri)
-                        if (r == null) enviar(JSONObject().put("tipo", "aviso").put("msj", "No se ha encontrado ningún código en esa imagen"))
+                        if (r == null) enviar(JSONObject().put("tipo", "aviso").put("msj", getString(R.string.msj_sin_codigo)))
                         else enviar(mensajeCodigo(r.texto, r.tipo, r.bytes))
                     }
                     PEDIR_ADJUNTO -> {
@@ -444,18 +444,18 @@ class MainActivity : Activity() {
                     }
                     PEDIR_EXPORTAR -> {
                         contentResolver.openOutputStream(uri, "wt")!!.use { Copia.exportar(it) }
-                        enviar(JSONObject().put("tipo", "aviso").put("msj", "Copia guardada"))
+                        enviar(JSONObject().put("tipo", "aviso").put("msj", getString(R.string.msj_copia_guardada)))
                     }
                     PEDIR_IMPORTAR, PEDIR_OTRAS -> importarDe(uri, false)
                 }
             } catch (e: ErrorUsuario) {
-                enviar(JSONObject().put("tipo", "aviso").put("msj", e.message ?: "No se ha podido"))
+                enviar(JSONObject().put("tipo", "aviso").put("msj", e.message ?: getString(R.string.err_generico)))
             } catch (_: Exception) {
                 val msj = when (pedido) {
-                    PEDIR_EXPORTAR -> "No se ha podido guardar la copia"
-                    PEDIR_IMPORTAR, PEDIR_OTRAS -> "No se ha podido leer ese archivo"
-                    PEDIR_ADJUNTO -> "No se ha podido adjuntar ese archivo"
-                    else -> "No se ha podido leer esa imagen"
+                    PEDIR_EXPORTAR -> getString(R.string.err_guardar_copia)
+                    PEDIR_IMPORTAR, PEDIR_OTRAS -> getString(R.string.err_leer_archivo)
+                    PEDIR_ADJUNTO -> getString(R.string.err_adjuntar)
+                    else -> getString(R.string.err_leer_imagen)
                 }
                 enviar(JSONObject().put("tipo", "aviso").put("msj", msj))
             }

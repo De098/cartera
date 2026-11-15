@@ -11,7 +11,7 @@ Descarga el `.apk` de la última versión (en **Assets**) y ábrelo en el móvil
 se instala y se actualiza sola: pulsa el segundo botón desde el móvil o añade `https://github.com/De098/cartera`.
 
 - **Tarjetas con código**: nombre, número, tipo de código (QR, EAN-13, EAN-8, UPC-A, Code 128, Code 39, Aztec, PDF417,
-  Data Matrix y algunos más), color, nota y favoritas. Lista con buscador: favoritas arriba y luego las usadas hace menos.
+  Data Matrix y algunos más), color, nota y chincheta para fijar. Lista con buscador: las fijadas (📌) arriba y luego las usadas hace menos.
   Al abrir una, el código sale grande con el número debajo, el brillo al máximo y la pantalla sin apagarse; al cerrarla
   se restaura todo.
 - **Tres formas de añadir**: escanear con la cámara (el permiso se pide en ese momento), leer el código de una foto de la
@@ -29,7 +29,7 @@ se instala y se actualiza sola: pulsa el segundo botón desde el móvil o añade
   fecha» vuelve a pasar el analizador sobre una tarjeta ya guardada.
 - **Caducidades**: cualquier tarjeta puede caducar; avisos configurables (por defecto 30 días antes y el mismo día) y
   distintivos «Caduca pronto» y «Caducada».
-- **Widget de favoritas** (pulsar una abre su código) y **acceso directo** a una tarjeta en la pantalla de inicio.
+- **Widget de fijadas** (pulsar una abre su código) y **acceso directo** a una tarjeta en la pantalla de inicio.
 - **Copia de seguridad** en un `.zip` (tarjetas y adjuntos).
 - **Importar de otras apps** (Ajustes > Importar de otras apps): el formato se detecta por el contenido del archivo, no por su
   nombre. Admite **Catima** (su `.zip` con `catima.csv` y las imágenes de frente y dorso, y el `.csv` suelto de las versiones
@@ -63,7 +63,7 @@ la propia app también.
 | `TablaCsv.kt`, `Csv.kt` | lector de CSV (separador, codificación, columnas por nombre en castellano e inglés), fechas, colores y tipos de código |
 | `Catima.kt` | la copia `.zip` de Catima: `catima.csv` + imágenes de frente y dorso |
 | `Pkpass.kt` | pases de Apple Wallet (`pass.json`: nombre, código, fecha, color e imágenes; `.pkpasses` con varios) |
-| `Widgets.kt` | el widget de favoritas |
+| `Widgets.kt` | el widget de fijadas |
 | `MainActivity.kt` | el `WebView`, el puente con el sistema (cámara, galería, archivos, brillo, accesos directos, importar archivos y pases abiertos desde otras apps, permiso de avisos) |
 
 Los datos están en la carpeta privada de la app: `tarjetas/«id».json` (uno por tarjeta, con los campos que no conoce esta

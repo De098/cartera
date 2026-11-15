@@ -1,7 +1,7 @@
 Cartera keeps your membership, loyalty and library cards, tickets and boarding passes on your phone, with their code ready to show: no account, no server and no internet permission. Your data never leaves the device. The app is in Spanish.
 
 <b>Cards with a code</b>
-• Name, number, colour, note and favourites. A searchable list: favourites first, then the ones you use most.
+• Name, number, colour, note and pin-to-top. A searchable list: pinned cards first, then the ones you use most.
 • QR, EAN-13, EAN-8, UPC-A, Code 128, Code 39, Aztec, PDF417 and Data Matrix codes.
 • Opening a card shows a big code with the number below, full screen brightness and the screen kept on. Closing it restores everything.
 
@@ -25,7 +25,7 @@ Cartera keeps your membership, loyalty and library cards, tickets and boarding p
 • "Expires soon" and "Expired" badges.
 
 <b>Also</b>
-• Favourites widget: tap one and its code opens.
+• Pinned-cards widget: tap one and its code opens.
 • Home screen shortcut to a single card.
 • Backup to a .zip file.
 

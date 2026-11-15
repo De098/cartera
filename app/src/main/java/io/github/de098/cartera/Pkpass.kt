@@ -21,7 +21,10 @@ import java.util.zip.ZipInputStream
  */
 object Pkpass {
     private const val MAX_ENTRADA = 20L * 1024 * 1024
-    private val IMAGENES = listOf("strip" to "Imagen", "logo" to "Logo", "thumbnail" to "Miniatura")
+    private val IMAGENES = listOf("strip", "logo", "thumbnail")
+
+    /** Nombre que se le da a cada imagen del pase al guardarla como adjunto. */
+    private fun rotulo(base: String) = Nucleo.s(when (base) { "strip" -> R.string.img_strip; "logo" -> R.string.img_logo; else -> R.string.img_thumbnail })
 
     private fun leerTope(i: InputStream): ByteArray {
         val s = ByteArrayOutputStream()
@@ -42,7 +45,7 @@ object Pkpass {
         val n = nombre.lowercase()
         if (n.count { it == '/' } > 1) return false
         val ultimo = n.substringAfterLast('/')
-        return ultimo.endsWith(".pkpass") || ultimo == "pass.json" || IMAGENES.any { (b, _) -> ultimo == "$b.png" || ultimo == "$b@2x.png" || ultimo == "$b@3x.png" }
+        return ultimo.endsWith(".pkpass") || ultimo == "pass.json" || IMAGENES.any { b -> ultimo == "$b.png" || ultimo == "$b@2x.png" || ultimo == "$b@3x.png" }
     }
 
     fun importarZip(z: ZipFile, abrirSiUna: Boolean): Resultado {
@@ -56,7 +59,7 @@ object Pkpass {
                     try { archivos[nombre] = z.getInputStream(e).use { leerTope(it) } } catch (_: Exception) { lote.ilegibles++ }
                 }
             }
-        } catch (_: Exception) { return Resultado("Ese archivo ZIP está dañado o no se puede abrir.") }
+        } catch (_: Exception) { return Resultado(Nucleo.s(R.string.err_zip)) }
         procesar(lote, archivos, 0)
         return lote.resultado(abrirSiUna)
     }
@@ -95,7 +98,7 @@ object Pkpass {
     /** Convierte el pass.json en una ficha. «imagen» da los bytes de un archivo del pase por su nombre (o null). */
     fun aFicha(j: JSONObject, imagen: (String) -> ByteArray?): Ficha {
         val org = texto(j, "organizationName"); val desc = texto(j, "description"); val logo = texto(j, "logoText")
-        val nombre = org.ifEmpty { logo.ifEmpty { desc.ifEmpty { "Pase de Wallet" } } }
+        val nombre = org.ifEmpty { logo.ifEmpty { desc.ifEmpty { Nucleo.s(R.string.pase_wallet) } } }
 
         val tipoPase = listOf("eventTicket", "boardingPass", "coupon", "storeCard", "generic").firstOrNull { j.has(it) } ?: ""
         val codigoJ = j.optJSONArray("barcodes")?.optJSONObject(0) ?: j.optJSONObject("barcode")
@@ -112,10 +115,10 @@ object Pkpass {
         val cad = Csv.fecha(texto(j, "expirationDate"))
 
         val imgs = mutableListOf<Imagen>()
-        for ((base, rotulo) in IMAGENES) {
+        for (base in IMAGENES) {
             val n = listOf("$base.png", "$base@2x.png", "$base@3x.png").firstOrNull { imagen(it)?.isNotEmpty() == true } ?: continue
             val b = imagen(n)!!
-            imgs += Imagen(rotulo, "", "png") { ByteArrayInputStream(b) }
+            imgs += Imagen(rotulo(base), "", "png") { ByteArrayInputStream(b) }
         }
         val nota = if (desc.isNotEmpty() && desc != nombre) desc else ""
         return Ficha(nombre = nombre, numero = numero, codigo = codigo, tipo = tipo, nota = nota, color = Csv.color(texto(j, "backgroundColor")),

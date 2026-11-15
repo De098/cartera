@@ -33,9 +33,13 @@ object Nucleo {
     val ISO_MIN: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")
     val HM: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
-    /** Clave de ZXing → nombre que se enseña. «NINGUNO» = sin código: solo se enseña el número. */
-    val FORMATOS = listOf(
-        "QR_CODE" to "Código QR",
+    /** Claves de ZXing de los tipos de código, en el orden en que se enseñan. «NINGUNO» = sin código: solo se enseña el número. */
+    val CLAVES = listOf("QR_CODE", "EAN_13", "EAN_8", "UPC_A", "CODE_128", "CODE_39", "AZTEC", "PDF_417", "DATA_MATRIX", "UPC_E",
+        "ITF", "CODABAR", "CODE_93", "NINGUNO")
+
+    /** Clave de ZXing → nombre que se enseña (en el idioma del móvil: tres de ellos se traducen). */
+    val FORMATOS: List<Pair<String, String>> get() = listOf(
+        "QR_CODE" to s(R.string.fmt_qr),
         "EAN_13" to "EAN-13",
         "EAN_8" to "EAN-8",
         "UPC_A" to "UPC-A",
@@ -45,20 +49,32 @@ object Nucleo {
         "PDF_417" to "PDF417",
         "DATA_MATRIX" to "Data Matrix",
         "UPC_E" to "UPC-E",
-        "ITF" to "ITF (2 de 5 entrelazado)",
+        "ITF" to s(R.string.fmt_itf),
         "CODABAR" to "Codabar",
         "CODE_93" to "Code 93",
-        "NINGUNO" to "Sin código (solo el número)",
+        "NINGUNO" to s(R.string.fmt_ninguno),
     )
 
     lateinit var base: File
+    private lateinit var ctx: Context
+
+    /** Texto de res/values (en el idioma del móvil) con sus huecos; sirve en los object que no tienen Context. */
+    fun s(id: Int, vararg a: Any): String = ctx.getString(id, *a)
+
+    /** Texto con plural (una cosa / varias): la cantidad elige la forma y se pasa también como primer hueco salvo que se den otros. */
+    fun n(id: Int, cantidad: Int, vararg a: Any): String =
+        ctx.resources.getQuantityString(id, cantidad, *(if (a.isEmpty()) arrayOf<Any>(cantidad) else a))
 
     val tarjetas get() = File(base, "tarjetas")
     val adjuntos get() = File(base, "adjuntos")
 
     fun iniciar(c: Context) {
-        if (!::base.isInitialized) base = c.applicationContext.filesDir
+        ctx = c.applicationContext
+        if (!::base.isInitialized) base = ctx.filesDir
     }
+
+    /** Los meses abreviados en el idioma del móvil (ene… / Jan…). */
+    fun meses(): Array<String> = ctx.resources.getStringArray(R.array.meses_cortos)
 
     fun nuevoId(): String = UUID.randomUUID().toString().replace("-", "").substring(0, 16)
 

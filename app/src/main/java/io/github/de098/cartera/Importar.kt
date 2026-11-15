@@ -88,19 +88,16 @@ class Lote(var origen: String) {
         }
     }
 
-    private fun plural(n: Int, uno: String, varios: String) = if (n == 1) uno else varios
-
     fun resultado(abrirSiUna: Boolean = false): Resultado {
         if (nuevas == 0 && repetidas == 0 && omitidas == 0 && ilegibles == 0)
-            return Resultado("No he encontrado ninguna tarjeta en ese archivo.")
+            return Resultado(Nucleo.s(R.string.res_ninguna))
         val l = mutableListOf<String>()
-        l += if (nuevas == 0) "No se ha importado ninguna tarjeta nueva."
-             else "Importada${if (nuevas > 1) "s" else ""} de $origen: $nuevas ${plural(nuevas, "tarjeta", "tarjetas")}."
-        if (repetidas > 0) l += "$repetidas ${plural(repetidas, "ya estaba", "ya estaban")} (mismo nombre y número): no se ${plural(repetidas, "ha duplicado", "han duplicado")}."
-        if (sinDibujo > 0) l += "$sinDibujo ${plural(sinDibujo, "se ha importado", "se han importado")} sin dibujo del código, porque su tipo no se puede dibujar aquí: " +
-            "se ve solo el número."
-        if (omitidas > 0) l += "$omitidas ${plural(omitidas, "fila se ha saltado", "filas se han saltado")} por no tener número ni código."
-        if (ilegibles > 0) l += "$ilegibles ${plural(ilegibles, "no se ha podido guardar.", "no se han podido guardar.")}"
+        l += if (nuevas == 0) Nucleo.s(R.string.res_nada_nuevo)
+             else Nucleo.n(R.plurals.res_importadas, nuevas, origen, nuevas)
+        if (repetidas > 0) l += Nucleo.n(R.plurals.res_repetidas, repetidas)
+        if (sinDibujo > 0) l += Nucleo.n(R.plurals.res_sin_dibujo, sinDibujo)
+        if (omitidas > 0) l += Nucleo.n(R.plurals.res_omitidas, omitidas)
+        if (ilegibles > 0) l += Nucleo.n(R.plurals.res_ilegibles, ilegibles)
         val abrir = if (abrirSiUna && ids.size == 1) ids[0] else null
         return Resultado(l.joinToString("\n"), resumen = true, abrir = abrir, conFechas = conFechas)
     }
@@ -113,8 +110,6 @@ class Lote(var origen: String) {
  * Un .zip cifrado con contraseña (Catima permite exportar así) no se puede abrir sin librerías externas: se avisa.
  */
 object Importar {
-    const val CIFRADO = "Ese archivo está cifrado con contraseña (Catima permite exportar así) y Cartera no puede abrirlo. " +
-        "En Catima, vuelve a exportar la copia sin escribir contraseña y entonces impórtala aquí."
     private const val MAX_TEXTO = 50L * 1024 * 1024
 
     @Synchronized
@@ -123,13 +118,13 @@ object Importar {
         val n = f.inputStream().use { it.read(cab).coerceAtLeast(0) }
         if (n >= 4 && cab[0] == 'P'.code.toByte() && cab[1] == 'K'.code.toByte() && (cab[2].toInt() == 3 || cab[2].toInt() == 5)) return zip(f, abrirSiUna)
         if ((0 until n).any { cab[it].toInt() == 0 } && !(n >= 2 && (cab[0] == 0xFF.toByte() || cab[0] == 0xFE.toByte())))
-            return Resultado(NO_RECONOZCO)
-        if (f.length() > MAX_TEXTO) return Resultado("Ese archivo es demasiado grande para ser una lista de tarjetas.")
+            return Resultado(noReconozco())
+        if (f.length() > MAX_TEXTO) return Resultado(Nucleo.s(R.string.err_importar_enorme))
         return texto(Csv.decodificar(f.readBytes()))
     }
 
-    const val NO_RECONOZCO = "No reconozco ese archivo. Puedo importar copias de Cartera y de Catima (.zip o .csv), " +
-        "el CSV de Loyalty Card Keychain, pases de Apple Wallet (.pkpass o .pkpasses) y cualquier .csv con una fila de cabecera."
+    /** Mensaje de «archivo no reconocido» (en el idioma del móvil). */
+    fun noReconozco(): String = Nucleo.s(R.string.err_no_reconozco)
 
     private fun texto(t: String): Resultado {
         val lote = Lote("CSV")
@@ -138,8 +133,8 @@ object Importar {
     }
 
     private fun zip(f: File, abrirSiUna: Boolean): Resultado {
-        if (zipCifrado(f)) return Resultado(CIFRADO)
-        val z = try { ZipFile(f) } catch (_: Exception) { return Resultado("Ese archivo ZIP está dañado o no se puede abrir.") }
+        if (zipCifrado(f)) return Resultado(Nucleo.s(R.string.err_cifrado))
+        val z = try { ZipFile(f) } catch (_: Exception) { return Resultado(Nucleo.s(R.string.err_zip)) }
         z.use {
             val nombres = z.entries().asSequence().map { it.name }.toList()
             fun hay(fin: String) = nombres.any { it.equals(fin, ignoreCase = true) }
@@ -152,7 +147,7 @@ object Importar {
                     val e = z.entries().asSequence().first { it.name.endsWith(".csv", true) }
                     texto(Csv.decodificar(z.getInputStream(e).readBytes()))
                 }
-                else -> Resultado(NO_RECONOZCO)
+                else -> Resultado(noReconozco())
             }
         }
     }

@@ -16,7 +16,7 @@ object Catima {
 
     fun importar(z: ZipFile): Resultado {
         val csv = z.entries().asSequence().firstOrNull { it.name.equals("catima.csv", ignoreCase = true) }
-            ?: return Resultado("Esa copia de Catima no trae catima.csv")
+            ?: return Resultado(Nucleo.s(R.string.err_catima_sin_csv))
         val texto = Csv.decodificar(z.getInputStream(csv).readBytes())
 
         // imágenes por tarjeta de Catima: id → [(frente|back, entrada)]
@@ -29,10 +29,10 @@ object Catima {
         val error = TablaCsv.importar(lote, texto) { id ->
             imagenes[id].orEmpty().map { (lado, e) ->
                 val ext = e.name.substringAfterLast('.').lowercase().let { if (it == "jpeg") "jpg" else it }
-                Imagen(if (lado == "front") "Frente" else "Dorso", if (lado == "front") "frente" else "dorso", ext) { z.getInputStream(e) }
+                Imagen(Nucleo.s(if (lado == "front") R.string.img_frente else R.string.img_dorso), if (lado == "front") "frente" else "dorso", ext) { z.getInputStream(e) }
             }
         }
-        return if (error != null) Resultado(if (error.startsWith("No he reconocido")) "No se ha encontrado ninguna tarjeta en esa copia de Catima" else error)
+        return if (error != null) Resultado(if (error == TablaCsv.errColumnas()) Nucleo.s(R.string.err_catima_vacia) else error)
         else lote.resultado()
     }
 }

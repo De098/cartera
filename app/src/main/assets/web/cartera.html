@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Cartera</title>
+<title data-t="app">Cartera</title>
 <meta name="theme-color" content="#f6f5f4">
 <script src="/cartera/local.js"></script>
+<script src="/cartera/textos.js"></script>
 <link rel="preload" href="/cartera/nunito.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* fuente Nunito (SIL Open Font License 1.1, ver web/nunito-LICENCIA.txt), guardada aquí: sin internet ni Google */
@@ -13,8 +14,8 @@
 /* Siempre tema claro: fondo claro y letra oscura (buen contraste a propósito, no hay tema oscuro) */
 :root {
   color-scheme: light;
-  --fondo: #f6f5f4; --tarjeta: #ffffff; --texto: #241f31; --suave: #5f5a68; --linea: #d9d6de;
-  --acento: #1c71d8; --acento-texto: #ffffff; --rojo: #b0161f; --verde: #1b6e46; --sel: #e6effb;
+  --fondo: #f6f5f4; --tarjeta: #ffffff; --texto: #241f31; --suave: #6f6a78; --linea: #e3e1e6;
+  --acento: #3584e4; --acento-texto: #ffffff; --rojo: #c01c28; --verde: #26a269; --sel: #e6effb;
   --ambar-fondo: #fff1d6; --ambar-texto: #7a4a00; --rojo-fondo: #fde4e4;
   --borde: #78858f;   /* contorno, como el del icono de la app */
 }
@@ -35,6 +36,9 @@ button.icono { width: 48px; padding: 0; font-size: 1.5rem; }
 input[type=text], input[type=search], input[type=date], input[type=time], select, textarea {
   width: 100%; min-height: 48px; padding: 8px 12px; background: var(--tarjeta); border: 2px solid var(--borde); border-radius: 12px; }
 textarea { min-height: 88px; resize: vertical; }
+/* la lupa dentro del buscador, la misma que en Notas de Recordatorios (ICO.lupa) */
+input#buscar { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cline x1='29' y1='29' x2='39' y2='39' stroke='%2378858F' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='21' cy='21' r='11' fill='%23FFFFFF' stroke='%2378858F' stroke-width='3.4'/%3E%3Cpath d='M15.5,19 a6,6 0 0 1 5,-4.5' fill='none' stroke='%2381D4FA' stroke-width='2.8' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: 11px center; background-size: 22px 22px; padding-left: 42px; }
 input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); outline-offset: 1px; }
 .suave { color: var(--suave); }
 
@@ -49,9 +53,25 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
 .seg button.on { background: var(--acento); color: var(--acento-texto); border-color: var(--acento); }
 
 /* lista */
-.fila { display: flex; align-items: stretch; background: var(--tarjeta); border: 2px solid var(--borde); border-radius: 14px;
-  margin-bottom: 10px; overflow: hidden; cursor: pointer; }
-.fila:active { background: var(--sel); }
+.fila { position: relative; margin-bottom: 10px; }
+.fila.hueco { margin-bottom: 30px; }
+.fila-in { background: var(--tarjeta); border: 2px solid var(--borde); border-radius: 14px; overflow: hidden; }
+.fila-fila { display: flex; align-items: stretch; cursor: pointer; }
+.fila-fila:active { background: var(--sel); }
+.fila.fijada .flecha { margin-right: 22px; }
+.chincheta-op { width: 27px; height: 27px; display: block; }
+.chincheta { position: absolute; top: -10px; right: -6px; width: 30px; height: 30px; transform: rotate(25deg); pointer-events: none; }
+.flecha { flex: none; align-self: center; width: 46px; min-height: 46px; margin-right: 6px; padding: 0; font-size: 1.3rem; line-height: 1; }
+.flecha { transition: transform .2s; }
+.fila.abierta .flecha { transform: rotate(180deg); }
+.opciones { display: none; border-top: 2px solid var(--borde); padding: 8px; }
+.fila.abierta .opciones { display: block; }
+.opciones button { display: flex; align-items: center; width: 100%; text-align: left; margin-bottom: 6px; min-height: 46px; }
+.opciones button:last-child { margin-bottom: 0; }
+.opciones .ic { flex: none; width: 34px; display: flex; align-items: center; justify-content: center; margin-right: 6px; }
+.ic-svg { width: 27px; height: 27px; display: block; }
+#bajustes .ic-svg { width: 30px; height: 30px; margin: 0 auto; }
+.opciones hr { border: 0; border-top: 2px solid var(--borde); opacity: .35; margin: 8px 0; }
 .banda { flex: none; width: 12px; }
 .cuerpo { flex: 1; min-width: 0; padding: 10px 12px; }
 .nombre { font-weight: 800; font-size: 1.1rem; overflow-wrap: anywhere; }
@@ -61,8 +81,6 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
   background: var(--sel); color: var(--texto); border: 1.5px solid var(--borde); }
 .ins.pronto { background: var(--ambar-fondo); color: var(--ambar-texto); border-color: var(--ambar-texto); }
 .ins.mal { background: var(--rojo-fondo); color: var(--rojo); border-color: var(--rojo); }
-.estrella { flex: none; align-self: center; width: 52px; min-height: 52px; margin-right: 6px; border: 0; background: none;
-  font-size: 1.7rem; color: var(--texto); padding: 0; }
 .fila .acc { flex: none; display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 8px; }
 .fila .acc button { min-height: 40px; font-size: .9rem; }
 .vacio { text-align: center; color: var(--suave); margin: 40px 12px; }
@@ -94,7 +112,6 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
 .adj figure { margin: 0 0 12px; }
 .adj img { display: block; width: 100%; height: auto; border: 2px solid var(--borde); border-radius: 12px; background: #fff; }
 .adj figcaption { color: var(--suave); font-size: .9rem; margin-top: 2px; }
-.acciones { display: grid; gap: 10px; margin-top: 16px; }
 
 /* formulario */
 .campo { margin-bottom: 16px; }
@@ -149,46 +166,37 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
 <main id="inicio">
   <header class="cab">
     <img class="logo" src="/cartera/logo.svg" alt="">
-    <h1>Cartera</h1>
-    <button id="bajustes" class="icono" aria-label="Ajustes">⚙</button>
+    <h1 data-t="app">Cartera</h1>
+    <button id="bajustes" class="icono" data-t-aria="ajustes" aria-label="Ajustes">⚙</button>
   </header>
-  <input id="buscar" type="search" placeholder="Buscar por nombre, número o nota" autocomplete="off">
+  <input id="buscar" type="search" data-t-placeholder="buscar_ph" placeholder="Buscar por nombre, número o nota" autocomplete="off">
   <nav class="seg" id="seg">
-    <button data-s="todo" class="on">Todo</button>
-    <button data-s="tarjeta">Tarjetas</button>
-    <button data-s="entrada">Entradas</button>
-    <button data-s="arch">Archivadas</button>
+    <button data-t="s_todo" data-s="todo" class="on">Todo</button>
+    <button data-t="s_tarjetas" data-s="tarjeta">Tarjetas</button>
+    <button data-t="s_entradas" data-s="entrada">Entradas</button>
+    <button data-t="s_arch" data-s="arch">Archivadas</button>
   </nav>
   <div id="lista"></div>
   <p id="vacio" class="vacio" hidden></p>
 </main>
-<button id="bnuevo" class="flotante">＋ Añadir</button>
+<button id="bnuevo" class="flotante" data-t="anadir">＋ Añadir</button>
 
 <!-- ver una tarjeta: el código grande -->
 <section id="ver" class="capa" hidden>
   <div class="capa-in">
     <div class="barra">
-      <button id="vvolver" class="txt">‹ Volver</button>
+      <button id="vvolver" class="txt" data-t="volver">‹ Volver</button>
       <span class="grande"></span>
-      <button id="vfav" class="txt"></button>
     </div>
     <div id="vcab" class="cabcolor"><h2 id="vnombre"></h2><p id="vtipo"></p></div>
-    <div id="vcodigo" class="codigo"><img id="vimg" alt="Código"><p id="verr" hidden></p></div>
+    <div id="vcodigo" class="codigo"><img id="vimg" data-t-alt="cod_alt" alt="Código"><p id="verr" hidden></p></div>
     <p id="vnum" class="numero"></p>
     <div id="vinfo" class="info" hidden></div>
     <div id="vavisos" class="aviso-permiso" hidden>
-      <p>Los avisos están desactivados: actívalos en los ajustes de Android para que esta tarjeta te avise.</p>
-      <button class="bavisos">Abrir ajustes de notificaciones</button>
+      <p data-t="avisos_off_tarjeta">Los avisos están desactivados: actívalos en los ajustes de Android para que esta tarjeta te avise.</p>
+      <button class="bavisos" data-t="abrir_ajustes_avisos">Abrir ajustes de notificaciones</button>
     </div>
     <div id="vadj" class="adj"></div>
-    <div class="acciones">
-      <button id="veditar">Editar</button>
-      <button id="vcontenido">Ver contenido del código</button>
-      <button id="vreconocer">Reconocer fecha</button>
-      <button id="vinicio">Añadir a la pantalla de inicio</button>
-      <button id="varch">Archivar</button>
-      <button id="vborrar" class="peligro">Borrar</button>
-    </div>
   </div>
 </section>
 
@@ -196,85 +204,85 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
 <section id="editar" class="capa" hidden>
   <div class="capa-in">
     <div class="barra">
-      <button id="ecancelar" class="txt">‹ Cancelar</button>
-      <h2 id="etitulo">Nueva tarjeta</h2>
-      <button id="eguardar" class="primario">Guardar</button>
+      <button id="ecancelar" class="txt" data-t="cancelar_atras">‹ Cancelar</button>
+      <h2 id="etitulo" data-t="nueva_tarjeta">Nueva tarjeta</h2>
+      <button id="eguardar" class="primario" data-t="guardar">Guardar</button>
     </div>
     <p id="eleido" class="leido" hidden></p>
     <div id="epregunta" class="pregunta" hidden>
-      <p>¿Es una entrada o un billete?</p>
+      <p data-t="p_pregunta">¿Es una entrada o un billete?</p>
       <div class="botones2">
-        <button type="button" id="psi" class="primario">Sí</button>
-        <button type="button" id="pno">No, es una tarjeta</button>
+        <button type="button" id="psi" class="primario" data-t="p_si">Sí</button>
+        <button type="button" id="pno" data-t="p_no">No, es una tarjeta</button>
       </div>
       <div id="pcuando" hidden>
-        <p class="suave" style="margin:10px 0 4px">¿Cuándo es? (se avisa ese día)</p>
+        <p class="suave" data-t="p_cuando" style="margin:10px 0 4px">¿Cuándo es? (se avisa ese día)</p>
         <div class="dos">
-          <div><label for="pfecha" class="suave" style="font-weight:600">Día</label><input id="pfecha" type="date"></div>
-          <div><label for="phora" class="suave" style="font-weight:600">Hora (opcional)</label><input id="phora" type="time"></div>
+          <div><label for="pfecha" class="suave" data-t="dia" style="font-weight:600">Día</label><input id="pfecha" type="date"></div>
+          <div><label for="phora" class="suave" data-t="hora_op" style="font-weight:600">Hora (opcional)</label><input id="phora" type="time"></div>
         </div>
       </div>
     </div>
     <div class="campo">
-      <span class="rotulo">¿Qué es?</span>
+      <span class="rotulo" data-t="que_es">¿Qué es?</span>
       <div class="seg" id="eclase" style="margin-top:4px">
-        <button data-c="tarjeta">Tarjeta</button>
-        <button data-c="entrada">Entrada o billete</button>
+        <button data-c="tarjeta" data-t="tarjeta">Tarjeta</button>
+        <button data-c="entrada" data-t="entrada">Entrada o billete</button>
       </div>
     </div>
     <div class="campo">
-      <label for="enombre">Nombre</label>
-      <input id="enombre" type="text" maxlength="80" placeholder="Supermercado, biblioteca, concierto…" autocomplete="off">
+      <label for="enombre" data-t="nombre">Nombre</label>
+      <input id="enombre" type="text" maxlength="80" data-t-placeholder="nombre_ph" placeholder="Supermercado, biblioteca, concierto…" autocomplete="off">
     </div>
     <div class="campo">
-      <span class="rotulo">Código</span>
+      <span class="rotulo" data-t="codigo">Código</span>
       <div class="botones2">
-        <button id="escanear">Escanear con la cámara</button>
-        <button id="egaleria">Leer de una foto</button>
+        <button id="escanear" data-t="escanear">Escanear con la cámara</button>
+        <button id="egaleria" data-t="de_foto">Leer de una foto</button>
       </div>
-      <label for="enumero" class="suave" style="font-weight:600">Número (o texto) del código</label>
+      <label for="enumero" class="suave" data-t="numero_codigo" style="font-weight:600">Número (o texto) del código</label>
       <input id="enumero" type="text" autocomplete="off" autocapitalize="off">
-      <label for="etipo" class="suave" style="font-weight:600;margin-top:8px;display:block">Tipo de código</label>
+      <label for="etipo" class="suave" data-t="tipo_codigo" style="font-weight:600;margin-top:8px;display:block">Tipo de código</label>
       <select id="etipo"></select>
       <div id="eprev" class="prev" hidden>
-        <div class="codigo"><img id="eprevimg" alt="Vista previa del código"></div>
+        <div class="codigo"><img id="eprevimg" data-t-alt="prev_alt" alt="Vista previa del código"></div>
       </div>
       <p id="eprevmsj" class="msj-ok" hidden></p>
     </div>
     <div id="eevento" class="campo" hidden>
-      <span class="rotulo">Cuándo es</span>
+      <span class="rotulo" data-t="cuando_es">Cuándo es</span>
       <div class="dos">
-        <div><label for="efecha" class="suave" style="font-weight:600">Día</label><input id="efecha" type="date"></div>
-        <div><label for="ehora" class="suave" style="font-weight:600">Hora (opcional)</label><input id="ehora" type="time"></div>
+        <div><label for="efecha" class="suave" data-t="dia" style="font-weight:600">Día</label><input id="efecha" type="date"></div>
+        <div><label for="ehora" class="suave" data-t="hora_op" style="font-weight:600">Hora (opcional)</label><input id="ehora" type="time"></div>
       </div>
-      <label for="eprevio" class="suave" style="font-weight:600;margin-top:8px;display:block">Aviso previo (además del aviso del propio día)</label>
+      <label for="eprevio" class="suave" data-t="previo_label" style="font-weight:600;margin-top:8px;display:block">Aviso previo (además del aviso del propio día)</label>
       <select id="eprevio"></select>
     </div>
     <div class="campo">
-      <span class="rotulo">Color</span>
+      <span class="rotulo" data-t="color">Color</span>
       <div id="ecolores" class="colores"></div>
     </div>
     <div class="campo">
-      <label for="enota">Nota</label>
+      <label for="enota" data-t="nota">Nota</label>
       <textarea id="enota" maxlength="2000"></textarea>
     </div>
     <div class="campo">
-      <label class="check"><input type="checkbox" id="efav"> Favorita (sale arriba y en el widget)</label>
+      <label class="check"><input type="checkbox" id="efav"> <span data-t="favorita_check">Fijar arriba (también sale en el widget)</span></label>
     </div>
     <div class="campo">
-      <label for="ecaduca">Caduca el (opcional)</label>
+      <label for="ecaduca" data-t="caduca_el">Caduca el (opcional)</label>
       <input id="ecaduca" type="date">
       <div id="ecadavisos" hidden>
-        <p class="suave" style="margin:8px 0 0">Avisarme:</p>
+        <p class="suave" data-t="avisarme" style="margin:8px 0 0">Avisarme:</p>
         <div id="ecadchecks" class="checks"></div>
       </div>
     </div>
     <div class="campo">
-      <span class="rotulo">Adjuntos (imagen o PDF)</span>
+      <span class="rotulo" data-t="adjuntos">Adjuntos (imagen o PDF)</span>
       <div id="eadj"></div>
-      <button id="eadjuntar">Adjuntar imagen o PDF</button>
+      <button id="eadjuntar" data-t="adjuntar">Adjuntar imagen o PDF</button>
     </div>
-    <button id="eguardar2" class="primario" style="width:100%">Guardar</button>
+    <button id="eguardar2" class="primario" data-t="guardar" style="width:100%">Guardar</button>
   </div>
 </section>
 
@@ -282,42 +290,42 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
 <section id="ajustes" class="capa" hidden>
   <div class="capa-in">
     <div class="barra">
-      <button id="ajvolver" class="txt">‹ Volver</button>
-      <h2>Ajustes</h2>
+      <button id="ajvolver" class="txt" data-t="volver">‹ Volver</button>
+      <h2 data-t="ajustes">Ajustes</h2>
       <span style="width:80px"></span>
     </div>
     <div class="caja">
-      <h3>Avisos</h3>
+      <h3 data-t="aj_avisos">Avisos</h3>
       <div id="ajavisosmal" class="aviso-permiso" hidden>
-        <p>Los avisos están desactivados: actívalos en los ajustes de Android.</p>
-        <button class="bavisos">Abrir ajustes de notificaciones</button>
+        <p data-t="avisos_off">Los avisos están desactivados: actívalos en los ajustes de Android.</p>
+        <button class="bavisos" data-t="abrir_ajustes_avisos">Abrir ajustes de notificaciones</button>
       </div>
-      <p class="suave">Las entradas avisan el día del evento y, si quieres, unos días antes. Las caducidades avisan los días que elijas.</p>
-      <label for="ajhora" style="font-weight:800">Hora de los avisos</label>
+      <p class="suave" data-t="aj_avisos_info">Las entradas avisan el día del evento y, si quieres, unos días antes. Las caducidades avisan los días que elijas.</p>
+      <label for="ajhora" data-t="aj_hora" style="font-weight:800">Hora de los avisos</label>
       <input id="ajhora" type="time">
-      <label for="ajprevio" style="font-weight:800;margin-top:10px;display:block">Aviso previo de las entradas nuevas</label>
+      <label for="ajprevio" data-t="aj_previo" style="font-weight:800;margin-top:10px;display:block">Aviso previo de las entradas nuevas</label>
       <select id="ajprevio"></select>
-      <p style="margin-top:12px;font-weight:800">Avisos de caducidad de las tarjetas nuevas</p>
+      <p data-t="aj_cad" style="margin-top:12px;font-weight:800">Avisos de caducidad de las tarjetas nuevas</p>
       <div id="ajcad" class="checks"></div>
     </div>
     <div class="caja">
-      <h3>Importar de otras apps</h3>
-      <p>Trae tus tarjetas de otra app. El formato se reconoce solo, mirando el archivo por dentro.</p>
-      <button id="ajotras" class="primario" style="width:100%">Importar…</button>
-      <p class="suave">Se puede importar de Catima (su copia .zip o .csv, sin contraseña), Loyalty Card Keychain, pases de Apple Wallet (.pkpass) y cualquier archivo .csv con una fila de cabecera.</p>
+      <h3 data-t="aj_importar_t">Importar de otras apps</h3>
+      <p data-t="aj_importar_p">Trae tus tarjetas de otra app. El formato se reconoce solo, mirando el archivo por dentro.</p>
+      <button id="ajotras" class="primario" data-t="aj_importar_b" style="width:100%">Importar…</button>
+      <p class="suave" data-t="aj_importar_info">Se puede importar de Catima (su copia .zip o .csv, sin contraseña), Loyalty Card Keychain, pases de Apple Wallet (.pkpass) y cualquier archivo .csv con una fila de cabecera.</p>
     </div>
     <div class="caja">
-      <h3>Copia de seguridad</h3>
-      <p>Guarda todo (tarjetas, entradas y sus adjuntos) en un archivo .zip, o recupéralo. Al recuperar no se borra nada.</p>
+      <h3 data-t="aj_copia_t">Copia de seguridad</h3>
+      <p data-t="aj_copia_p">Guarda todo (tarjetas, entradas y sus adjuntos) en un archivo .zip, o recupéralo. Al recuperar no se borra nada.</p>
       <div class="botones2">
-        <button id="ajexportar">Guardar copia</button>
-        <button id="ajimportar">Recuperar copia</button>
+        <button id="ajexportar" data-t="aj_guardar_copia">Guardar copia</button>
+        <button id="ajimportar" data-t="aj_recuperar_copia">Recuperar copia</button>
       </div>
     </div>
     <div class="caja">
-      <h3>Acerca de</h3>
-      <p>Cartera <span id="ajversion"></span>. Todo se queda en este móvil: la app no tiene permiso de internet.</p>
-      <p class="suave">Software libre (GPL-3.0). Los códigos se dibujan y se leen con ZXing (Apache 2.0). Tipografía Nunito (SIL OFL 1.1).</p>
+      <h3 data-t="aj_acerca_t">Acerca de</h3>
+      <p><span data-t="app">Cartera</span> <span id="ajversion"></span>. <span data-t="aj_acerca_p">Todo se queda en este móvil: la app no tiene permiso de internet.</span></p>
+      <p class="suave" data-t="aj_licencias">Software libre (GPL-3.0). Los códigos se dibujan y se leen con ZXing (Apache 2.0). Tipografía Nunito (SIL OFL 1.1).</p>
     </div>
   </div>
 </section>
@@ -325,14 +333,14 @@ input:focus, select:focus, textarea:focus { outline: 3px solid var(--acento); ou
 <div id="dlg" class="dlg" hidden>
   <div class="dlg-caja">
     <p id="dlgtxt"></p>
-    <div class="dlg-bots" id="dlgbots"><button id="dlgno">Cancelar</button><button id="dlgsi" class="primario peligro">Borrar</button></div>
+    <div class="dlg-bots" id="dlgbots"><button id="dlgno" data-t="cancelar">Cancelar</button><button id="dlgsi" class="primario peligro" data-t="borrar">Borrar</button></div>
   </div>
 </div>
 <div id="cont" class="dlg" hidden>
   <div class="dlg-caja">
-    <p id="conttit">Contenido del código</p>
+    <p id="conttit" data-t="cont_titulo">Contenido del código</p>
     <pre id="conttxt" class="contenido"></pre>
-    <div class="dlg-bots"><button id="contcopiar" class="primario">Copiar</button><button id="contcerrar">Cerrar</button></div>
+    <div class="dlg-bots"><button id="contcopiar" class="primario" data-t="copiar">Copiar</button><button id="contcerrar" data-t="cerrar">Cerrar</button></div>
   </div>
 </div>
 <div id="toast" class="toast" hidden></div>

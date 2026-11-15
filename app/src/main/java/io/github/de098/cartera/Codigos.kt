@@ -24,9 +24,9 @@ import com.google.zxing.common.HybridBinarizer
  */
 object Codigos {
     /** Los formatos que se pueden dibujar (todos menos «NINGUNO»), por su clave. */
-    private val FORMATOS: Map<String, BarcodeFormat> = Nucleo.FORMATOS
-        .filter { it.first != "NINGUNO" }
-        .associate { it.first to BarcodeFormat.valueOf(it.first) }
+    private val FORMATOS: Map<String, BarcodeFormat> = Nucleo.CLAVES
+        .filter { it != "NINGUNO" }
+        .associate { it to BarcodeFormat.valueOf(it) }
 
     /** Códigos de una sola fila de barras: se dibujan estirando la fila hacia abajo. */
     private val UNIDIMENSIONALES = setOf(
@@ -40,37 +40,37 @@ object Codigos {
     fun claveDe(f: BarcodeFormat?): String = if (f != null && FORMATOS.containsKey(f.name)) f.name else "NINGUNO"
 
     private fun ayuda(clave: String): String = when (clave) {
-        "EAN_13" -> "El EAN-13 lleva 13 cifras (o 12 y se calcula la última)."
-        "EAN_8" -> "El EAN-8 lleva 8 cifras (o 7 y se calcula la última)."
-        "UPC_A" -> "El UPC-A lleva 12 cifras (o 11 y se calcula la última)."
-        "UPC_E" -> "El UPC-E lleva 8 cifras (empieza por 0 o 1) o 7."
-        "ITF" -> "El ITF lleva solo cifras y en cantidad par."
-        "CODE_39" -> "El Code 39 admite letras MAYÚSCULAS, cifras y - . \$ / + % y espacio."
-        "CODABAR" -> "El Codabar lleva cifras y una letra A-D al principio y al final."
-        "CODE_128" -> "El Code 128 admite letras, cifras y signos sin tildes."
-        "DATA_MATRIX", "AZTEC", "PDF_417", "QR_CODE" -> "Ese texto no se puede escribir en ese tipo de código."
-        else -> "Ese número no vale para ese tipo de código."
+        "EAN_13" -> Nucleo.s(R.string.ayuda_ean13)
+        "EAN_8" -> Nucleo.s(R.string.ayuda_ean8)
+        "UPC_A" -> Nucleo.s(R.string.ayuda_upca)
+        "UPC_E" -> Nucleo.s(R.string.ayuda_upce)
+        "ITF" -> Nucleo.s(R.string.ayuda_itf)
+        "CODE_39" -> Nucleo.s(R.string.ayuda_code39)
+        "CODABAR" -> Nucleo.s(R.string.ayuda_codabar)
+        "CODE_128" -> Nucleo.s(R.string.ayuda_code128)
+        "DATA_MATRIX", "AZTEC", "PDF_417", "QR_CODE" -> Nucleo.s(R.string.ayuda_texto)
+        else -> Nucleo.s(R.string.ayuda_otro)
     }
 
-    /** null si el número se puede dibujar con ese tipo; si no, por qué no (en castellano). */
+    /** null si el número se puede dibujar con ese tipo; si no, por qué no (en el idioma del móvil). */
     fun validar(clave: String, contenido: String, bin: Boolean = false): String? {
-        if (contenido.isEmpty()) return "Falta el número"
-        return try { matriz(clave, contenido, bin); null } catch (_: Exception) { "Ese número no vale para ${nombre(clave)}. ${ayuda(clave)}" }
+        if (contenido.isEmpty()) return Nucleo.s(R.string.err_falta_numero)
+        return try { matriz(clave, contenido, bin); null } catch (_: Exception) { Nucleo.s(R.string.err_no_vale, nombre(clave), ayuda(clave)) }
     }
 
     private fun nombre(clave: String) = Nucleo.FORMATOS.firstOrNull { it.first == clave }?.second ?: clave
 
     /** `bin`: el contenido es binario (cada carácter es un octeto, como lo da la lectura): se dibuja en ISO-8859-1 y no en UTF-8. */
     private fun matriz(clave: String, contenido: String, bin: Boolean = false): BitMatrix {
-        val f = FORMATOS[clave] ?: throw ErrorUsuario("Tipo de código desconocido")
+        val f = FORMATOS[clave] ?: throw ErrorUsuario(Nucleo.s(R.string.err_tipo_desconocido))
         val pistas = mapOf<EncodeHintType, Any>(EncodeHintType.MARGIN to 0, EncodeHintType.CHARACTER_SET to (if (bin) "ISO-8859-1" else "UTF-8"))
         return MultiFormatWriter().encode(contenido, f, 0, 0, pistas)
     }
 
     /** El código dibujado como SVG (negro sobre blanco, con su margen en blanco). Lanza si no se puede. */
     fun svg(clave: String, contenido: String, bin: Boolean = false): String {
-        val f = FORMATOS[clave] ?: throw ErrorUsuario("Tipo de código desconocido")
-        val m = try { matriz(clave, contenido, bin) } catch (e: Exception) { throw ErrorUsuario("No se puede dibujar ese código") }
+        val f = FORMATOS[clave] ?: throw ErrorUsuario(Nucleo.s(R.string.err_tipo_desconocido))
+        val m = try { matriz(clave, contenido, bin) } catch (e: Exception) { throw ErrorUsuario(Nucleo.s(R.string.err_no_dibujar)) }
         val w = m.width
         val unidim = f in UNIDIMENSIONALES
         val alto = if (unidim) maxOf(30, (w * 0.4).toInt()) else m.height

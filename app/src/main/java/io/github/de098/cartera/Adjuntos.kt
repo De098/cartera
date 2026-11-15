@@ -40,7 +40,7 @@ object Adjuntos {
                     val n = entrada.read(trozo)
                     if (n < 0) break
                     total += n
-                    if (total > MAX_BYTES) throw ErrorUsuario("Ese archivo es demasiado grande (máximo 40 MB)")
+                    if (total > MAX_BYTES) throw ErrorUsuario(Nucleo.s(R.string.err_adj_grande))
                     s.write(trozo, 0, n)
                 }
             }
@@ -49,7 +49,7 @@ object Adjuntos {
 
     /** Copia el archivo elegido con el selector del sistema a los adjuntos de la tarjeta y devuelve su ficha. */
     fun anadir(c: Context, id: String, uri: Uri): JSONObject {
-        if (!Nucleo.ID.matches(id)) throw ErrorUsuario("Tarjeta no válida")
+        if (!Nucleo.ID.matches(id)) throw ErrorUsuario(Nucleo.s(R.string.err_tarjeta_invalida))
         val cr = c.contentResolver
         val mime = cr.getType(uri) ?: ""
         var nombre = ""
@@ -64,14 +64,14 @@ object Adjuntos {
         val esPdf = mime == "application/pdf" || (mime.isEmpty() && nombre.lowercase().endsWith(".pdf"))
         if (esPdf) {
             val f = File(dir, "$clave.pdf")
-            (cr.openInputStream(uri) ?: throw ErrorUsuario("No se puede leer ese archivo")).use { copiar(it, f) }
-            val paginas = try { paginas(f) } catch (_: Exception) { f.delete(); throw ErrorUsuario("No se puede abrir ese PDF") }
+            (cr.openInputStream(uri) ?: throw ErrorUsuario(Nucleo.s(R.string.err_no_se_lee))).use { copiar(it, f) }
+            val paginas = try { paginas(f) } catch (_: Exception) { f.delete(); throw ErrorUsuario(Nucleo.s(R.string.err_pdf)) }
             ficha.put("f", f.name).put("tipo", "pdf").put("paginas", paginas)
         } else {
             val ext = when (mime) { "image/png" -> "png"; "image/jpeg" -> "jpg"; "image/webp" -> "webp"; "image/gif" -> "gif"; else -> "" }
             if (ext.isNotEmpty()) {
                 val f = File(dir, "$clave.$ext")
-                (cr.openInputStream(uri) ?: throw ErrorUsuario("No se puede leer ese archivo")).use { copiar(it, f) }
+                (cr.openInputStream(uri) ?: throw ErrorUsuario(Nucleo.s(R.string.err_no_se_lee))).use { copiar(it, f) }
                 ficha.put("f", f.name)
             } else {
                 // otro formato de imagen (p. ej. HEIC): se convierte a JPEG para que la página lo pueda enseñar
@@ -80,7 +80,7 @@ object Adjuntos {
                 var red = 1
                 while (maxOf(medidas.outWidth, medidas.outHeight) / red > 3000) red *= 2
                 val bmp = cr.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, BitmapFactory.Options().apply { inSampleSize = red }) }
-                    ?: throw ErrorUsuario("Ese archivo no es una imagen ni un PDF")
+                    ?: throw ErrorUsuario(Nucleo.s(R.string.err_no_imagen))
                 val f = File(dir, "$clave.jpg")
                 dir.mkdirs()
                 f.outputStream().use { bmp.compress(Bitmap.CompressFormat.JPEG, 92, it) }

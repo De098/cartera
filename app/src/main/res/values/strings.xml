@@ -1,6 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nombre">Cartera</string>
-    <string name="w_nombre_favoritas">Favoritas</string>
-    <string name="w_desc_favoritas">Tus tarjetas favoritas: pulsa una y se abre su código</string>
+    <string name="nombre">Cardholder</string>
+    <string name="w_nombre_favoritas">Pinned</string>
+    <string name="w_desc_favoritas">Your pinned cards: tap one to open its code</string>
+    <string name="w_titulo">📌 Pinned</string>
+    <string name="w_vacio">Pin cards with the pushpin (📌) and they\'ll show up here</string>
+    <string name="canal_entradas">Tickets and passes</string>
+    <string name="canal_caducidad">Expiry dates</string>
+    <string name="aviso_hoy">Today</string>
+    <string name="aviso_hoy_hora">Today at %1$s. Tap to show your ticket.</string>
+    <string name="aviso_hoy_sin_hora">It\'s today. Tap to show your ticket.</string>
+    <string name="aviso_manana">Tomorrow</string>
+    <string name="aviso_texto_hora">%1$s at %2$s.</string>
+    <string name="aviso_texto_sin_hora">%1$s.</string>
+    <string name="aviso_cad_hoy">Expires today</string>
+    <string name="aviso_cad_manana">Expires tomorrow</string>
+    <string name="aviso_cad_fecha">Expiry date: %1$s.</string>
+    <string name="fmt_qr">QR code</string>
+    <string name="fmt_itf">ITF (interleaved 2 of 5)</string>
+    <string name="fmt_ninguno">No barcode (number only)</string>
+    <string name="err_falta_numero">Enter a number</string>
+    <string name="err_no_vale">That number doesn\'t work for %1$s. %2$s</string>
+    <string name="ayuda_ean13">EAN-13 takes 13 digits (or 12, and the last one is worked out for you).</string>
+    <string name="ayuda_ean8">EAN-8 takes 8 digits (or 7, and the last one is worked out for you).</string>
+    <string name="ayuda_upca">UPC-A takes 12 digits (or 11, and the last one is worked out for you).</string>
+    <string name="ayuda_upce">UPC-E takes 8 digits (starting with 0 or 1) or 7.</string>
+    <string name="ayuda_itf">ITF takes digits only, and an even number of them.</string>
+    <string name="ayuda_code39">Code 39 allows CAPITAL letters, digits, spaces and - . $ / + %%</string>
+    <string name="ayuda_codabar">Codabar takes digits, with a letter from A to D at the start and the end.</string>
+    <string name="ayuda_code128">Code 128 allows letters, digits and symbols, but no accents.</string>
+    <string name="ayuda_texto">That text can\'t be written in this type of code.</string>
+    <string name="ayuda_otro">That number isn\'t valid for this type of code.</string>
+    <string name="err_tipo_desconocido">Unknown code type</string>
+    <string name="err_no_dibujar">Can\'t draw that code</string>
+    <string name="err_adj_grande">That file is too big (40 MB maximum)</string>
+    <string name="err_tarjeta_invalida">Invalid card</string>
+    <string name="err_no_se_lee">Can\'t read that file</string>
+    <string name="err_pdf">Can\'t open that PDF</string>
+    <string name="err_no_imagen">That file isn\'t an image or a PDF</string>
+    <string name="err_copia_nueva">That backup was made by a newer version of the app. Update the app first.</string>
+    <string name="copia_vacia">There was nothing new in that backup</string>
+    <string name="msj_copia_guardada">Backup saved</string>
+    <string name="err_cifrado">That file is password-protected (Catima can export like that) and Cardholder can\'t open it. In Catima, export the backup again without a password, then import it here.</string>
+    <string name="err_no_reconozco">I don\'t recognise that file. I can import Cardholder and Catima backups (.zip or .csv), the Loyalty Card Keychain CSV, Apple Wallet passes (.pkpass or .pkpasses) and any .csv with a header row.</string>
+    <string name="err_importar_enorme">That file is too big to be a list of cards.</string>
+    <string name="err_zip">That ZIP file is damaged or can\'t be opened.</string>
+    <string name="res_ninguna">No cards found in that file.</string>
+    <string name="res_nada_nuevo">No new cards were imported.</string>
+    <string name="err_catima_sin_csv">That Catima backup doesn\'t contain catima.csv</string>
+    <string name="err_catima_vacia">No cards found in that Catima backup</string>
+    <string name="img_frente">Front</string>
+    <string name="img_dorso">Back</string>
+    <string name="img_strip">Image</string>
+    <string name="img_logo">Logo</string>
+    <string name="img_thumbnail">Thumbnail</string>
+    <string name="pase_wallet">Wallet pass</string>
+    <string name="err_csv_vacio">That file is empty.</string>
+    <string name="err_csv_columnas">Couldn\'t find a column with the card number. The first row of the file must contain the column names (for example: name, number, type, note, expiry, colour).</string>
+    <string name="tarjeta_sin_nombre">Unnamed card</string>
+    <string name="billete_vuelo">Flight %1$s %2$s → %3$s</string>
+    <string name="billete_vuelo_resumen">flight %1$s, %2$s → %3$s, %4$s (the code doesn\'t include the time)</string>
+    <string name="billete_tren">Train %1$s</string>
+    <string name="billete_tren_sin_ruta">Train ticket</string>
+    <string name="billete_tren_resumen">train %1$s, %2$s</string>
+    <string name="billete_tren_resumen_sin_ruta">train, %1$s</string>
+    <string name="billete_a_las"> at %1$s</string>
+    <string name="err_pon_nombre">Add a name</string>
+    <string name="err_pon_dia">Add the event date</string>
+    <string name="err_fecha_cad">The expiry date isn\'t valid</string>
+    <string name="clip_etiqueta">Code</string>
+    <string name="err_camara">Can\'t open the camera on this phone</string>
+    <string name="err_fotos">Can\'t open photos on this phone</string>
+    <string name="err_archivos">Can\'t open files on this phone</string>
+    <string name="err_guardar_aqui">Can\'t save on this phone</string>
+    <string name="err_ajustes_avisos">Can\'t open notification settings</string>
+    <string name="err_archivo_grande">That file is too big</string>
+    <string name="err_generico">Something went wrong</string>
+    <string name="err_leer_archivo">Couldn\'t read that file</string>
+    <string name="err_acceso_no">Your home screen doesn\'t support shortcuts</string>
+    <string name="err_acceso">Couldn\'t add the shortcut</string>
+    <string name="msj_sin_codigo">No code found in that image</string>
+    <string name="err_guardar_copia">Couldn\'t save the backup</string>
+    <string name="err_adjuntar">Couldn\'t attach that file</string>
+    <string name="err_leer_imagen">Couldn\'t read that image</string>
+    <string name="esc_pon_codigo">Put the code inside the box</string>
+    <string name="esc_linterna">Torch</string>
+    <string name="esc_cancelar">Cancel</string>
+    <string name="esc_sin_permiso">You can\'t scan without camera permission. You can read the code from a photo or type in the number instead.</string>
+    <string name="esc_sin_camara">This phone has no camera</string>
+    <string name="esc_camara_no">Can\'t use the camera</string>
+    <string name="esc_camara_fallo">Couldn\'t open the camera</string>
+    <plurals name="res_importadas">
+        <item quantity="one">Imported from %1$s: %2$d card.</item>
+        <item quantity="other">Imported from %1$s: %2$d cards.</item>
+    </plurals>
+    <plurals name="res_repetidas">
+        <item quantity="one">%d was already there (same name and number), so it wasn\'t duplicated.</item>
+        <item quantity="other">%d were already there (same name and number), so they weren\'t duplicated.</item>
+    </plurals>
+    <plurals name="res_sin_dibujo">
+        <item quantity="one">%d was imported without a drawn code, as its type can\'t be drawn here. Only the number is shown.</item>
+        <item quantity="other">%d were imported without drawn codes, as their types can\'t be drawn here. Only the numbers are shown.</item>
+    </plurals>
+    <plurals name="res_omitidas">
+        <item quantity="one">%d row was skipped because it had no number or code.</item>
+        <item quantity="other">%d rows were skipped because they had no number or code.</item>
+    </plurals>
+    <plurals name="res_ilegibles">
+        <item quantity="one">%d couldn\'t be saved.</item>
+        <item quantity="other">%d couldn\'t be saved.</item>
+    </plurals>
+    <plurals name="copia_recuperadas">
+        <item quantity="one">Restored %d card</item>
+        <item quantity="other">Restored %d cards</item>
+    </plurals>
+    <plurals name="aviso_en_dias">
+        <item quantity="one">In %d day</item>
+        <item quantity="other">In %d days</item>
+    </plurals>
+    <plurals name="aviso_cad_en">
+        <item quantity="one">Expires in %d day</item>
+        <item quantity="other">Expires in %d days</item>
+    </plurals>
+    <string-array name="meses_cortos">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dec</item>
+    </string-array>
 </resources>

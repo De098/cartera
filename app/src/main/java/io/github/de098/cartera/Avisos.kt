@@ -18,14 +18,14 @@ object Avisos {
 
     // canal → nombre visible en Ajustes de Android (se puede elegir sonido/vibración de cada uno)
     private val CANALES = linkedMapOf(
-        "entradas" to "Entradas y billetes",
-        "caducidad" to "Caducidades",
+        "entradas" to R.string.canal_entradas,
+        "caducidad" to R.string.canal_caducidad,
     )
 
     fun crearCanales(c: Context) {
         val nm = c.getSystemService(NotificationManager::class.java)
         for ((id, nombre) in CANALES)
-            nm.createNotificationChannel(NotificationChannel(id, nombre, NotificationManager.IMPORTANCE_HIGH))
+            nm.createNotificationChannel(NotificationChannel(id, c.getString(nombre), NotificationManager.IMPORTANCE_HIGH))
     }
 
     fun mostrar(c: Context, i: Intent) {

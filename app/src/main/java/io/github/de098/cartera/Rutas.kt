@@ -51,7 +51,7 @@ object Rutas {
                 else -> { estado = 404; tipo = TEXTO; texto = "no" }
             }
         } catch (e: ErrorUsuario) {
-            estado = 400; tipo = TEXTO; texto = e.message ?: "No se ha podido"
+            estado = 400; tipo = TEXTO; texto = e.message ?: Nucleo.s(R.string.err_generico)
         } catch (e: Exception) {
             estado = 500; tipo = TEXTO; texto = "Error (${e.javaClass.simpleName})"
         }

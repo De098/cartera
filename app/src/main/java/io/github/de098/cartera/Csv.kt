@@ -161,7 +161,7 @@ object Csv {
 
     private val TIPOS: Map<String, String> by lazy {
         val m = mutableMapOf<String, String>()
-        for ((k, _) in Nucleo.FORMATOS) if (k != "NINGUNO") m[k.replace("_", "")] = k
+        for (k in Nucleo.CLAVES) if (k != "NINGUNO") m[k.replace("_", "")] = k
         m["QR"] = "QR_CODE"; m["QRCODE"] = "QR_CODE"; m["CODIGOQR"] = "QR_CODE"
         m["EAN"] = "EAN_13"; m["EAN13"] = "EAN_13"; m["EAN8"] = "EAN_8"
         m["UPC"] = "UPC_A"; m["UPCA"] = "UPC_A"; m["UPCE"] = "UPC_E"

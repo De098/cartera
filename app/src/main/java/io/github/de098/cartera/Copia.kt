@@ -57,8 +57,8 @@ object Copia {
         val cab = z.getEntry("copia.json")?.let {
             try { JSONObject(z.getInputStream(it).bufferedReader(Charsets.UTF_8).readText()) } catch (_: Exception) { null }
         }
-        if (cab == null || cab.optString("app") != APP) return Resultado(Importar.NO_RECONOZCO)
-        if (cab.optInt("formato") > 1) return Resultado("Esa copia es de una versión más nueva de la app: actualízala primero")
+        if (cab == null || cab.optString("app") != APP) return Resultado(Importar.noReconozco())
+        if (cab.optInt("formato") > 1) return Resultado(Nucleo.s(R.string.err_copia_nueva))
 
         var tarjetas = 0
         var conFechas = false
@@ -81,6 +81,6 @@ object Copia {
                 if (j.optString("caduca").isNotEmpty() || j.optString("evento").isNotEmpty()) conFechas = true
             } catch (_: Exception) { /* una tarjeta mala no estropea el resto */ }
         }
-        return Resultado(if (tarjetas == 0) "La copia no tenía nada nuevo" else "Recuperado: $tarjetas tarjeta${if (tarjetas > 1) "s" else ""}", conFechas = conFechas)
+        return Resultado(if (tarjetas == 0) Nucleo.s(R.string.copia_vacia) else Nucleo.n(R.plurals.copia_recuperadas, tarjetas), conFechas = conFechas)
     }
 }

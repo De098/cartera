@@ -15,10 +15,9 @@ object Billetes {
     /** Lo reconocido: «tipo» es «avion» o «tren»; «hora» puede faltar; «resumen» es la línea que se enseña a la persona. */
     class Datos(val tipo: String, val nombre: String, val fecha: LocalDate, val hora: LocalTime?, val resumen: String)
 
-    private val MESES = listOf("ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic")
 
     private fun fechaTexto(f: LocalDate, h: LocalTime?): String =
-        "${f.dayOfMonth} ${MESES[f.monthValue - 1]} ${f.year}" + (h?.let { " a las %02d:%02d".format(it.hour, it.minute) } ?: "")
+        "${f.dayOfMonth} ${Nucleo.meses()[f.monthValue - 1]} ${f.year}" + (h?.let { Nucleo.s(R.string.billete_a_las, "%02d:%02d".format(it.hour, it.minute)) } ?: "")
 
     /**
      * `texto` es lo leído por ZXing y `bytes` los octetos en bruto (si el código era binario). `hoy` solo se
@@ -56,8 +55,8 @@ object Billetes {
         val fecha = fechaDeDiaJuliano(dia, hoy) ?: return null
         val sinCeros = numero.trimStart('0').ifEmpty { "0" }
         val vuelo = aerolinea + (if (sinCeros[0].isDigit()) sinCeros else "0$sinCeros")
-        return Datos("avion", "Vuelo $vuelo $origen → $destino", fecha, null,
-            "vuelo $vuelo, $origen → $destino, ${fechaTexto(fecha, null)} (el código no lleva la hora)")
+        return Datos("avion", Nucleo.s(R.string.billete_vuelo, vuelo, origen, destino), fecha, null,
+            Nucleo.s(R.string.billete_vuelo_resumen, vuelo, origen, destino, fechaTexto(fecha, null)))
     }
 
     // ---------------------------------------------------------------- UIC 918.3
@@ -161,7 +160,9 @@ object Billetes {
             val m = flecha.find(t) ?: continue
             ruta = m.groupValues[1].trim() + " → " + m.groupValues[2].trim(); break
         }
-        val nombre = if (ruta != null) "Tren $ruta" else "Billete de tren"
-        return Datos("tren", nombre.take(80), f, h, "tren${if (ruta != null) " $ruta" else ""}, ${fechaTexto(f, h)}")
+        val nombre = if (ruta != null) Nucleo.s(R.string.billete_tren, ruta) else Nucleo.s(R.string.billete_tren_sin_ruta)
+        val resumen = if (ruta != null) Nucleo.s(R.string.billete_tren_resumen, ruta, fechaTexto(f, h))
+                      else Nucleo.s(R.string.billete_tren_resumen_sin_ruta, fechaTexto(f, h))
+        return Datos("tren", nombre.take(80), f, h, resumen)
     }
 }

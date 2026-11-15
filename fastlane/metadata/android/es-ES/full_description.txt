@@ -1,7 +1,7 @@
 Cartera guarda en tu móvil las tarjetas de socio, fidelización o biblioteca, y tus entradas y billetes, con su código listo para enseñar: sin cuenta, sin servidor y sin permiso de internet. Tus datos no salen del teléfono.
 
 <b>Tarjetas con código</b>
-• Nombre, número, color, nota y favoritas. Lista con buscador: las favoritas arriba y luego las que usas más a menudo.
+• Nombre, número, color, nota y chincheta para fijar. Lista con buscador: las fijadas arriba y luego las que usas más a menudo.
 • Códigos QR, EAN-13, EAN-8, UPC-A, Code 128, Code 39, Aztec, PDF417 y Data Matrix.
 • Al abrir una tarjeta, el código sale grande, con el número debajo, el brillo al máximo y la pantalla sin apagarse. Al cerrarla, todo vuelve a como estaba.
 
@@ -25,7 +25,7 @@ Cartera guarda en tu móvil las tarjetas de socio, fidelización o biblioteca, y
 • Distintivo «Caduca pronto» o «Caducada».
 
 <b>Y además</b>
-• Widget de favoritas: pulsa una y se abre su código.
+• Widget de fijadas: pulsa una y se abre su código.
 • Acceso directo a una tarjeta en la pantalla de inicio.
 • Copia de seguridad en un archivo .zip.
 

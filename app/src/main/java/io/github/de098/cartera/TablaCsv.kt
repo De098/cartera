@@ -26,6 +26,9 @@ object TablaCsv {
     // columnas que solo tiene Catima (el de Loyalty Card Keychain no las trae)
     private val SOLO_CATIMA = listOf("validfrom", "balance", "balancetype", "barcodeid", "barcodeencoding", "starstatus", "lastused", "archive")
 
+    /** El error de «no hay columna con el número» (para que [Catima] lo distinga sin depender del idioma). */
+    fun errColumnas(): String = Nucleo.s(R.string.err_csv_columnas)
+
     /** Devuelve null si ha ido bien (lo importado queda en [lote]) o el motivo por el que no se puede. */
     fun importar(lote: Lote, texto: String, imagenes: (String) -> List<Imagen>): String? {
         val sep = Csv.separador(texto)
@@ -36,7 +39,7 @@ object TablaCsv {
             else actual += f
         }
         if (actual.isNotEmpty()) tablas += actual
-        if (tablas.isEmpty()) return "Ese archivo está vacío."
+        if (tablas.isEmpty()) return Nucleo.s(R.string.err_csv_vacio)
 
         val conVersion = tablas[0].size == 1 && tablas[0][0].size == 1 && tablas[0][0][0].trim().matches(Regex("\\d{1,5}"))
 
@@ -44,8 +47,7 @@ object TablaCsv {
         fun tiene(cab: List<String>, l: List<String>) = l.any { it in cab }
         val tabla = tablas.firstOrNull { t -> cabecera(t).let { tiene(it, NOMBRE) && tiene(it, NUMERO + CONTENIDO) } }
             ?: tablas.firstOrNull { t -> cabecera(t).let { tiene(it, NUMERO + CONTENIDO) && !(it.size == 2 && "groupid" in it) } }
-            ?: return "No he reconocido ninguna columna con el número de la tarjeta. La primera fila del archivo debe tener los nombres " +
-                "de las columnas (por ejemplo: nombre, número, tipo, nota, caducidad, color)."
+            ?: return errColumnas()
 
         val cab = cabecera(tabla)
         fun idx(l: List<String>): Int { for (n in l) { val i = cab.indexOf(n); if (i >= 0) return i }; return -1 }
@@ -67,7 +69,7 @@ object TablaCsv {
             val cont = col(f, cCont)
             var codigo = ""
             if (numero.isEmpty()) numero = cont else if (cont.isNotEmpty() && cont != numero) codigo = cont
-            val nombre = col(f, cNombre).ifEmpty { if (cNombre < 0 && (numero.isNotEmpty())) "Tarjeta sin nombre" else "" }
+            val nombre = col(f, cNombre).ifEmpty { if (cNombre < 0 && (numero.isNotEmpty())) Nucleo.s(R.string.tarjeta_sin_nombre) else "" }
             if (nombre.isEmpty() && numero.isEmpty()) continue
             if (nombre.isEmpty()) { lote.omitidas++; continue }
 

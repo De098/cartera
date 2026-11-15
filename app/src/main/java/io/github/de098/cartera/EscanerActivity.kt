@@ -82,7 +82,7 @@ class EscanerActivity : Activity() {
         fun dp(v: Int) = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, v.toFloat(), resources.displayMetrics).toInt()
 
         val ayuda = TextView(this).apply {
-            text = "Pon el código dentro del recuadro"
+            text = getString(R.string.esc_pon_codigo)
             setTextColor(texto); textSize = 17f; typeface = Typeface.create(letra, Typeface.BOLD)
             gravity = Gravity.CENTER
         }
@@ -96,10 +96,10 @@ class EscanerActivity : Activity() {
         val filaBotones = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER
         }
-        val bLinterna = boton("Linterna") { alternarLinterna() }
+        val bLinterna = boton(getString(R.string.esc_linterna)) { alternarLinterna() }
         botonLinterna = bLinterna
         bLinterna.visibility = View.GONE   // solo si el móvil tiene flash (se sabe al abrir la cámara)
-        val bCancelar = boton("Cancelar") { terminar(null, null, null) }
+        val bCancelar = boton(getString(R.string.esc_cancelar)) { terminar(null, null, null) }
         val lpBoton = { LinearLayout.LayoutParams(0, dp(48), 1f).apply { setMargins(dp(6), 0, dp(6), 0) } }
         filaBotones.addView(bLinterna, lpBoton())
         filaBotones.addView(bCancelar, lpBoton())
@@ -144,7 +144,7 @@ class EscanerActivity : Activity() {
         super.onRequestPermissionsResult(codigo, permisos, resultados)
         if (codigo != 7) return
         if (resultados.isNotEmpty() && resultados[0] == PackageManager.PERMISSION_GRANTED) { if (textura.isAvailable) abrirCamara() }
-        else terminar(null, null, "Sin permiso de la cámara no se puede escanear. Puedes leer el código desde una foto o escribir el número.")
+        else terminar(null, null, getString(R.string.esc_sin_permiso))
     }
 
     override fun onResume() {
@@ -171,15 +171,15 @@ class EscanerActivity : Activity() {
         try {
             val cm = getSystemService(Context.CAMERA_SERVICE) as CameraManager
             val id = cm.cameraIdList.firstOrNull { cm.getCameraCharacteristics(it).get(CameraCharacteristics.LENS_FACING) == CameraCharacteristics.LENS_FACING_BACK }
-                ?: cm.cameraIdList.firstOrNull() ?: return terminar(null, null, "Este móvil no tiene cámara")
+                ?: cm.cameraIdList.firstOrNull() ?: return terminar(null, null, getString(R.string.esc_sin_camara))
             val car = cm.getCameraCharacteristics(id)
             orientacionSensor = car.get(CameraCharacteristics.SENSOR_ORIENTATION) ?: 90
-            val mapa = car.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP) ?: return terminar(null, null, "No se puede usar la cámara")
+            val mapa = car.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP) ?: return terminar(null, null, getString(R.string.esc_camara_no))
             // un tamaño que sirva a la vez para la vista previa y para leer, sin pasar de ~2 Mpx
             val paraVista = mapa.getOutputSizes(SurfaceTexture::class.java)?.toSet() ?: emptySet()
             val paraLeer = mapa.getOutputSizes(ImageFormat.YUV_420_888) ?: emptyArray()
             val t = paraLeer.filter { it in paraVista && it.width <= 1920 && it.height <= 1440 }.maxByOrNull { it.width * it.height }
-                ?: paraLeer.minByOrNull { it.width * it.height } ?: return terminar(null, null, "No se puede usar la cámara")
+                ?: paraLeer.minByOrNull { it.width * it.height } ?: return terminar(null, null, getString(R.string.esc_camara_no))
             tamano = t
             textura.surfaceTexture?.setDefaultBufferSize(t.width, t.height)
             runOnUiThread { ajustarTextura(); if (car.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true) botonLinterna?.visibility = View.VISIBLE }
@@ -219,17 +219,17 @@ class EscanerActivity : Activity() {
                                 sesion = s
                                 try { s.setRepeatingRequest(b.build(), null, hilo) } catch (_: Exception) {}
                             }
-                            override fun onConfigureFailed(s: CameraCaptureSession) { terminar(null, null, "No se ha podido abrir la cámara") }
+                            override fun onConfigureFailed(s: CameraCaptureSession) { terminar(null, null, getString(R.string.esc_camara_fallo)) }
                         }, hilo)
-                    } catch (_: Exception) { terminar(null, null, "No se ha podido abrir la cámara") }
+                    } catch (_: Exception) { terminar(null, null, getString(R.string.esc_camara_fallo)) }
                 }
                 override fun onDisconnected(c: CameraDevice) { c.close(); camara = null }
-                override fun onError(c: CameraDevice, error: Int) { c.close(); camara = null; terminar(null, null, "No se ha podido abrir la cámara") }
+                override fun onError(c: CameraDevice, error: Int) { c.close(); camara = null; terminar(null, null, getString(R.string.esc_camara_fallo)) }
             }, hilo)
         } catch (_: CameraAccessException) {
-            terminar(null, null, "No se ha podido abrir la cámara")
+            terminar(null, null, getString(R.string.esc_camara_fallo))
         } catch (_: Exception) {
-            terminar(null, null, "No se ha podido abrir la cámara")
+            terminar(null, null, getString(R.string.esc_camara_fallo))
         }
     }
 

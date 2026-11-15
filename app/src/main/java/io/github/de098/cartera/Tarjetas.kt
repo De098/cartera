@@ -68,7 +68,7 @@ object Tarjetas {
         j.put("formato", 1)
 
         val nombre = e.optString("nombre", j.optString("nombre")).trim().take(80)
-        if (nombre.isEmpty()) throw ErrorUsuario("Pon un nombre")
+        if (nombre.isEmpty()) throw ErrorUsuario(Nucleo.s(R.string.err_pon_nombre))
         j.put("nombre", nombre)
         val clase = if (e.optString("clase", j.optString("clase")) == "entrada") "entrada" else "tarjeta"
         j.put("clase", clase)
@@ -85,7 +85,7 @@ object Tarjetas {
             if (br.isEmpty()) j.remove("bruto") else j.put("bruto", br)
         }
         var tipo = e.optString("tipo", j.optString("tipo"))
-        if (Nucleo.FORMATOS.none { it.first == tipo }) tipo = "NINGUNO"
+        if (tipo !in Nucleo.CLAVES) tipo = "NINGUNO"
         if (j.optString("codigo").ifEmpty { numero }.isEmpty()) tipo = "NINGUNO"
         j.put("tipo", tipo)
         if (tipo != "NINGUNO") {
@@ -100,7 +100,7 @@ object Tarjetas {
 
         if (clase == "entrada") {
             val ev = normalizarEvento(e.optString("evento", j.optString("evento")))
-                ?: throw ErrorUsuario("Pon el día del evento")
+                ?: throw ErrorUsuario(Nucleo.s(R.string.err_pon_dia))
             j.put("evento", ev)
             j.put("eventoHora", if (e.has("eventoHora")) e.optBoolean("eventoHora") else j.optBoolean("eventoHora", true))
             j.put("previo", (if (e.has("previo")) e.optInt("previo") else j.optInt("previo", Nucleo.ajustes().optInt("previo"))).coerceIn(0, 30))
@@ -109,7 +109,7 @@ object Tarjetas {
         }
 
         val caduca = e.optString("caduca", j.optString("caduca"))
-        if (caduca.isNotEmpty() && !fechaValida(caduca)) throw ErrorUsuario("La fecha de caducidad no es válida")
+        if (caduca.isNotEmpty() && !fechaValida(caduca)) throw ErrorUsuario(Nucleo.s(R.string.err_fecha_cad))
         j.put("caduca", caduca)
         j.put("caducaAvisos", diasAviso(
             if (e.has("caducaAvisos")) e.optJSONArray("caducaAvisos") else j.optJSONArray("caducaAvisos") ?: Nucleo.ajustes().optJSONArray("caduca")))
@@ -249,16 +249,18 @@ object Tarjetas {
             val ev: LocalDateTime? = if (j.optString("clase") == "entrada") fechaHora(j.optString("evento")) else null
             if (ev != null) {
                 val conHora = j.optBoolean("eventoHora", true)
-                val horaTxt = if (conHora) " a las ${ev.format(Nucleo.HM)}" else ""
+                val hm = ev.format(Nucleo.HM)
                 // el día del evento: a la hora de los avisos, o una hora antes si el evento es más temprano
                 var dia = ev.toLocalDate().atTime(hora)
                 if (conHora && dia.isAfter(ev.minusHours(1))) dia = ev.minusHours(1)
-                r += Aviso("$id:ev", dia, "Hoy: $nombre", "Es hoy$horaTxt. Pulsa para abrir el código.", id, "entradas")
+                r += Aviso("$id:ev", dia, "${Nucleo.s(R.string.aviso_hoy)}: $nombre",
+                    if (conHora) Nucleo.s(R.string.aviso_hoy_hora, hm) else Nucleo.s(R.string.aviso_hoy_sin_hora), id, "entradas")
                 val previo = j.optInt("previo", 0)
                 if (previo > 0) {
-                    val cuando = if (previo == 1) "Mañana" else "En $previo días"
+                    val cuando = if (previo == 1) Nucleo.s(R.string.aviso_manana) else Nucleo.n(R.plurals.aviso_en_dias, previo)
                     r += Aviso("$id:pre", ev.toLocalDate().minusDays(previo.toLong()).atTime(hora),
-                        "$cuando: $nombre", "$cuando$horaTxt.", id, "entradas")
+                        "$cuando: $nombre",
+                        if (conHora) Nucleo.s(R.string.aviso_texto_hora, cuando, hm) else Nucleo.s(R.string.aviso_texto_sin_hora, cuando), id, "entradas")
                 }
             }
             val c = j.optString("caduca")
@@ -269,12 +271,12 @@ object Tarjetas {
                     val d = avisos.optInt(i, -1)
                     if (d < 0) continue
                     val texto = when (d) {
-                        0 -> "Caduca hoy"
-                        1 -> "Caduca mañana"
-                        else -> "Caduca en $d días"
+                        0 -> Nucleo.s(R.string.aviso_cad_hoy)
+                        1 -> Nucleo.s(R.string.aviso_cad_manana)
+                        else -> Nucleo.n(R.plurals.aviso_cad_en, d)
                     }
                     r += Aviso("$id:cad$d", fecha.minusDays(d.toLong()).atTime(hora), "$texto: $nombre",
-                        "Fecha de caducidad: ${fecha.dayOfMonth}/${fecha.monthValue}/${fecha.year}.", id, "caducidad")
+                        Nucleo.s(R.string.aviso_cad_fecha, "${fecha.dayOfMonth}/${fecha.monthValue}/${fecha.year}"), id, "caducidad")
                 }
             }
         }
