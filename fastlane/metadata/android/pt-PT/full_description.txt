@@ -1,0 +1,36 @@
+O Porta-cartões guarda no telemóvel os seus cartões de sócio, de fidelização e da biblioteca, bilhetes e cartões de embarque, com o código pronto a mostrar: sem conta, sem servidor e sem permissão de acesso à internet. Os seus dados nunca saem do dispositivo.
+
+<b>Cartões com código</b>
+• Nome, número, cor, nota e fixar no topo. Uma lista com pesquisa: primeiro os fixados, depois os que usa mais.
+• Códigos QR, EAN-13, EAN-8, UPC-A, Code 128, Code 39, Aztec, PDF417 e Data Matrix.
+• Ao abrir um cartão, o código aparece em grande com o número por baixo, o brilho no máximo e o ecrã sempre ligado. Ao fechá-lo, tudo volta ao que estava.
+
+<b>Três formas de adicionar um cartão</b>
+• Digitalizar o código com a câmara (a permissão só é pedida nesse momento).
+• Ler o código de uma foto ou captura de ecrã da galeria.
+• Escrever o número e escolher o tipo.
+
+<b>Bilhetes e passes</b>
+• Com a data e a hora do evento, um anexo (imagem ou PDF) e/ou o respetivo código.
+• Um aviso no dia do evento e outro antecipado, configurável (por exemplo, na véspera).
+• Depois do evento são arquivados automaticamente; pode recuperá-los ou eliminá-los.
+
+<b>Bilhetes que se preenchem sozinhos</b>
+• Ao digitalizar um cartão de embarque (IATA), obtém o voo, a origem, o destino e o dia; nos bilhetes de comboio UIC (Aztec), a data, a hora e as estações que o código contenha.
+• Preenche o formulário sem guardar e diz-lhe o que encontrou. Se o código não tiver data (como os bilhetes da Renfe), pergunta se é um bilhete e depois o dia e a hora.
+• «Ver conteúdo do código» e «Reconhecer data» em cada cartão.
+
+<b>Validades</b>
+• Qualquer cartão pode ter data de validade, com avisos configuráveis (por omissão, 30 dias antes e no próprio dia).
+• Etiquetas «Expira em breve» e «Expirado».
+
+<b>E ainda</b>
+• Widget de cartões fixados: toque num e o código abre-se.
+• Atalho de um cartão no ecrã principal.
+• Cópia de segurança num ficheiro .zip.
+
+<b>Importar de outras apps</b>
+• Catima (a cópia .zip ou .csv, sem palavra-passe), Loyalty Card Keychain, passes do Apple Wallet (.pkpass, também ao abri-los a partir de um e-mail ou do navegador) e qualquer ficheiro .csv com linha de cabeçalho.
+• O formato é detetado automaticamente. No fim, vê quantos cartões foram importados, quantos já existiam e quantos chegaram sem código desenhado.
+
+Tema claro de alto contraste. Software livre (GPL-3.0).

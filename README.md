@@ -35,7 +35,7 @@ se instala y se actualiza sola: pulsa el segundo botón desde el móvil o añade
   nombre. Admite **Catima** (su `.zip` con `catima.csv` y las imágenes de frente y dorso, y el `.csv` suelto de las versiones
   anteriores, con o sin línea de versión), **Loyalty Card Keychain** (su CSV), **pases de Apple Wallet** (`.pkpass` y
   `.pkpasses`, también al abrirlos desde el correo o el navegador) y **cualquier CSV con cabecera** (columnas reconocidas por
-  nombre en castellano o inglés; separador coma, punto y coma o tabulador). Al terminar enseña cuántas tarjetas se han importado,
+  nombre en castellano, inglés, francés, catalán, alemán, italiano o portugués; separador coma, punto y coma o tabulador). Al terminar enseña cuántas tarjetas se han importado,
   cuántas ya estaban (mismo nombre y número, no se duplican) y cuántas se han importado sin dibujo del código. Las copias de
   Catima cifradas con contraseña no se pueden abrir sin librerías externas: la app pide exportarlas sin contraseña.
 - **Avisos**: el permiso de notificaciones se pide solo la primera vez que se guarda o importa una tarjeta con fecha de evento o
@@ -60,7 +60,7 @@ la propia app también.
 | `Programador.kt`, `Avisos.kt` | alarmas exactas locales, canales de notificación, reprogramado al encender el móvil |
 | `Copia.kt` | copia `.zip` de la app (exportar e importar) |
 | `Importar.kt` | detecta el formato de un archivo por su contenido (zip, cifrado, CSV…), guarda las tarjetas leídas sin duplicar y cuenta el resumen |
-| `TablaCsv.kt`, `Csv.kt` | lector de CSV (separador, codificación, columnas por nombre en castellano e inglés), fechas, colores y tipos de código |
+| `TablaCsv.kt`, `Csv.kt` | lector de CSV (separador, codificación, columnas por nombre en castellano, inglés, francés, catalán, alemán, italiano y portugués), fechas, colores y tipos de código |
 | `Catima.kt` | la copia `.zip` de Catima: `catima.csv` + imágenes de frente y dorso |
 | `Pkpass.kt` | pases de Apple Wallet (`pass.json`: nombre, código, fecha, color e imágenes; `.pkpasses` con varios) |
 | `Widgets.kt` | el widget de fijadas |

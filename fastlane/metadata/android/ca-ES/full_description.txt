@@ -1,0 +1,36 @@
+Cartera guarda al mòbil les targetes de soci, de fidelització i de la biblioteca, les entrades i les targetes d'embarcament, amb el codi a punt per ensenyar: sense comptes, sense servidor i sense permís d'internet. Les dades no surten mai del dispositiu.
+
+<b>Targetes amb codi</b>
+• Nom, número, color, nota i fixar a dalt. Llista amb cercador: primer les fixades i després les que més fas servir.
+• Codis QR, EAN-13, EAN-8, UPC-A, Code 128, Code 39, Aztec, PDF417 i Data Matrix.
+• En obrir una targeta, el codi surt en gran amb el número a sota, la brillantor al màxim i la pantalla sempre encesa. En tancar-la, tot torna com estava.
+
+<b>Tres maneres d'afegir una targeta</b>
+• Escanejar el codi amb la càmera (el permís només es demana en aquell moment).
+• Llegir el codi d'una foto o captura de la galeria.
+• Escriure el número i triar el tipus.
+
+<b>Entrades i bitllets</b>
+• Amb el dia i l'hora de l'esdeveniment, un adjunt (imatge o PDF) i/o el seu codi.
+• Avís el dia de l'esdeveniment i un altre abans, configurable (per exemple, el dia abans).
+• Quan l'esdeveniment ja ha passat s'arxiven soles; les pots recuperar o esborrar.
+
+<b>Entrades que s'omplen soles</b>
+• En escanejar una targeta d'embarcament (IATA) llegeix el vol, l'origen, el destí i el dia; en els bitllets de tren UIC (Aztec), la data, l'hora i les estacions que porti el codi.
+• Omple el formulari sense desar i et diu què ha trobat. Si el codi no porta data (com els bitllets de Renfe), et pregunta si és una entrada i després el dia i l'hora.
+• «Mostra el contingut del codi» i «Reconeix la data» a cada targeta.
+
+<b>Caducitat</b>
+• Qualsevol targeta pot tenir data de caducitat, amb avisos configurables (per defecte, 30 dies abans i el mateix dia).
+• Etiquetes «Caduca aviat» i «Caducada».
+
+<b>I a més</b>
+• Widget de targetes fixades: en tocar-ne una s'obre el seu codi.
+• Drecera d'una targeta a la pantalla d'inici.
+• Còpia de seguretat en un fitxer .zip.
+
+<b>Importar d'altres apps</b>
+• Catima (la còpia .zip o .csv, sense contrasenya), Loyalty Card Keychain, passis d'Apple Wallet (.pkpass, també en obrir-los des d'un correu o el navegador) i qualsevol fitxer .csv amb fila de capçalera.
+• El format es detecta sol. En acabar, et diu quantes targetes s'han importat, quantes ja hi eren i quantes han arribat sense codi dibuixat.
+
+Tema clar d'alt contrast. Programari lliure (GPL-3.0).

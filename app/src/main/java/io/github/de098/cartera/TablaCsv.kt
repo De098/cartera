@@ -10,19 +10,38 @@ package io.github.de098.cartera
  */
 object TablaCsv {
     private val NOMBRE = listOf("store", "nombre", "name", "tienda", "comercio", "shop", "merchant", "empresa", "company", "brand", "marca",
-        "establecimiento", "title", "titulo", "cardname", "nombretarjeta", "storename", "programa", "tarjeta", "card")
+        "establecimiento", "title", "titulo", "cardname", "nombretarjeta", "storename", "programa", "tarjeta", "card",
+        // francés
+        "nom", "magasin", "enseigne", "commerce", "boutique", "nomcarte", "nomdelacarte",
+        // catalán, alemán, italiano y portugués
+        "botiga", "kartenname", "geschaft", "nome", "negozio", "loja")
     private val NUMERO = listOf("cardid", "cardnumber", "numerodetarjeta", "numerotarjeta", "number", "numero", "nrotarjeta", "num", "nro", "no",
-        "code", "codigo", "memberid", "member", "numerodesocio", "numerosocio", "socio", "nsocio", "cardno")
-    private val CONTENIDO = listOf("barcodeid", "barcode", "codigodebarras", "codigobarras", "contenido", "valor", "value", "message", "mensaje")
-    private val TIPO = listOf("barcodetype", "tipo", "format", "formato", "type", "tipodecodigo", "tipocodigo", "barcodeformat", "symbology", "simbologia")
-    private val NOTA = listOf("note", "notes", "nota", "notas", "comment", "comments", "comentario", "comentarios", "description", "descripcion", "observaciones")
+        "code", "codigo", "memberid", "member", "numerodesocio", "numerosocio", "socio", "nsocio", "cardno",
+        "numerodecarte", "numerocarte", "numerodemembre", "numeromembre", "numerodadherent", "numeroadherent", "adherent",
+        "numerodetargeta", "numerotargeta", "nummer", "kartennummer", "mitgliedsnummer", "numerotessera", "numerodellatessera", "numerocartao", "numerodocartao")
+    private val CONTENIDO = listOf("barcodeid", "barcode", "codigodebarras", "codigobarras", "contenido", "valor", "value", "message", "mensaje",
+        "codebarres", "codeabarres", "contenu", "valeur")
+    private val TIPO = listOf("barcodetype", "tipo", "format", "formato", "type", "tipodecodigo", "tipocodigo", "barcodeformat", "symbology", "simbologia",
+        "typedecode", "typecode", "symbologie",
+        "tipus", "tipusdecodi", "typ", "codetyp", "tipodicodice")
+    private val NOTA = listOf("note", "notes", "nota", "notas", "comment", "comments", "comentario", "comentarios", "description", "descripcion", "observaciones",
+        "remarque", "remarques", "commentaire", "commentaires",
+        "notiz", "notizen", "bemerkung", "commento", "observacoes")
     private val CADUCA = listOf("expiry", "expirydate", "expiration", "expirationdate", "expires", "expdate", "caducidad", "fechadecaducidad",
-        "fechacaducidad", "caduca", "vencimiento", "validuntil", "validhasta", "validthru", "validto", "validez")
-    private val EVENTO = listOf("event", "eventdate", "evento", "fechaevento", "fechadelevento", "relevantdate")
-    private val COLOR = listOf("headercolor", "color", "colour", "backgroundcolor", "bgcolor", "colorfondo", "colordefondo")
-    private val FAVORITA = listOf("starstatus", "favorite", "favourite", "favorita", "favorito", "star", "estrella")
-    private val ARCHIVADA = listOf("archive", "archived", "archivada", "archivado")
-    private val USO = listOf("lastused", "ultimouso")
+        "fechacaducidad", "caduca", "vencimiento", "validuntil", "validhasta", "validthru", "validto", "validez",
+        "dateexpiration", "datedexpiration", "expire", "validite", "valablejusquau", "datedevalidite",
+        "caducitat", "datadecaducitat", "ablaufdatum", "gultigbis", "scadenza", "datadiscadenza", "validade", "datadevalidade")
+    private val EVENTO = listOf("event", "eventdate", "evento", "fechaevento", "fechadelevento", "relevantdate",
+        "evenement", "dateevenement", "datedelevenement",
+        "esdeveniment", "veranstaltung", "dataevento")
+    private val COLOR = listOf("headercolor", "color", "colour", "backgroundcolor", "bgcolor", "colorfondo", "colordefondo",
+        "couleur", "couleurdefond",
+        "farbe", "colore", "cor")
+    private val FAVORITA = listOf("starstatus", "favorite", "favourite", "favorita", "favorito", "star", "estrella",
+        "favori", "favoris", "epinglee", "etoile",
+        "preferida", "preferit", "favorit", "preferito", "preferita")
+    private val ARCHIVADA = listOf("archive", "archived", "archivada", "archivado", "archivee", "archives")
+    private val USO = listOf("lastused", "ultimouso", "derniereutilisation")
     // columnas que solo tiene Catima (el de Loyalty Card Keychain no las trae)
     private val SOLO_CATIMA = listOf("validfrom", "balance", "balancetype", "barcodeid", "barcodeencoding", "starstatus", "lastused", "archive")
 

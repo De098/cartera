@@ -1,0 +1,36 @@
+Meine Karten speichert deine Mitglieds-, Kunden- und Büchereikarten, Tickets und Bordkarten auf dem Handy – mit dem Code griffbereit zum Vorzeigen: kein Konto, kein Server und keine Internetberechtigung. Deine Daten verlassen nie das Gerät.
+
+<b>Karten mit Code</b>
+• Name, Nummer, Farbe, Notiz und Anheften. Eine durchsuchbare Liste: zuerst die angehefteten Karten, dann die, die du am häufigsten nutzt.
+• QR, EAN-13, EAN-8, UPC-A, Code 128, Code 39, Aztec, PDF417 und Data Matrix.
+• Beim Öffnen einer Karte erscheint der Code groß mit der Nummer darunter, volle Helligkeit und der Bildschirm bleibt an. Beim Schließen ist alles wieder wie vorher.
+
+<b>Drei Wege, eine Karte hinzuzufügen</b>
+• Den Code mit der Kamera scannen (die Berechtigung wird erst in diesem Moment abgefragt).
+• Den Code aus einem Foto oder Screenshot in der Galerie lesen.
+• Die Nummer eintippen und den Typ wählen.
+
+<b>Tickets und Pässe</b>
+• Mit Datum und Uhrzeit der Veranstaltung, einem Anhang (Bild oder PDF) und/oder dem Code.
+• Eine Erinnerung am Tag der Veranstaltung und eine einstellbare vorab (zum Beispiel am Vortag).
+• Ist die Veranstaltung vorbei, werden sie automatisch archiviert; du kannst sie wiederherstellen oder löschen.
+
+<b>Tickets, die sich selbst ausfüllen</b>
+• Beim Scannen einer Bordkarte (IATA) werden Flug, Start, Ziel und Tag erkannt; bei UIC-Zugtickets (Aztec) Datum, Uhrzeit und Bahnhöfe, die der Code enthält.
+• Das Formular wird ausgefüllt, ohne zu speichern, und du siehst, was gefunden wurde. Enthält der Code kein Datum (z. B. bei Renfe-Tickets), fragt die App, ob es ein Ticket ist, und dann nach Tag und Uhrzeit.
+• „Code-Inhalt anzeigen“ und „Datum erkennen“ bei jeder Karte.
+
+<b>Ablaufdaten</b>
+• Jede Karte kann ein Ablaufdatum haben, mit einstellbaren Erinnerungen (standardmäßig 30 Tage vorher und am Tag selbst).
+• Hinweise „Läuft bald ab“ und „Abgelaufen“.
+
+<b>Außerdem</b>
+• Widget mit angehefteten Karten: Tippe auf eine, und ihr Code öffnet sich.
+• Verknüpfung zu einer einzelnen Karte auf dem Startbildschirm.
+• Sicherung in einer .zip-Datei.
+
+<b>Import aus anderen Apps</b>
+• Catima (dessen .zip- oder .csv-Sicherung, ohne Passwort), Loyalty Card Keychain, Apple-Wallet-Pässe (.pkpass, auch direkt aus einer E-Mail oder dem Browser) und jede .csv-Datei mit Kopfzeile.
+• Das Format wird automatisch erkannt. Am Ende siehst du, wie viele Karten importiert wurden, wie viele schon da waren und wie viele ohne gezeichneten Code kamen.
+
+Helles Design mit hohem Kontrast. Freie Software (GPL-3.0).

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nombre">Portatessere</string>
+    <string name="w_nombre_favoritas">Fissate</string>
+    <string name="w_desc_favoritas">Le tessere fissate: toccane una per aprirne il codice</string>
+    <string name="w_titulo">📌 Fissate</string>
+    <string name="w_vacio">Fissa le tessere con la puntina (📌) e compariranno qui</string>
+    <string name="canal_entradas">Biglietti e pass</string>
+    <string name="canal_caducidad">Scadenze</string>
+    <string name="aviso_hoy">Oggi</string>
+    <string name="aviso_hoy_hora">Oggi alle %1$s. Tocca per mostrare il biglietto.</string>
+    <string name="aviso_hoy_sin_hora">È oggi. Tocca per mostrare il biglietto.</string>
+    <string name="aviso_manana">Domani</string>
+    <string name="aviso_texto_hora">%1$s alle %2$s.</string>
+    <string name="aviso_texto_sin_hora">%1$s.</string>
+    <string name="aviso_cad_hoy">Scade oggi</string>
+    <string name="aviso_cad_manana">Scade domani</string>
+    <string name="aviso_cad_fecha">Data di scadenza: %1$s.</string>
+    <string name="fmt_qr">Codice QR</string>
+    <string name="fmt_itf">ITF (2 su 5 interleaved)</string>
+    <string name="fmt_ninguno">Nessun codice (solo numero)</string>
+    <string name="err_falta_numero">Inserisci un numero</string>
+    <string name="err_no_vale">Questo numero non va bene per %1$s. %2$s</string>
+    <string name="ayuda_ean13">L’EAN-13 ha 13 cifre (oppure 12, e l’ultima viene calcolata per te).</string>
+    <string name="ayuda_ean8">L’EAN-8 ha 8 cifre (oppure 7, e l’ultima viene calcolata per te).</string>
+    <string name="ayuda_upca">L’UPC-A ha 12 cifre (oppure 11, e l’ultima viene calcolata per te).</string>
+    <string name="ayuda_upce">L’UPC-E ha 8 cifre (che iniziano con 0 o 1) oppure 7.</string>
+    <string name="ayuda_itf">L’ITF accetta solo cifre, in numero pari.</string>
+    <string name="ayuda_code39">Il Code 39 accetta lettere MAIUSCOLE, cifre, spazi e - . $ / + %%</string>
+    <string name="ayuda_codabar">Il Codabar accetta cifre, con una lettera dalla A alla D all’inizio e alla fine.</string>
+    <string name="ayuda_code128">Il Code 128 accetta lettere, cifre e simboli, ma non le lettere accentate.</string>
+    <string name="ayuda_texto">Questo testo non si può scrivere con questo tipo di codice.</string>
+    <string name="ayuda_otro">Questo numero non è valido per questo tipo di codice.</string>
+    <string name="err_tipo_desconocido">Tipo di codice sconosciuto</string>
+    <string name="err_no_dibujar">Impossibile disegnare questo codice</string>
+    <string name="err_adj_grande">Il file è troppo grande (massimo 40 MB)</string>
+    <string name="err_tarjeta_invalida">Tessera non valida</string>
+    <string name="err_no_se_lee">Impossibile leggere il file</string>
+    <string name="err_pdf">Impossibile aprire il PDF</string>
+    <string name="err_no_imagen">Il file non è né un’immagine né un PDF</string>
+    <string name="err_copia_nueva">Questo backup è stato creato da una versione più recente dell’app. Aggiorna prima l’app.</string>
+    <string name="copia_vacia">Nel backup non c’era niente di nuovo</string>
+    <string name="msj_copia_guardada">Backup salvato</string>
+    <string name="err_cifrado">Il file è protetto da password (Catima può esportare così) e Portatessere non può aprirlo. In Catima esporta di nuovo il backup senza password, poi importalo qui.</string>
+    <string name="err_no_reconozco">Non riconosco questo file. Posso importare backup di Portatessere e Catima (.zip o .csv), il CSV di Loyalty Card Keychain, pass di Apple Wallet (.pkpass o .pkpasses) e qualsiasi .csv con una riga di intestazione.</string>
+    <string name="err_importar_enorme">Il file è troppo grande per essere un elenco di tessere.</string>
+    <string name="err_zip">Il file ZIP è danneggiato o non si può aprire.</string>
+    <string name="res_ninguna">Nessuna tessera trovata nel file.</string>
+    <string name="res_nada_nuevo">Non è stata importata nessuna tessera nuova.</string>
+    <string name="err_catima_sin_csv">Questo backup di Catima non contiene catima.csv</string>
+    <string name="err_catima_vacia">Nessuna tessera trovata in questo backup di Catima</string>
+    <string name="img_frente">Fronte</string>
+    <string name="img_dorso">Retro</string>
+    <string name="img_strip">Immagine</string>
+    <string name="img_logo">Logo</string>
+    <string name="img_thumbnail">Miniatura</string>
+    <string name="pase_wallet">Pass di Wallet</string>
+    <string name="err_csv_vacio">Il file è vuoto.</string>
+    <string name="err_csv_columnas">Non trovo una colonna con il numero della tessera. La prima riga del file deve contenere i nomi delle colonne (per esempio: nome, numero, tipo, nota, scadenza, colore).</string>
+    <string name="tarjeta_sin_nombre">Tessera senza nome</string>
+    <string name="billete_vuelo">Volo %1$s %2$s → %3$s</string>
+    <string name="billete_vuelo_resumen">volo %1$s, %2$s → %3$s, %4$s (il codice non riporta l’ora)</string>
+    <string name="billete_tren">Treno %1$s</string>
+    <string name="billete_tren_sin_ruta">Biglietto del treno</string>
+    <string name="billete_tren_resumen">treno %1$s, %2$s</string>
+    <string name="billete_tren_resumen_sin_ruta">treno, %1$s</string>
+    <string name="billete_a_las">" alle %1$s"</string>
+    <string name="err_pon_nombre">Inserisci un nome</string>
+    <string name="err_pon_dia">Inserisci la data dell’evento</string>
+    <string name="err_fecha_cad">La data di scadenza non è valida</string>
+    <string name="clip_etiqueta">Codice</string>
+    <string name="err_camara">Impossibile aprire la fotocamera su questo telefono</string>
+    <string name="err_fotos">Impossibile aprire le foto su questo telefono</string>
+    <string name="err_archivos">Impossibile aprire i file su questo telefono</string>
+    <string name="err_guardar_aqui">Impossibile salvare su questo telefono</string>
+    <string name="err_ajustes_avisos">Impossibile aprire le impostazioni delle notifiche</string>
+    <string name="err_archivo_grande">Il file è troppo grande</string>
+    <string name="err_generico">Qualcosa è andato storto</string>
+    <string name="err_leer_archivo">Impossibile leggere il file</string>
+    <string name="err_acceso_no">La tua schermata Home non supporta le scorciatoie</string>
+    <string name="err_acceso">Impossibile aggiungere la scorciatoia</string>
+    <string name="msj_sin_codigo">Nessun codice trovato nell’immagine</string>
+    <string name="err_guardar_copia">Impossibile salvare il backup</string>
+    <string name="err_adjuntar">Impossibile allegare il file</string>
+    <string name="err_leer_imagen">Impossibile leggere l’immagine</string>
+    <string name="esc_pon_codigo">Inquadra il codice nel riquadro</string>
+    <string name="esc_linterna">Torcia</string>
+    <string name="esc_cancelar">Annulla</string>
+    <string name="esc_sin_permiso">Senza il permesso della fotocamera non puoi scansionare. Puoi leggere il codice da una foto o digitare il numero.</string>
+    <string name="esc_sin_camara">Questo telefono non ha la fotocamera</string>
+    <string name="esc_camara_no">Impossibile usare la fotocamera</string>
+    <string name="esc_camara_fallo">Impossibile aprire la fotocamera</string>
+    <plurals name="res_importadas">
+        <item quantity="one">Importata da %1$s: %2$d tessera.</item>
+        <item quantity="many">Importate da %1$s: %2$d tessere.</item>
+        <item quantity="other">Importate da %1$s: %2$d tessere.</item>
+    </plurals>
+    <plurals name="res_repetidas">
+        <item quantity="one">%d c’era già (stesso nome e numero) e non è stata duplicata.</item>
+        <item quantity="many">%d c’erano già (stesso nome e numero) e non sono state duplicate.</item>
+        <item quantity="other">%d c’erano già (stesso nome e numero) e non sono state duplicate.</item>
+    </plurals>
+    <plurals name="res_sin_dibujo">
+        <item quantity="one">%d è stata importata senza codice disegnato, perché il suo tipo qui non si può disegnare. Viene mostrato solo il numero.</item>
+        <item quantity="many">%d sono state importate senza codice disegnato, perché il loro tipo qui non si può disegnare. Vengono mostrati solo i numeri.</item>
+        <item quantity="other">%d sono state importate senza codice disegnato, perché il loro tipo qui non si può disegnare. Vengono mostrati solo i numeri.</item>
+    </plurals>
+    <plurals name="res_omitidas">
+        <item quantity="one">%d riga è stata saltata perché non aveva né numero né codice.</item>
+        <item quantity="many">%d righe sono state saltate perché non avevano né numero né codice.</item>
+        <item quantity="other">%d righe sono state saltate perché non avevano né numero né codice.</item>
+    </plurals>
+    <plurals name="res_ilegibles">
+        <item quantity="one">%d non è stata salvata.</item>
+        <item quantity="many">%d non sono state salvate.</item>
+        <item quantity="other">%d non sono state salvate.</item>
+    </plurals>
+    <plurals name="copia_recuperadas">
+        <item quantity="one">%d tessera ripristinata</item>
+        <item quantity="many">%d tessere ripristinate</item>
+        <item quantity="other">%d tessere ripristinate</item>
+    </plurals>
+    <plurals name="aviso_en_dias">
+        <item quantity="one">Tra %d giorno</item>
+        <item quantity="many">Tra %d giorni</item>
+        <item quantity="other">Tra %d giorni</item>
+    </plurals>
+    <plurals name="aviso_cad_en">
+        <item quantity="one">Scade tra %d giorno</item>
+        <item quantity="many">Scade tra %d giorni</item>
+        <item quantity="other">Scade tra %d giorni</item>
+    </plurals>
+    <string-array name="meses_cortos">
+        <item>gen</item>
+        <item>feb</item>
+        <item>mar</item>
+        <item>apr</item>
+        <item>mag</item>
+        <item>giu</item>
+        <item>lug</item>
+        <item>ago</item>
+        <item>set</item>
+        <item>ott</item>
+        <item>nov</item>
+        <item>dic</item>
+    </string-array>
+</resources>

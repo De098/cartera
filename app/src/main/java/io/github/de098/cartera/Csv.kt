@@ -76,7 +76,7 @@ object Csv {
         java.text.Normalizer.normalize(s.trim().lowercase(), java.text.Normalizer.Form.NFD)
             .replace(Regex("\\p{M}+"), "").replace(Regex("[^a-z0-9]"), "")
 
-    fun verdad(v: String): Boolean = v.trim().lowercase() in setOf("1", "true", "yes", "si", "sí", "y", "s", "x", "verdadero")
+    fun verdad(v: String): Boolean = v.trim().lowercase() in setOf("1", "true", "yes", "si", "sí", "y", "s", "x", "verdadero", "oui", "o", "vrai", "cert", "ja", "j", "wahr", "vero", "sim")
 
     // ---------------------------------------------------------------- fechas
 

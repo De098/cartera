@@ -1,0 +1,36 @@
+Porte-cartes range vos cartes d'adhérent, de fidélité et de bibliothèque, vos billets et vos cartes d'embarquement sur votre téléphone, avec leur code prêt à présenter : sans compte, sans serveur et sans autorisation d'accès à Internet. Vos données ne quittent jamais l'appareil.
+
+<b>Cartes avec code</b>
+• Nom, numéro, couleur, note et épinglage en haut. Une liste avec recherche : d'abord les cartes épinglées, puis celles que vous utilisez le plus.
+• Codes QR, EAN-13, EAN-8, UPC-A, Code 128, Code 39, Aztec, PDF417 et Data Matrix.
+• En ouvrant une carte, le code s'affiche en grand avec le numéro en dessous, la luminosité au maximum et l'écran qui reste allumé. En la fermant, tout redevient comme avant.
+
+<b>Trois façons d'ajouter une carte</b>
+• Scanner le code avec l'appareil photo (l'autorisation n'est demandée qu'à ce moment-là).
+• Lire le code depuis une photo ou une capture d'écran de votre galerie.
+• Saisir le numéro et choisir le type.
+
+<b>Billets et pass</b>
+• Avec la date et l'heure de l'événement, une pièce jointe (image ou PDF) et/ou son code.
+• Un rappel le jour de l'événement et un autre à l'avance, réglable (par exemple, la veille).
+• Une fois l'événement passé, ils sont archivés automatiquement ; vous pouvez les restaurer ou les supprimer.
+
+<b>Des billets qui se remplissent tout seuls</b>
+• En scannant une carte d'embarquement (IATA), l'appli récupère le vol, l'origine, la destination et le jour ; pour les billets de train UIC (Aztec), la date, l'heure et les gares que contient le code.
+• Elle remplit le formulaire sans enregistrer et vous dit ce qu'elle a trouvé. Si le code ne contient pas de date (comme les billets de la Renfe), elle demande s'il s'agit d'un billet, puis le jour et l'heure.
+• « Voir le contenu du code » et « Détecter la date » sur chaque carte.
+
+<b>Dates d'expiration</b>
+• Toute carte peut avoir une date d'expiration, avec des rappels réglables (par défaut 30 jours avant et le jour même).
+• Repères « Expire bientôt » et « Expirée ».
+
+<b>Et aussi</b>
+• Widget des cartes épinglées : touchez-en une et son code s'ouvre.
+• Raccourci vers une carte sur l'écran d'accueil.
+• Sauvegarde dans un fichier .zip.
+
+<b>Importer depuis d'autres applis</b>
+• Catima (sa sauvegarde .zip ou .csv, sans mot de passe), Loyalty Card Keychain, pass Apple Wallet (.pkpass, y compris ouverts depuis un e-mail ou le navigateur) et tout fichier .csv avec une ligne d'en-tête.
+• Le format est reconnu automatiquement. À la fin, l'appli indique combien de cartes ont été importées, combien existaient déjà et combien sont arrivées sans code dessiné.
+
+Thème clair à fort contraste. Logiciel libre (GPL-3.0).

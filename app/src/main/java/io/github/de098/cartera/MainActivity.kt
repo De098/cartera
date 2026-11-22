@@ -67,6 +67,10 @@ class MainActivity : Activity() {
 
     /** Lo que la página puede pedirle a la app. */
     private inner class Puente {
+        /** Factor de letra de Android; la página lo aplica como zoom CSS (como Recordatorios). */
+        @JavascriptInterface
+        fun escala(): Float = resources.configuration.fontScale
+
         /** Contesta /cartera/…: devuelve {estado, tipo, cuerpo}. */
         @JavascriptInterface
         fun pedir(metodo: String, ruta: String, cuerpo: String): String =
@@ -168,8 +172,8 @@ class MainActivity : Activity() {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
             settings.setSupportZoom(false)
-            // la letra sigue el tamaño de letra de Android (la página está hecha para que quepa)
-            settings.textZoom = Math.round(resources.configuration.fontScale * 100).coerceIn(80, 200)
+            // la letra nunca crece sola (solo puede encoger); el aumento lo hace la página con zoom CSS (ver escala())
+            settings.textZoom = minOf(100, Math.round(resources.configuration.fontScale * 100))
             settings.allowFileAccess = false
             settings.allowContentAccess = false
             settings.blockNetworkLoads = true

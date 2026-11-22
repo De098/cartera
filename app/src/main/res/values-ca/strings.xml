@@ -1,139 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="nombre">Cartera</string>
-    <string name="w_nombre_favoritas">Fijadas</string>
-    <string name="w_desc_favoritas">Tus tarjetas fijadas: pulsa una y se abre su código</string>
-    <string name="w_titulo">📌 Fijadas</string>
-    <string name="w_vacio">Fija tarjetas con la chincheta (📌) y saldrán aquí</string>
-    <string name="canal_entradas">Entradas y billetes</string>
-    <string name="canal_caducidad">Caducidades</string>
-    <string name="aviso_hoy">Hoy</string>
-    <string name="aviso_hoy_hora">Es hoy a las %1$s. Pulsa para abrir el código.</string>
-    <string name="aviso_hoy_sin_hora">Es hoy. Pulsa para abrir el código.</string>
-    <string name="aviso_manana">Mañana</string>
-    <string name="aviso_texto_hora">%1$s a las %2$s.</string>
+    <string name="w_nombre_favoritas">Fixades</string>
+    <string name="w_desc_favoritas">Les targetes fixades: toca’n una per obrir-ne el codi</string>
+    <string name="w_titulo">📌 Fixades</string>
+    <string name="w_vacio">Fixa targetes amb la xinxeta (📌) i sortiran aquí</string>
+    <string name="canal_entradas">Entrades i bitllets</string>
+    <string name="canal_caducidad">Caducitats</string>
+    <string name="aviso_hoy">Avui</string>
+    <string name="aviso_hoy_hora">Avui a les %1$s. Toca per mostrar l’entrada.</string>
+    <string name="aviso_hoy_sin_hora">És avui. Toca per mostrar l’entrada.</string>
+    <string name="aviso_manana">Demà</string>
+    <string name="aviso_texto_hora">%1$s a les %2$s.</string>
     <string name="aviso_texto_sin_hora">%1$s.</string>
-    <string name="aviso_cad_hoy">Caduca hoy</string>
-    <string name="aviso_cad_manana">Caduca mañana</string>
-    <string name="aviso_cad_fecha">Fecha de caducidad: %1$s.</string>
-    <string name="fmt_qr">Código QR</string>
-    <string name="fmt_itf">ITF (2 de 5 entrelazado)</string>
-    <string name="fmt_ninguno">Sin código (solo el número)</string>
-    <string name="err_falta_numero">Falta el número</string>
-    <string name="err_no_vale">Ese número no vale para %1$s. %2$s</string>
-    <string name="ayuda_ean13">El EAN-13 lleva 13 cifras (o 12 y se calcula la última).</string>
-    <string name="ayuda_ean8">El EAN-8 lleva 8 cifras (o 7 y se calcula la última).</string>
-    <string name="ayuda_upca">El UPC-A lleva 12 cifras (o 11 y se calcula la última).</string>
-    <string name="ayuda_upce">El UPC-E lleva 8 cifras (empieza por 0 o 1) o 7.</string>
-    <string name="ayuda_itf">El ITF lleva solo cifras y en cantidad par.</string>
-    <string name="ayuda_code39">El Code 39 admite letras MAYÚSCULAS, cifras y - . $ / + %% y espacio.</string>
-    <string name="ayuda_codabar">El Codabar lleva cifras y una letra A-D al principio y al final.</string>
-    <string name="ayuda_code128">El Code 128 admite letras, cifras y signos sin tildes.</string>
-    <string name="ayuda_texto">Ese texto no se puede escribir en ese tipo de código.</string>
-    <string name="ayuda_otro">Ese número no vale para ese tipo de código.</string>
-    <string name="err_tipo_desconocido">Tipo de código desconocido</string>
-    <string name="err_no_dibujar">No se puede dibujar ese código</string>
-    <string name="err_adj_grande">Ese archivo es demasiado grande (máximo 40 MB)</string>
-    <string name="err_tarjeta_invalida">Tarjeta no válida</string>
-    <string name="err_no_se_lee">No se puede leer ese archivo</string>
-    <string name="err_pdf">No se puede abrir ese PDF</string>
-    <string name="err_no_imagen">Ese archivo no es una imagen ni un PDF</string>
-    <string name="err_copia_nueva">Esa copia es de una versión más nueva de la app: actualízala primero</string>
-    <string name="copia_vacia">La copia no tenía nada nuevo</string>
-    <string name="msj_copia_guardada">Copia guardada</string>
-    <string name="err_cifrado">Ese archivo está cifrado con contraseña (Catima permite exportar así) y Cartera no puede abrirlo. En Catima, vuelve a exportar la copia sin escribir contraseña y entonces impórtala aquí.</string>
-    <string name="err_no_reconozco">No reconozco ese archivo. Puedo importar copias de Cartera y de Catima (.zip o .csv), el CSV de Loyalty Card Keychain, pases de Apple Wallet (.pkpass o .pkpasses) y cualquier .csv con una fila de cabecera.</string>
-    <string name="err_importar_enorme">Ese archivo es demasiado grande para ser una lista de tarjetas.</string>
-    <string name="err_zip">Ese archivo ZIP está dañado o no se puede abrir.</string>
-    <string name="res_ninguna">No he encontrado ninguna tarjeta en ese archivo.</string>
-    <string name="res_nada_nuevo">No se ha importado ninguna tarjeta nueva.</string>
-    <string name="err_catima_sin_csv">Esa copia de Catima no trae catima.csv</string>
-    <string name="err_catima_vacia">No se ha encontrado ninguna tarjeta en esa copia de Catima</string>
-    <string name="img_frente">Frente</string>
-    <string name="img_dorso">Dorso</string>
-    <string name="img_strip">Imagen</string>
-    <string name="img_logo">Logo</string>
+    <string name="aviso_cad_hoy">Caduca avui</string>
+    <string name="aviso_cad_manana">Caduca demà</string>
+    <string name="aviso_cad_fecha">Data de caducitat: %1$s.</string>
+    <string name="fmt_qr">Codi QR</string>
+    <string name="fmt_itf">ITF (2 de 5 entrellaçat)</string>
+    <string name="fmt_ninguno">Sense codi (només el número)</string>
+    <string name="err_falta_numero">Escriu el número</string>
+    <string name="err_no_vale">Aquest número no serveix per a %1$s. %2$s</string>
+    <string name="ayuda_ean13">L’EAN-13 té 13 xifres (o 12, i l’última es calcula sola).</string>
+    <string name="ayuda_ean8">L’EAN-8 té 8 xifres (o 7, i l’última es calcula sola).</string>
+    <string name="ayuda_upca">L’UPC-A té 12 xifres (o 11, i l’última es calcula sola).</string>
+    <string name="ayuda_upce">L’UPC-E té 8 xifres (començant per 0 o 1) o 7.</string>
+    <string name="ayuda_itf">L’ITF només admet xifres, i en nombre parell.</string>
+    <string name="ayuda_code39">El Code 39 admet MAJÚSCULES, xifres, espais i - . $ / + %%</string>
+    <string name="ayuda_codabar">El Codabar admet xifres, amb una lletra de la A a la D al principi i al final.</string>
+    <string name="ayuda_code128">El Code 128 admet lletres, xifres i símbols, però no accents.</string>
+    <string name="ayuda_texto">Aquest text no es pot escriure amb aquest tipus de codi.</string>
+    <string name="ayuda_otro">Aquest número no és vàlid per a aquest tipus de codi.</string>
+    <string name="err_tipo_desconocido">Tipus de codi desconegut</string>
+    <string name="err_no_dibujar">No es pot dibuixar aquest codi</string>
+    <string name="err_adj_grande">El fitxer és massa gran (40 MB com a màxim)</string>
+    <string name="err_tarjeta_invalida">Targeta no vàlida</string>
+    <string name="err_no_se_lee">No es pot llegir el fitxer</string>
+    <string name="err_pdf">No es pot obrir el PDF</string>
+    <string name="err_no_imagen">El fitxer no és ni una imatge ni un PDF</string>
+    <string name="err_copia_nueva">Aquesta còpia és d’una versió més nova de l’app. Actualitza-la primer.</string>
+    <string name="copia_vacia">La còpia no tenia res de nou</string>
+    <string name="msj_copia_guardada">Còpia desada</string>
+    <string name="err_cifrado">El fitxer està protegit amb contrasenya (Catima pot exportar així) i Cartera no el pot obrir. A Catima, torna a exportar la còpia sense contrasenya i importa-la aquí.</string>
+    <string name="err_no_reconozco">No reconec aquest fitxer. Puc importar còpies de Cartera i de Catima (.zip o .csv), el CSV de Loyalty Card Keychain, passis d’Apple Wallet (.pkpass o .pkpasses) i qualsevol .csv amb fila de capçalera.</string>
+    <string name="err_importar_enorme">El fitxer és massa gran per ser una llista de targetes.</string>
+    <string name="err_zip">El fitxer ZIP està malmès o no es pot obrir.</string>
+    <string name="res_ninguna">No s’ha trobat cap targeta en aquest fitxer.</string>
+    <string name="res_nada_nuevo">No s’ha importat cap targeta nova.</string>
+    <string name="err_catima_sin_csv">Aquesta còpia de Catima no conté catima.csv</string>
+    <string name="err_catima_vacia">No s’ha trobat cap targeta en aquesta còpia de Catima</string>
+    <string name="img_frente">Davant</string>
+    <string name="img_dorso">Darrere</string>
+    <string name="img_strip">Imatge</string>
+    <string name="img_logo">Logotip</string>
     <string name="img_thumbnail">Miniatura</string>
-    <string name="pase_wallet">Pase de Wallet</string>
-    <string name="err_csv_vacio">Ese archivo está vacío.</string>
-    <string name="err_csv_columnas">No he reconocido ninguna columna con el número de la tarjeta. La primera fila del archivo debe tener los nombres de las columnas (por ejemplo: nombre, número, tipo, nota, caducidad, color).</string>
-    <string name="tarjeta_sin_nombre">Tarjeta sin nombre</string>
-    <string name="billete_vuelo">Vuelo %1$s %2$s → %3$s</string>
-    <string name="billete_vuelo_resumen">vuelo %1$s, %2$s → %3$s, %4$s (el código no lleva la hora)</string>
+    <string name="pase_wallet">Passi de Wallet</string>
+    <string name="err_csv_vacio">El fitxer és buit.</string>
+    <string name="err_csv_columnas">No s’ha trobat cap columna amb el número de la targeta. La primera fila del fitxer ha de tenir els noms de les columnes (per exemple: nom, número, tipus, nota, caducitat, color).</string>
+    <string name="tarjeta_sin_nombre">Targeta sense nom</string>
+    <string name="billete_vuelo">Vol %1$s %2$s → %3$s</string>
+    <string name="billete_vuelo_resumen">vol %1$s, %2$s → %3$s, %4$s (el codi no porta l’hora)</string>
     <string name="billete_tren">Tren %1$s</string>
-    <string name="billete_tren_sin_ruta">Billete de tren</string>
+    <string name="billete_tren_sin_ruta">Bitllet de tren</string>
     <string name="billete_tren_resumen">tren %1$s, %2$s</string>
     <string name="billete_tren_resumen_sin_ruta">tren, %1$s</string>
-    <string name="billete_a_las"> a las %1$s</string>
-    <string name="err_pon_nombre">Pon un nombre</string>
-    <string name="err_pon_dia">Pon el día del evento</string>
-    <string name="err_fecha_cad">La fecha de caducidad no es válida</string>
-    <string name="clip_etiqueta">Código</string>
-    <string name="err_camara">No se puede abrir la cámara en este móvil</string>
-    <string name="err_fotos">No se pueden abrir fotos en este móvil</string>
-    <string name="err_archivos">No se pueden abrir archivos en este móvil</string>
-    <string name="err_guardar_aqui">No se puede guardar en este móvil</string>
-    <string name="err_ajustes_avisos">No se pueden abrir los ajustes de notificaciones</string>
-    <string name="err_archivo_grande">Ese archivo es demasiado grande</string>
-    <string name="err_generico">No se ha podido</string>
-    <string name="err_leer_archivo">No se ha podido leer ese archivo</string>
-    <string name="err_acceso_no">Tu pantalla de inicio no permite añadir accesos directos</string>
-    <string name="err_acceso">No se ha podido añadir el acceso directo</string>
-    <string name="msj_sin_codigo">No se ha encontrado ningún código en esa imagen</string>
-    <string name="err_guardar_copia">No se ha podido guardar la copia</string>
-    <string name="err_adjuntar">No se ha podido adjuntar ese archivo</string>
-    <string name="err_leer_imagen">No se ha podido leer esa imagen</string>
-    <string name="esc_pon_codigo">Pon el código dentro del recuadro</string>
-    <string name="esc_linterna">Linterna</string>
-    <string name="esc_cancelar">Cancelar</string>
-    <string name="esc_sin_permiso">Sin permiso de la cámara no se puede escanear. Puedes leer el código desde una foto o escribir el número.</string>
-    <string name="esc_sin_camara">Este móvil no tiene cámara</string>
-    <string name="esc_camara_no">No se puede usar la cámara</string>
-    <string name="esc_camara_fallo">No se ha podido abrir la cámara</string>
+    <string name="billete_a_las">" a les %1$s"</string>
+    <string name="err_pon_nombre">Posa-hi un nom</string>
+    <string name="err_pon_dia">Posa-hi el dia de l’esdeveniment</string>
+    <string name="err_fecha_cad">La data de caducitat no és vàlida</string>
+    <string name="clip_etiqueta">Codi</string>
+    <string name="err_camara">No es pot obrir la càmera en aquest mòbil</string>
+    <string name="err_fotos">No es poden obrir les fotos en aquest mòbil</string>
+    <string name="err_archivos">No es poden obrir els fitxers en aquest mòbil</string>
+    <string name="err_guardar_aqui">No es pot desar en aquest mòbil</string>
+    <string name="err_ajustes_avisos">No es pot obrir la configuració de notificacions</string>
+    <string name="err_archivo_grande">El fitxer és massa gran</string>
+    <string name="err_generico">Hi ha hagut un error</string>
+    <string name="err_leer_archivo">No s’ha pogut llegir el fitxer</string>
+    <string name="err_acceso_no">La pantalla d’inici no admet dreceres</string>
+    <string name="err_acceso">No s’ha pogut afegir la drecera</string>
+    <string name="msj_sin_codigo">No s’ha trobat cap codi a la imatge</string>
+    <string name="err_guardar_copia">No s’ha pogut desar la còpia</string>
+    <string name="err_adjuntar">No s’ha pogut adjuntar el fitxer</string>
+    <string name="err_leer_imagen">No s’ha pogut llegir la imatge</string>
+    <string name="esc_pon_codigo">Posa el codi dins del requadre</string>
+    <string name="esc_linterna">Llanterna</string>
+    <string name="esc_cancelar">Cancel·la</string>
+    <string name="esc_sin_permiso">Sense permís de càmera no es pot escanejar. Pots llegir el codi d’una foto o escriure el número.</string>
+    <string name="esc_sin_camara">Aquest mòbil no té càmera</string>
+    <string name="esc_camara_no">No es pot fer servir la càmera</string>
+    <string name="esc_camara_fallo">No s’ha pogut obrir la càmera</string>
     <plurals name="res_importadas">
-        <item quantity="one">Importada de %1$s: %2$d tarjeta.</item>
-        <item quantity="other">Importadas de %1$s: %2$d tarjetas.</item>
+        <item quantity="one">Importada de %1$s: %2$d targeta.</item>
+        <item quantity="many">Importades de %1$s: %2$d targetes.</item>
+        <item quantity="other">Importades de %1$s: %2$d targetes.</item>
     </plurals>
     <plurals name="res_repetidas">
-        <item quantity="one">%d ya estaba (mismo nombre y número): no se ha duplicado.</item>
-        <item quantity="other">%d ya estaban (mismo nombre y número): no se han duplicado.</item>
+        <item quantity="one">%d ja hi era (mateix nom i número) i no s’ha duplicat.</item>
+        <item quantity="many">%d ja hi eren (mateix nom i número) i no s’han duplicat.</item>
+        <item quantity="other">%d ja hi eren (mateix nom i número) i no s’han duplicat.</item>
     </plurals>
     <plurals name="res_sin_dibujo">
-        <item quantity="one">%d se ha importado sin dibujo del código, porque su tipo no se puede dibujar aquí: se ve solo el número.</item>
-        <item quantity="other">%d se han importado sin dibujo del código, porque su tipo no se puede dibujar aquí: se ve solo el número.</item>
+        <item quantity="one">%d s’ha importat sense codi dibuixat, perquè aquí no se’n pot dibuixar el tipus. Només se’n mostra el número.</item>
+        <item quantity="many">%d s’han importat sense codi dibuixat, perquè aquí no se’n pot dibuixar el tipus. Només se’n mostren els números.</item>
+        <item quantity="other">%d s’han importat sense codi dibuixat, perquè aquí no se’n pot dibuixar el tipus. Només se’n mostren els números.</item>
     </plurals>
     <plurals name="res_omitidas">
-        <item quantity="one">%d fila se ha saltado por no tener número ni código.</item>
-        <item quantity="other">%d filas se han saltado por no tener número ni código.</item>
+        <item quantity="one">S’ha saltat %d fila perquè no tenia número ni codi.</item>
+        <item quantity="many">S’han saltat %d files perquè no tenien número ni codi.</item>
+        <item quantity="other">S’han saltat %d files perquè no tenien número ni codi.</item>
     </plurals>
     <plurals name="res_ilegibles">
-        <item quantity="one">%d no se ha podido guardar.</item>
-        <item quantity="other">%d no se han podido guardar.</item>
+        <item quantity="one">%d no s’ha pogut desar.</item>
+        <item quantity="many">%d no s’han pogut desar.</item>
+        <item quantity="other">%d no s’han pogut desar.</item>
     </plurals>
     <plurals name="copia_recuperadas">
-        <item quantity="one">Recuperada: %d tarjeta</item>
-        <item quantity="other">Recuperadas: %d tarjetas</item>
+        <item quantity="one">S’ha recuperat %d targeta</item>
+        <item quantity="many">S’han recuperat %d targetes</item>
+        <item quantity="other">S’han recuperat %d targetes</item>
     </plurals>
     <plurals name="aviso_en_dias">
-        <item quantity="one">En %d día</item>
-        <item quantity="other">En %d días</item>
+        <item quantity="one">D’aquí a %d dia</item>
+        <item quantity="many">D’aquí a %d dies</item>
+        <item quantity="other">D’aquí a %d dies</item>
     </plurals>
     <plurals name="aviso_cad_en">
-        <item quantity="one">Caduca en %d día</item>
-        <item quantity="other">Caduca en %d días</item>
+        <item quantity="one">Caduca d’aquí a %d dia</item>
+        <item quantity="many">Caduca d’aquí a %d dies</item>
+        <item quantity="other">Caduca d’aquí a %d dies</item>
     </plurals>
     <string-array name="meses_cortos">
-        <item>ene</item>
-        <item>feb</item>
-        <item>mar</item>
-        <item>abr</item>
-        <item>may</item>
-        <item>jun</item>
-        <item>jul</item>
-        <item>ago</item>
-        <item>sep</item>
-        <item>oct</item>
-        <item>nov</item>
-        <item>dic</item>
+        <item>gen.</item>
+        <item>febr.</item>
+        <item>març</item>
+        <item>abr.</item>
+        <item>maig</item>
+        <item>juny</item>
+        <item>jul.</item>
+        <item>ag.</item>
+        <item>set.</item>
+        <item>oct.</item>
+        <item>nov.</item>
+        <item>des.</item>
     </string-array>
 </resources>

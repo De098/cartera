@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nombre">Meine Karten</string>
+    <string name="w_nombre_favoritas">Angeheftet</string>
+    <string name="w_desc_favoritas">Deine angehefteten Karten: Tippe auf eine, um ihren Code zu öffnen</string>
+    <string name="w_titulo">📌 Angeheftet</string>
+    <string name="w_vacio">Hefte Karten mit der Pinnnadel (📌) an, dann erscheinen sie hier</string>
+    <string name="canal_entradas">Tickets und Pässe</string>
+    <string name="canal_caducidad">Ablaufdaten</string>
+    <string name="aviso_hoy">Heute</string>
+    <string name="aviso_hoy_hora">Heute um %1$s Uhr. Tippe, um dein Ticket zu zeigen.</string>
+    <string name="aviso_hoy_sin_hora">Es ist heute. Tippe, um dein Ticket zu zeigen.</string>
+    <string name="aviso_manana">Morgen</string>
+    <string name="aviso_texto_hora">%1$s um %2$s Uhr.</string>
+    <string name="aviso_texto_sin_hora">%1$s.</string>
+    <string name="aviso_cad_hoy">Läuft heute ab</string>
+    <string name="aviso_cad_manana">Läuft morgen ab</string>
+    <string name="aviso_cad_fecha">Gültig bis: %1$s.</string>
+    <string name="fmt_qr">QR-Code</string>
+    <string name="fmt_itf">ITF (2 aus 5 verschachtelt)</string>
+    <string name="fmt_ninguno">Kein Barcode (nur Nummer)</string>
+    <string name="err_falta_numero">Gib eine Nummer ein</string>
+    <string name="err_no_vale">Diese Nummer passt nicht zu %1$s. %2$s</string>
+    <string name="ayuda_ean13">EAN-13 hat 13 Ziffern (oder 12, dann wird die letzte berechnet).</string>
+    <string name="ayuda_ean8">EAN-8 hat 8 Ziffern (oder 7, dann wird die letzte berechnet).</string>
+    <string name="ayuda_upca">UPC-A hat 12 Ziffern (oder 11, dann wird die letzte berechnet).</string>
+    <string name="ayuda_upce">UPC-E hat 8 Ziffern (beginnend mit 0 oder 1) oder 7.</string>
+    <string name="ayuda_itf">ITF erlaubt nur Ziffern, und zwar eine gerade Anzahl.</string>
+    <string name="ayuda_code39">Code 39 erlaubt GROSSBUCHSTABEN, Ziffern, Leerzeichen und - . $ / + %%</string>
+    <string name="ayuda_codabar">Codabar erlaubt Ziffern, mit einem Buchstaben von A bis D am Anfang und am Ende.</string>
+    <string name="ayuda_code128">Code 128 erlaubt Buchstaben, Ziffern und Symbole, aber keine Umlaute oder Akzente.</string>
+    <string name="ayuda_texto">Dieser Text lässt sich mit diesem Code-Typ nicht schreiben.</string>
+    <string name="ayuda_otro">Diese Nummer ist für diesen Code-Typ ungültig.</string>
+    <string name="err_tipo_desconocido">Unbekannter Code-Typ</string>
+    <string name="err_no_dibujar">Dieser Code kann nicht gezeichnet werden</string>
+    <string name="err_adj_grande">Die Datei ist zu groß (maximal 40 MB)</string>
+    <string name="err_tarjeta_invalida">Ungültige Karte</string>
+    <string name="err_no_se_lee">Die Datei kann nicht gelesen werden</string>
+    <string name="err_pdf">Das PDF kann nicht geöffnet werden</string>
+    <string name="err_no_imagen">Die Datei ist weder ein Bild noch ein PDF</string>
+    <string name="err_copia_nueva">Diese Sicherung stammt aus einer neueren App-Version. Aktualisiere zuerst die App.</string>
+    <string name="copia_vacia">In der Sicherung war nichts Neues</string>
+    <string name="msj_copia_guardada">Sicherung gespeichert</string>
+    <string name="err_cifrado">Die Datei ist passwortgeschützt (Catima kann so exportieren), und Meine Karten kann sie nicht öffnen. Exportiere die Sicherung in Catima noch einmal ohne Passwort und importiere sie dann hier.</string>
+    <string name="err_no_reconozco">Diese Datei kenne ich nicht. Importieren kann ich Sicherungen von Meine Karten und Catima (.zip oder .csv), die CSV von Loyalty Card Keychain, Apple-Wallet-Pässe (.pkpass oder .pkpasses) und jede .csv mit Kopfzeile.</string>
+    <string name="err_importar_enorme">Die Datei ist zu groß für eine Kartenliste.</string>
+    <string name="err_zip">Die ZIP-Datei ist beschädigt oder lässt sich nicht öffnen.</string>
+    <string name="res_ninguna">In der Datei wurden keine Karten gefunden.</string>
+    <string name="res_nada_nuevo">Es wurden keine neuen Karten importiert.</string>
+    <string name="err_catima_sin_csv">Diese Catima-Sicherung enthält keine catima.csv</string>
+    <string name="err_catima_vacia">In dieser Catima-Sicherung wurden keine Karten gefunden</string>
+    <string name="img_frente">Vorderseite</string>
+    <string name="img_dorso">Rückseite</string>
+    <string name="img_strip">Bild</string>
+    <string name="img_logo">Logo</string>
+    <string name="img_thumbnail">Vorschaubild</string>
+    <string name="pase_wallet">Wallet-Pass</string>
+    <string name="err_csv_vacio">Die Datei ist leer.</string>
+    <string name="err_csv_columnas">Keine Spalte mit der Kartennummer gefunden. Die erste Zeile der Datei muss die Spaltennamen enthalten (zum Beispiel: Name, Nummer, Typ, Notiz, Ablaufdatum, Farbe).</string>
+    <string name="tarjeta_sin_nombre">Karte ohne Namen</string>
+    <string name="billete_vuelo">Flug %1$s %2$s → %3$s</string>
+    <string name="billete_vuelo_resumen">Flug %1$s, %2$s → %3$s, %4$s (der Code enthält keine Uhrzeit)</string>
+    <string name="billete_tren">Zug %1$s</string>
+    <string name="billete_tren_sin_ruta">Zugticket</string>
+    <string name="billete_tren_resumen">Zug %1$s, %2$s</string>
+    <string name="billete_tren_resumen_sin_ruta">Zug, %1$s</string>
+    <string name="billete_a_las">" um %1$s Uhr"</string>
+    <string name="err_pon_nombre">Gib einen Namen ein</string>
+    <string name="err_pon_dia">Gib das Datum der Veranstaltung ein</string>
+    <string name="err_fecha_cad">Das Ablaufdatum ist ungültig</string>
+    <string name="clip_etiqueta">Code</string>
+    <string name="err_camara">Die Kamera kann auf diesem Handy nicht geöffnet werden</string>
+    <string name="err_fotos">Fotos können auf diesem Handy nicht geöffnet werden</string>
+    <string name="err_archivos">Dateien können auf diesem Handy nicht geöffnet werden</string>
+    <string name="err_guardar_aqui">Auf diesem Handy kann nicht gespeichert werden</string>
+    <string name="err_ajustes_avisos">Die Benachrichtigungseinstellungen lassen sich nicht öffnen</string>
+    <string name="err_archivo_grande">Die Datei ist zu groß</string>
+    <string name="err_generico">Da ist etwas schiefgelaufen</string>
+    <string name="err_leer_archivo">Die Datei konnte nicht gelesen werden</string>
+    <string name="err_acceso_no">Dein Startbildschirm unterstützt keine Verknüpfungen</string>
+    <string name="err_acceso">Die Verknüpfung konnte nicht hinzugefügt werden</string>
+    <string name="msj_sin_codigo">Im Bild wurde kein Code gefunden</string>
+    <string name="err_guardar_copia">Die Sicherung konnte nicht gespeichert werden</string>
+    <string name="err_adjuntar">Die Datei konnte nicht angehängt werden</string>
+    <string name="err_leer_imagen">Das Bild konnte nicht gelesen werden</string>
+    <string name="esc_pon_codigo">Halte den Code in den Rahmen</string>
+    <string name="esc_linterna">Taschenlampe</string>
+    <string name="esc_cancelar">Abbrechen</string>
+    <string name="esc_sin_permiso">Ohne Kameraberechtigung kann nicht gescannt werden. Du kannst den Code stattdessen aus einem Foto lesen oder die Nummer eintippen.</string>
+    <string name="esc_sin_camara">Dieses Handy hat keine Kamera</string>
+    <string name="esc_camara_no">Die Kamera kann nicht verwendet werden</string>
+    <string name="esc_camara_fallo">Die Kamera konnte nicht geöffnet werden</string>
+    <plurals name="res_importadas">
+        <item quantity="one">Aus %1$s importiert: %2$d Karte.</item>
+        <item quantity="other">Aus %1$s importiert: %2$d Karten.</item>
+    </plurals>
+    <plurals name="res_repetidas">
+        <item quantity="one">%d war schon vorhanden (gleicher Name und gleiche Nummer) und wurde nicht doppelt angelegt.</item>
+        <item quantity="other">%d waren schon vorhanden (gleicher Name und gleiche Nummer) und wurden nicht doppelt angelegt.</item>
+    </plurals>
+    <plurals name="res_sin_dibujo">
+        <item quantity="one">%d wurde ohne gezeichneten Code importiert, weil sich ihr Typ hier nicht zeichnen lässt. Es wird nur die Nummer angezeigt.</item>
+        <item quantity="other">%d wurden ohne gezeichneten Code importiert, weil sich ihr Typ hier nicht zeichnen lässt. Es werden nur die Nummern angezeigt.</item>
+    </plurals>
+    <plurals name="res_omitidas">
+        <item quantity="one">%d Zeile wurde übersprungen, weil sie weder Nummer noch Code hatte.</item>
+        <item quantity="other">%d Zeilen wurden übersprungen, weil sie weder Nummer noch Code hatten.</item>
+    </plurals>
+    <plurals name="res_ilegibles">
+        <item quantity="one">%d konnte nicht gespeichert werden.</item>
+        <item quantity="other">%d konnten nicht gespeichert werden.</item>
+    </plurals>
+    <plurals name="copia_recuperadas">
+        <item quantity="one">%d Karte wiederhergestellt</item>
+        <item quantity="other">%d Karten wiederhergestellt</item>
+    </plurals>
+    <plurals name="aviso_en_dias">
+        <item quantity="one">In %d Tag</item>
+        <item quantity="other">In %d Tagen</item>
+    </plurals>
+    <plurals name="aviso_cad_en">
+        <item quantity="one">Läuft in %d Tag ab</item>
+        <item quantity="other">Läuft in %d Tagen ab</item>
+    </plurals>
+    <string-array name="meses_cortos">
+        <item>Jan.</item>
+        <item>Feb.</item>
+        <item>März</item>
+        <item>Apr.</item>
+        <item>Mai</item>
+        <item>Juni</item>
+        <item>Juli</item>
+        <item>Aug.</item>
+        <item>Sept.</item>
+        <item>Okt.</item>
+        <item>Nov.</item>
+        <item>Dez.</item>
+    </string-array>
+</resources>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nombre">Porta-cartões</string>
+    <string name="w_nombre_favoritas">Fixados</string>
+    <string name="w_desc_favoritas">Os seus cartões fixados: toque num para abrir o código</string>
+    <string name="w_titulo">📌 Fixados</string>
+    <string name="w_vacio">Fixe cartões com o pionés (📌) e aparecem aqui</string>
+    <string name="canal_entradas">Bilhetes e passes</string>
+    <string name="canal_caducidad">Validades</string>
+    <string name="aviso_hoy">Hoje</string>
+    <string name="aviso_hoy_hora">Hoje às %1$s. Toque para mostrar o bilhete.</string>
+    <string name="aviso_hoy_sin_hora">É hoje. Toque para mostrar o bilhete.</string>
+    <string name="aviso_manana">Amanhã</string>
+    <string name="aviso_texto_hora">%1$s às %2$s.</string>
+    <string name="aviso_texto_sin_hora">%1$s.</string>
+    <string name="aviso_cad_hoy">Expira hoje</string>
+    <string name="aviso_cad_manana">Expira amanhã</string>
+    <string name="aviso_cad_fecha">Válido até: %1$s.</string>
+    <string name="fmt_qr">Código QR</string>
+    <string name="fmt_itf">ITF (2 de 5 intercalado)</string>
+    <string name="fmt_ninguno">Sem código de barras (só o número)</string>
+    <string name="err_falta_numero">Introduza um número</string>
+    <string name="err_no_vale">Esse número não serve para %1$s. %2$s</string>
+    <string name="ayuda_ean13">O EAN-13 tem 13 dígitos (ou 12, e o último é calculado automaticamente).</string>
+    <string name="ayuda_ean8">O EAN-8 tem 8 dígitos (ou 7, e o último é calculado automaticamente).</string>
+    <string name="ayuda_upca">O UPC-A tem 12 dígitos (ou 11, e o último é calculado automaticamente).</string>
+    <string name="ayuda_upce">O UPC-E tem 8 dígitos (a começar por 0 ou 1) ou 7.</string>
+    <string name="ayuda_itf">O ITF só aceita dígitos, e em número par.</string>
+    <string name="ayuda_code39">O Code 39 aceita MAIÚSCULAS, dígitos, espaços e - . $ / + %%</string>
+    <string name="ayuda_codabar">O Codabar aceita dígitos, com uma letra de A a D no início e no fim.</string>
+    <string name="ayuda_code128">O Code 128 aceita letras, dígitos e símbolos, mas não acentos.</string>
+    <string name="ayuda_texto">Esse texto não pode ser escrito com este tipo de código.</string>
+    <string name="ayuda_otro">Esse número não é válido para este tipo de código.</string>
+    <string name="err_tipo_desconocido">Tipo de código desconhecido</string>
+    <string name="err_no_dibujar">Não é possível desenhar esse código</string>
+    <string name="err_adj_grande">O ficheiro é demasiado grande (máximo 40 MB)</string>
+    <string name="err_tarjeta_invalida">Cartão inválido</string>
+    <string name="err_no_se_lee">Não é possível ler o ficheiro</string>
+    <string name="err_pdf">Não é possível abrir o PDF</string>
+    <string name="err_no_imagen">O ficheiro não é uma imagem nem um PDF</string>
+    <string name="err_copia_nueva">Esta cópia foi feita numa versão mais recente da app. Atualize a app primeiro.</string>
+    <string name="copia_vacia">A cópia não tinha nada de novo</string>
+    <string name="msj_copia_guardada">Cópia guardada</string>
+    <string name="err_cifrado">O ficheiro está protegido por palavra-passe (o Catima pode exportar assim) e o Porta-cartões não o consegue abrir. No Catima, exporte de novo a cópia sem palavra-passe e importe-a aqui.</string>
+    <string name="err_no_reconozco">Não reconheço este ficheiro. Consigo importar cópias do Porta-cartões e do Catima (.zip ou .csv), o CSV do Loyalty Card Keychain, passes do Apple Wallet (.pkpass ou .pkpasses) e qualquer .csv com linha de cabeçalho.</string>
+    <string name="err_importar_enorme">O ficheiro é demasiado grande para ser uma lista de cartões.</string>
+    <string name="err_zip">O ficheiro ZIP está danificado ou não pode ser aberto.</string>
+    <string name="res_ninguna">Não foram encontrados cartões nesse ficheiro.</string>
+    <string name="res_nada_nuevo">Não foi importado nenhum cartão novo.</string>
+    <string name="err_catima_sin_csv">Essa cópia do Catima não contém catima.csv</string>
+    <string name="err_catima_vacia">Não foram encontrados cartões nessa cópia do Catima</string>
+    <string name="img_frente">Frente</string>
+    <string name="img_dorso">Verso</string>
+    <string name="img_strip">Imagem</string>
+    <string name="img_logo">Logótipo</string>
+    <string name="img_thumbnail">Miniatura</string>
+    <string name="pase_wallet">Passe do Wallet</string>
+    <string name="err_csv_vacio">O ficheiro está vazio.</string>
+    <string name="err_csv_columnas">Não foi encontrada nenhuma coluna com o número do cartão. A primeira linha do ficheiro tem de ter os nomes das colunas (por exemplo: nome, número, tipo, nota, validade, cor).</string>
+    <string name="tarjeta_sin_nombre">Cartão sem nome</string>
+    <string name="billete_vuelo">Voo %1$s %2$s → %3$s</string>
+    <string name="billete_vuelo_resumen">voo %1$s, %2$s → %3$s, %4$s (o código não inclui a hora)</string>
+    <string name="billete_tren">Comboio %1$s</string>
+    <string name="billete_tren_sin_ruta">Bilhete de comboio</string>
+    <string name="billete_tren_resumen">comboio %1$s, %2$s</string>
+    <string name="billete_tren_resumen_sin_ruta">comboio, %1$s</string>
+    <string name="billete_a_las">" às %1$s"</string>
+    <string name="err_pon_nombre">Indique um nome</string>
+    <string name="err_pon_dia">Indique a data do evento</string>
+    <string name="err_fecha_cad">A data de validade não é válida</string>
+    <string name="clip_etiqueta">Código</string>
+    <string name="err_camara">Não é possível abrir a câmara neste telemóvel</string>
+    <string name="err_fotos">Não é possível abrir as fotos neste telemóvel</string>
+    <string name="err_archivos">Não é possível abrir ficheiros neste telemóvel</string>
+    <string name="err_guardar_aqui">Não é possível guardar neste telemóvel</string>
+    <string name="err_ajustes_avisos">Não é possível abrir as definições de notificações</string>
+    <string name="err_archivo_grande">O ficheiro é demasiado grande</string>
+    <string name="err_generico">Algo correu mal</string>
+    <string name="err_leer_archivo">Não foi possível ler o ficheiro</string>
+    <string name="err_acceso_no">O seu ecrã principal não suporta atalhos</string>
+    <string name="err_acceso">Não foi possível adicionar o atalho</string>
+    <string name="msj_sin_codigo">Não foi encontrado nenhum código na imagem</string>
+    <string name="err_guardar_copia">Não foi possível guardar a cópia</string>
+    <string name="err_adjuntar">Não foi possível anexar o ficheiro</string>
+    <string name="err_leer_imagen">Não foi possível ler a imagem</string>
+    <string name="esc_pon_codigo">Coloque o código dentro do quadro</string>
+    <string name="esc_linterna">Lanterna</string>
+    <string name="esc_cancelar">Cancelar</string>
+    <string name="esc_sin_permiso">Sem permissão da câmara não é possível digitalizar. Pode ler o código de uma foto ou escrever o número.</string>
+    <string name="esc_sin_camara">Este telemóvel não tem câmara</string>
+    <string name="esc_camara_no">Não é possível usar a câmara</string>
+    <string name="esc_camara_fallo">Não foi possível abrir a câmara</string>
+    <plurals name="res_importadas">
+        <item quantity="one">Importado de %1$s: %2$d cartão.</item>
+        <item quantity="many">Importados de %1$s: %2$d cartões.</item>
+        <item quantity="other">Importados de %1$s: %2$d cartões.</item>
+    </plurals>
+    <plurals name="res_repetidas">
+        <item quantity="one">%d já existia (mesmo nome e número) e não foi duplicado.</item>
+        <item quantity="many">%d já existiam (mesmo nome e número) e não foram duplicados.</item>
+        <item quantity="other">%d já existiam (mesmo nome e número) e não foram duplicados.</item>
+    </plurals>
+    <plurals name="res_sin_dibujo">
+        <item quantity="one">%d foi importado sem código desenhado, porque o seu tipo não pode ser desenhado aqui. Só aparece o número.</item>
+        <item quantity="many">%d foram importados sem código desenhado, porque o seu tipo não pode ser desenhado aqui. Só aparecem os números.</item>
+        <item quantity="other">%d foram importados sem código desenhado, porque o seu tipo não pode ser desenhado aqui. Só aparecem os números.</item>
+    </plurals>
+    <plurals name="res_omitidas">
+        <item quantity="one">%d linha foi ignorada porque não tinha número nem código.</item>
+        <item quantity="many">%d linhas foram ignoradas porque não tinham número nem código.</item>
+        <item quantity="other">%d linhas foram ignoradas porque não tinham número nem código.</item>
+    </plurals>
+    <plurals name="res_ilegibles">
+        <item quantity="one">%d não pôde ser guardado.</item>
+        <item quantity="many">%d não puderam ser guardados.</item>
+        <item quantity="other">%d não puderam ser guardados.</item>
+    </plurals>
+    <plurals name="copia_recuperadas">
+        <item quantity="one">%d cartão recuperado</item>
+        <item quantity="many">%d cartões recuperados</item>
+        <item quantity="other">%d cartões recuperados</item>
+    </plurals>
+    <plurals name="aviso_en_dias">
+        <item quantity="one">Daqui a %d dia</item>
+        <item quantity="many">Daqui a %d dias</item>
+        <item quantity="other">Daqui a %d dias</item>
+    </plurals>
+    <plurals name="aviso_cad_en">
+        <item quantity="one">Expira daqui a %d dia</item>
+        <item quantity="many">Expira daqui a %d dias</item>
+        <item quantity="other">Expira daqui a %d dias</item>
+    </plurals>
+    <string-array name="meses_cortos">
+        <item>jan.</item>
+        <item>fev.</item>
+        <item>mar.</item>
+        <item>abr.</item>
+        <item>mai.</item>
+        <item>jun.</item>
+        <item>jul.</item>
+        <item>ago.</item>
+        <item>set.</item>
+        <item>out.</item>
+        <item>nov.</item>
+        <item>dez.</item>
+    </string-array>
+</resources>

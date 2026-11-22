@@ -1,4 +1,4 @@
-Cartera keeps your membership, loyalty and library cards, tickets and boarding passes on your phone, with their code ready to show: no account, no server and no internet permission. Your data never leaves the device. The app is in Spanish.
+Cardholder keeps your membership, loyalty and library cards, tickets and boarding passes on your phone, with their code ready to show: no account, no server and no internet permission. Your data never leaves the device.
 
 <b>Cards with a code</b>
 • Name, number, colour, note and pin-to-top. A searchable list: pinned cards first, then the ones you use most.

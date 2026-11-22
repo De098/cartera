@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nombre">Porte-cartes</string>
+    <string name="w_nombre_favoritas">Épinglées</string>
+    <string name="w_desc_favoritas">Vos cartes épinglées : touchez-en une pour ouvrir son code</string>
+    <string name="w_titulo">📌 Épinglées</string>
+    <string name="w_vacio">Épinglez des cartes avec la punaise (📌) et elles apparaîtront ici</string>
+    <string name="canal_entradas">Billets et pass</string>
+    <string name="canal_caducidad">Dates d\'expiration</string>
+    <string name="aviso_hoy">Aujourd\'hui</string>
+    <string name="aviso_hoy_hora">Aujourd\'hui à %1$s. Touchez pour afficher votre billet.</string>
+    <string name="aviso_hoy_sin_hora">C\'est aujourd\'hui. Touchez pour afficher votre billet.</string>
+    <string name="aviso_manana">Demain</string>
+    <string name="aviso_texto_hora">%1$s à %2$s.</string>
+    <string name="aviso_texto_sin_hora">%1$s.</string>
+    <string name="aviso_cad_hoy">Expire aujourd\'hui</string>
+    <string name="aviso_cad_manana">Expire demain</string>
+    <string name="aviso_cad_fecha">Date d\'expiration : %1$s.</string>
+    <string name="fmt_qr">Code QR</string>
+    <string name="fmt_itf">ITF (2 parmi 5 entrelacé)</string>
+    <string name="fmt_ninguno">Sans code-barres (numéro seul)</string>
+    <string name="err_falta_numero">Saisissez un numéro</string>
+    <string name="err_no_vale">Ce numéro ne convient pas pour %1$s. %2$s</string>
+    <string name="ayuda_ean13">L\'EAN-13 compte 13 chiffres (ou 12, et le dernier est calculé pour vous).</string>
+    <string name="ayuda_ean8">L\'EAN-8 compte 8 chiffres (ou 7, et le dernier est calculé pour vous).</string>
+    <string name="ayuda_upca">L\'UPC-A compte 12 chiffres (ou 11, et le dernier est calculé pour vous).</string>
+    <string name="ayuda_upce">L\'UPC-E compte 8 chiffres (commençant par 0 ou 1) ou 7.</string>
+    <string name="ayuda_itf">L\'ITF n\'accepte que des chiffres, en nombre pair.</string>
+    <string name="ayuda_code39">Le Code 39 accepte les MAJUSCULES, les chiffres, les espaces et - . $ / + %%</string>
+    <string name="ayuda_codabar">Le Codabar accepte des chiffres, avec une lettre de A à D au début et à la fin.</string>
+    <string name="ayuda_code128">Le Code 128 accepte lettres, chiffres et symboles, mais pas les accents.</string>
+    <string name="ayuda_texto">Ce texte ne peut pas être écrit avec ce type de code.</string>
+    <string name="ayuda_otro">Ce numéro n\'est pas valable pour ce type de code.</string>
+    <string name="err_tipo_desconocido">Type de code inconnu</string>
+    <string name="err_no_dibujar">Impossible de dessiner ce code</string>
+    <string name="err_adj_grande">Ce fichier est trop volumineux (40 Mo maximum)</string>
+    <string name="err_tarjeta_invalida">Carte non valide</string>
+    <string name="err_no_se_lee">Impossible de lire ce fichier</string>
+    <string name="err_pdf">Impossible d\'ouvrir ce PDF</string>
+    <string name="err_no_imagen">Ce fichier n\'est ni une image ni un PDF</string>
+    <string name="err_copia_nueva">Cette sauvegarde vient d\'une version plus récente de l\'appli. Mettez d\'abord l\'appli à jour.</string>
+    <string name="copia_vacia">Cette sauvegarde ne contenait rien de nouveau</string>
+    <string name="msj_copia_guardada">Sauvegarde enregistrée</string>
+    <string name="err_cifrado">Ce fichier est protégé par un mot de passe (Catima peut exporter ainsi) et Porte-cartes ne peut pas l\'ouvrir. Dans Catima, exportez de nouveau la sauvegarde sans mot de passe, puis importez-la ici.</string>
+    <string name="err_no_reconozco">Je ne reconnais pas ce fichier. Je peux importer les sauvegardes de Porte-cartes et de Catima (.zip ou .csv), le CSV de Loyalty Card Keychain, les pass Apple Wallet (.pkpass ou .pkpasses) et tout .csv avec une ligne d\'en-tête.</string>
+    <string name="err_importar_enorme">Ce fichier est trop volumineux pour être une liste de cartes.</string>
+    <string name="err_zip">Ce fichier ZIP est endommagé ou ne peut pas être ouvert.</string>
+    <string name="res_ninguna">Aucune carte trouvée dans ce fichier.</string>
+    <string name="res_nada_nuevo">Aucune nouvelle carte importée.</string>
+    <string name="err_catima_sin_csv">Cette sauvegarde Catima ne contient pas catima.csv</string>
+    <string name="err_catima_vacia">Aucune carte trouvée dans cette sauvegarde Catima</string>
+    <string name="img_frente">Recto</string>
+    <string name="img_dorso">Verso</string>
+    <string name="img_strip">Image</string>
+    <string name="img_logo">Logo</string>
+    <string name="img_thumbnail">Miniature</string>
+    <string name="pase_wallet">Pass Wallet</string>
+    <string name="err_csv_vacio">Ce fichier est vide.</string>
+    <string name="err_csv_columnas">Impossible de trouver une colonne avec le numéro de carte. La première ligne du fichier doit contenir les noms des colonnes (par exemple : nom, numéro, type, note, expiration, couleur).</string>
+    <string name="tarjeta_sin_nombre">Carte sans nom</string>
+    <string name="billete_vuelo">Vol %1$s %2$s → %3$s</string>
+    <string name="billete_vuelo_resumen">vol %1$s, %2$s → %3$s, %4$s (le code n\'indique pas l\'heure)</string>
+    <string name="billete_tren">Train %1$s</string>
+    <string name="billete_tren_sin_ruta">Billet de train</string>
+    <string name="billete_tren_resumen">train %1$s, %2$s</string>
+    <string name="billete_tren_resumen_sin_ruta">train, %1$s</string>
+    <string name="billete_a_las"> à %1$s</string>
+    <string name="err_pon_nombre">Indiquez un nom</string>
+    <string name="err_pon_dia">Indiquez la date de l\'événement</string>
+    <string name="err_fecha_cad">La date d\'expiration n\'est pas valide</string>
+    <string name="clip_etiqueta">Code</string>
+    <string name="err_camara">Impossible d\'ouvrir l\'appareil photo sur ce téléphone</string>
+    <string name="err_fotos">Impossible d\'ouvrir les photos sur ce téléphone</string>
+    <string name="err_archivos">Impossible d\'ouvrir les fichiers sur ce téléphone</string>
+    <string name="err_guardar_aqui">Impossible d\'enregistrer sur ce téléphone</string>
+    <string name="err_ajustes_avisos">Impossible d\'ouvrir les paramètres des notifications</string>
+    <string name="err_archivo_grande">Ce fichier est trop volumineux</string>
+    <string name="err_generico">Un problème est survenu</string>
+    <string name="err_leer_archivo">Impossible de lire ce fichier</string>
+    <string name="err_acceso_no">Votre écran d\'accueil ne prend pas en charge les raccourcis</string>
+    <string name="err_acceso">Impossible d\'ajouter le raccourci</string>
+    <string name="msj_sin_codigo">Aucun code trouvé dans cette image</string>
+    <string name="err_guardar_copia">Impossible d\'enregistrer la sauvegarde</string>
+    <string name="err_adjuntar">Impossible de joindre ce fichier</string>
+    <string name="err_leer_imagen">Impossible de lire cette image</string>
+    <string name="esc_pon_codigo">Placez le code dans le cadre</string>
+    <string name="esc_linterna">Lampe</string>
+    <string name="esc_cancelar">Annuler</string>
+    <string name="esc_sin_permiso">Impossible de scanner sans l\'autorisation d\'accéder à l\'appareil photo. Vous pouvez lire le code depuis une photo ou saisir le numéro à la place.</string>
+    <string name="esc_sin_camara">Ce téléphone n\'a pas d\'appareil photo</string>
+    <string name="esc_camara_no">Impossible d\'utiliser l\'appareil photo</string>
+    <string name="esc_camara_fallo">Impossible d\'ouvrir l\'appareil photo</string>
+    <plurals name="res_importadas">
+        <item quantity="one">Importé depuis %1$s : %2$d carte.</item>
+        <item quantity="many">Importé depuis %1$s : %2$d cartes.</item>
+        <item quantity="other">Importé depuis %1$s : %2$d cartes.</item>
+    </plurals>
+    <plurals name="res_repetidas">
+        <item quantity="one">%d existait déjà (même nom et même numéro) et n\'a pas été dupliquée.</item>
+        <item quantity="many">%d existaient déjà (même nom et même numéro) et n\'ont pas été dupliquées.</item>
+        <item quantity="other">%d existaient déjà (même nom et même numéro) et n\'ont pas été dupliquées.</item>
+    </plurals>
+    <plurals name="res_sin_dibujo">
+        <item quantity="one">%d a été importée sans code dessiné, car son type ne peut pas être dessiné ici. Seul le numéro s\'affiche.</item>
+        <item quantity="many">%d ont été importées sans code dessiné, car leur type ne peut pas être dessiné ici. Seuls les numéros s\'affichent.</item>
+        <item quantity="other">%d ont été importées sans code dessiné, car leur type ne peut pas être dessiné ici. Seuls les numéros s\'affichent.</item>
+    </plurals>
+    <plurals name="res_omitidas">
+        <item quantity="one">%d ligne a été ignorée car elle n\'avait ni numéro ni code.</item>
+        <item quantity="many">%d lignes ont été ignorées car elles n\'avaient ni numéro ni code.</item>
+        <item quantity="other">%d lignes ont été ignorées car elles n\'avaient ni numéro ni code.</item>
+    </plurals>
+    <plurals name="res_ilegibles">
+        <item quantity="one">%d n\'a pas pu être enregistrée.</item>
+        <item quantity="many">%d n\'ont pas pu être enregistrées.</item>
+        <item quantity="other">%d n\'ont pas pu être enregistrées.</item>
+    </plurals>
+    <plurals name="copia_recuperadas">
+        <item quantity="one">%d carte restaurée</item>
+        <item quantity="many">%d cartes restaurées</item>
+        <item quantity="other">%d cartes restaurées</item>
+    </plurals>
+    <plurals name="aviso_en_dias">
+        <item quantity="one">Dans %d jour</item>
+        <item quantity="many">Dans %d jours</item>
+        <item quantity="other">Dans %d jours</item>
+    </plurals>
+    <plurals name="aviso_cad_en">
+        <item quantity="one">Expire dans %d jour</item>
+        <item quantity="many">Expire dans %d jours</item>
+        <item quantity="other">Expire dans %d jours</item>
+    </plurals>
+    <string-array name="meses_cortos">
+        <item>janv.</item>
+        <item>févr.</item>
+        <item>mars</item>
+        <item>avr.</item>
+        <item>mai</item>
+        <item>juin</item>
+        <item>juil.</item>
+        <item>août</item>
+        <item>sept.</item>
+        <item>oct.</item>
+        <item>nov.</item>
+        <item>déc.</item>
+    </string-array>
+</resources>

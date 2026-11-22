@@ -1,0 +1,36 @@
+Portatessere conserva sul telefono le tessere associative, fedeltà e della biblioteca, i biglietti e le carte d'imbarco, con il codice pronto da mostrare: nessun account, nessun server e nessun permesso di accesso a internet. I tuoi dati non lasciano mai il dispositivo.
+
+<b>Tessere con codice</b>
+• Nome, numero, colore, nota e fissa in alto. Un elenco con ricerca: prima le tessere fissate, poi quelle che usi di più.
+• Codici QR, EAN-13, EAN-8, UPC-A, Code 128, Code 39, Aztec, PDF417 e Data Matrix.
+• Aprendo una tessera il codice appare grande con il numero sotto, luminosità al massimo e schermo sempre acceso. Chiudendola, tutto torna come prima.
+
+<b>Tre modi per aggiungere una tessera</b>
+• Scansionare il codice con la fotocamera (il permesso viene chiesto solo in quel momento).
+• Leggere il codice da una foto o da uno screenshot della galleria.
+• Digitare il numero e scegliere il tipo.
+
+<b>Biglietti e pass</b>
+• Con data e ora dell'evento, un allegato (immagine o PDF) e/o il suo codice.
+• Un promemoria il giorno dell'evento e uno in anticipo, configurabile (per esempio il giorno prima).
+• Finito l'evento vengono archiviati in automatico; puoi ripristinarli o eliminarli.
+
+<b>Biglietti che si compilano da soli</b>
+• Scansionando una carta d'imbarco (IATA) legge volo, partenza, destinazione e giorno; per i biglietti del treno UIC (Aztec), data, ora e stazioni contenute nel codice.
+• Compila il modulo senza salvare e ti dice cosa ha trovato. Se il codice non ha una data (come i biglietti Renfe), ti chiede se è un biglietto e poi il giorno e l'ora.
+• «Vedi il contenuto del codice» e «Riconosci la data» su ogni tessera.
+
+<b>Scadenze</b>
+• Ogni tessera può avere una data di scadenza, con promemoria configurabili (di base 30 giorni prima e il giorno stesso).
+• Etichette «Scade presto» e «Scaduta».
+
+<b>E poi</b>
+• Widget delle tessere fissate: toccane una e si apre il suo codice.
+• Scorciatoia di una singola tessera nella schermata Home.
+• Backup in un file .zip.
+
+<b>Importa da altre app</b>
+• Catima (il suo backup .zip o .csv, senza password), Loyalty Card Keychain, pass di Apple Wallet (.pkpass, anche aprendoli da un'email o dal browser) e qualsiasi file .csv con una riga di intestazione.
+• Il formato viene riconosciuto in automatico. Alla fine vedi quante tessere sono state importate, quante c'erano già e quante sono arrivate senza codice disegnato.
+
+Tema chiaro ad alto contrasto. Software libero (GPL-3.0).
